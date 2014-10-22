@@ -15,6 +15,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Lib", "Lib", "{09715792-7A5
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MySynch.Q.Sender", "MySynch.Q.Sender\MySynch.Q.Sender.csproj", "{3DA88B89-1B9F-4A96-B67F-316EC723A0D0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MySynch.Q.Receiver", "MySynch.Q.Receiver\MySynch.Q.Receiver.csproj", "{198409E4-F53B-4B7C-B5E7-70E8AF6223AA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -25,6 +27,10 @@ Global
 		{3DA88B89-1B9F-4A96-B67F-316EC723A0D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3DA88B89-1B9F-4A96-B67F-316EC723A0D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3DA88B89-1B9F-4A96-B67F-316EC723A0D0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{198409E4-F53B-4B7C-B5E7-70E8AF6223AA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{198409E4-F53B-4B7C-B5E7-70E8AF6223AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{198409E4-F53B-4B7C-B5E7-70E8AF6223AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{198409E4-F53B-4B7C-B5E7-70E8AF6223AA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
