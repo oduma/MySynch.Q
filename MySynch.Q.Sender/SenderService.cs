@@ -22,14 +22,13 @@ namespace MySynch.Q.Sender
             LoggingManager.Debug("Constructing Sender...");
             InitializeComponent();
             _sender = new Publisher();
-            _sender.Initialize();
             LoggingManager.Debug("Sender constructed.");
         }
 
         protected override void OnStart(string[] args)
         {
             LoggingManager.Debug("Starting Sender...");
-
+            _sender.Initialize();
             _sender.MessageFeeder = new MessageFeeder();
             _cancellationTokenSource = new CancellationTokenSource();
             _cancellationToken = _cancellationTokenSource.Token;

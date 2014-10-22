@@ -53,12 +53,20 @@ namespace MySynch.Q.Sender
             set { this["name"] = value; }
         }
 
+        [ConfigurationProperty("queueName", DefaultValue = "", IsRequired = true)]
+        public string QueueName
+        {
+            get { return (string)this["queueName"]; }
+            set { this["queueName"] = value; }
+        }
+
         [ConfigurationProperty("hostName", DefaultValue = "", IsRequired = true)]
         public string HostName
         {
             get { return (string)this["hostName"]; }
             set { this["hostName"] = value; }
         }
+
 
     }
  

@@ -18,10 +18,11 @@ namespace MySynch.Q.Sender
 
         internal void FeedMessagesTo(Action<byte[]> PublishMessage)
         {
+            int i = 0;
             while(More)
             {
                 Thread.Sleep(2000);
-                PublishMessage(new byte[0]);
+                PublishMessage(Encoding.UTF8.GetBytes("Message "+ i++ +"."));
             }
             LoggingManager.Debug("Feeder stoped.");
         }
