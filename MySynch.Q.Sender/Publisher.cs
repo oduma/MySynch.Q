@@ -1,5 +1,7 @@
-﻿using RabbitMQ.Client;
+﻿using MySynch.Q.Common.Contracts;
+using RabbitMQ.Client;
 using Sciendo.Common.Logging;
+using Sciendo.Common.Serialization;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -11,11 +13,13 @@ namespace MySynch.Q.Sender
 {
     internal class Publisher
     {
+        private SenderSection _senderConfig;
+
         internal Publisher()
         {
             LoggingManager.Debug("Constructing Publisher...");
-            SenderSection senderConfig = ConfigurationManager.GetSection("sender") as SenderSection;
-            _senderQueues = senderConfig.Queues.Cast<QueueElement>().Select(q=>new SenderQueue{Name=q.Name,QueueName=q.QueueName,HostName=q.HostName}).ToArray();
+            _senderConfig = ConfigurationManager.GetSection("sender") as SenderSection;
+            _senderQueues = _senderConfig.Queues.Cast<QueueElement>().Select(q=>new SenderQueue{Name=q.Name,QueueName=q.QueueName,HostName=q.HostName}).ToArray();
             LoggingManager.Debug("Publisher Constructed.");
         }
 
@@ -43,23 +47,29 @@ namespace MySynch.Q.Sender
 
         internal void TryStart()
         {
-            this.MessageFeeder.More = true;
-            this.MessageFeeder.FeedMessagesTo(PublishMessage);
+            if (_messageFeeder == null)
+                _messageFeeder = new MessageFeeder();
+            if (!_messageFeeder.More)
+                _messageFeeder.Initialize(_senderConfig.LocalRootFolder);
+            this._messageFeeder.More = true;
+            this._messageFeeder.PublishMessage = PublishMessage;
         }
 
-        internal void PublishMessage(byte[] message)
+        internal void PublishMessage(BodyTransferMessage message)
         {
             LoggingManager.Debug("Publishing Message...");
+            var tempMessage = Serializer.Serialize<BodyTransferMessage>(message);
+            byte[] rawMessage = Encoding.UTF8.GetBytes(tempMessage);
             foreach (var senderQueue in _senderQueues.Where(q => q.Channel != null && !q.Channel.IsClosed))
             {
-                senderQueue.SendMessage(message);
+                senderQueue.SendMessage(rawMessage);
             }
             LoggingManager.Debug("Message Published.");
         }
         internal void Stop()
         {
             LoggingManager.Debug("Stoping Publisher...");
-            MessageFeeder.More = false;
+            _messageFeeder.More = false;
             Thread.Sleep(2000);
             foreach (var senderQueue in _senderQueues)
             {
@@ -69,6 +79,6 @@ namespace MySynch.Q.Sender
             LoggingManager.Debug("Publisher Stopped.");
         }
 
-        public MessageFeeder MessageFeeder { get; set; }
+        private MessageFeeder _messageFeeder;
     }
 }

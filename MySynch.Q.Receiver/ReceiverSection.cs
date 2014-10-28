@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MySynch.Q.Common.Configuration;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 namespace MySynch.Q.Receiver
 {
     
-    public class ReceiverSection:ConfigurationSection
+    public class ReceiverSection:BaseConfigurationSection
     {
         [ConfigurationProperty("name", DefaultValue = "", IsKey = true, IsRequired = true)]
         public string Name

@@ -29,7 +29,6 @@ namespace MySynch.Q.Sender
         {
             LoggingManager.Debug("Starting Sender...");
             _sender.Initialize();
-            _sender.MessageFeeder = new MessageFeeder();
             _cancellationTokenSource = new CancellationTokenSource();
             _cancellationToken = _cancellationTokenSource.Token;
             _cancellationToken.Register(_sender.Stop);

@@ -12,11 +12,13 @@ namespace MySynch.Q.Receiver
     internal class Consummer
     {
         private ReceiverQueue _receiverQueue;
+        private string _rootPath;
 
         internal Consummer()
         {
             LoggingManager.Debug("Constructing Consummer...");
             var receiverConfig = ConfigurationManager.GetSection("receiver") as ReceiverSection;
+            _rootPath = receiverConfig.LocalRootFolder;
             _receiverQueue = new ReceiverQueue 
                 {   Name = receiverConfig.Name, 
                     QueueName = receiverConfig.QueueName, 
@@ -52,10 +54,11 @@ namespace MySynch.Q.Receiver
 
         internal void TryStart(object obj)
         {
+            var messageApplyer = new MessageApplyer(_rootPath);
             More = true;
             while(More)
             {
-                new MessageApplyer().ApplyMessage(((BasicDeliverEventArgs)_receiverQueue.Consumer.Queue.Dequeue()).Body);
+                messageApplyer.ApplyMessage(((BasicDeliverEventArgs)_receiverQueue.Consumer.Queue.Dequeue()).Body);
             }
         }
 

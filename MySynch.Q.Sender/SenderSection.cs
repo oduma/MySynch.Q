@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MySynch.Q.Common.Configuration;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
@@ -8,13 +9,14 @@ using System.Threading.Tasks;
 namespace MySynch.Q.Sender
 {
     
-    public class SenderSection:ConfigurationSection
+    public class SenderSection:BaseConfigurationSection
     {
         [ConfigurationProperty("queues")]
         public QueueElementCollection Queues
         {
             get { return (QueueElementCollection)this["queues"]; }
         }
+
     }
 
     [ConfigurationCollection(typeof(QueueElement))]

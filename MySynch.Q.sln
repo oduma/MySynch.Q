@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MySynch.Q.Sender", "MySynch
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MySynch.Q.Receiver", "MySynch.Q.Receiver\MySynch.Q.Receiver.csproj", "{198409E4-F53B-4B7C-B5E7-70E8AF6223AA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MySynch.Q.Common", "MySynch.Q.Common\MySynch.Q.Common.csproj", "{696F72F6-22A7-41EF-A57D-0876B593721E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -31,6 +33,10 @@ Global
 		{198409E4-F53B-4B7C-B5E7-70E8AF6223AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{198409E4-F53B-4B7C-B5E7-70E8AF6223AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{198409E4-F53B-4B7C-B5E7-70E8AF6223AA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{696F72F6-22A7-41EF-A57D-0876B593721E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{696F72F6-22A7-41EF-A57D-0876B593721E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{696F72F6-22A7-41EF-A57D-0876B593721E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{696F72F6-22A7-41EF-A57D-0876B593721E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
