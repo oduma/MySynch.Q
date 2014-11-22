@@ -69,6 +69,18 @@ namespace MySynch.Q.Sender
             set { this["hostName"] = value; }
         }
 
+        [ConfigurationProperty("userName", DefaultValue = "", IsRequired = true)]
+        public string UserName
+        {
+            get { return (string)this["userName"]; }
+            set { this["userName"] = value; }
+        }
+        [ConfigurationProperty("password", DefaultValue = "", IsRequired = true)]
+        public string Password
+        {
+            get { return (string)this["password"]; }
+            set { this["password"] = value; }
+        }
 
     }
  

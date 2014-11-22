@@ -18,7 +18,7 @@ namespace MySynch.Q.Sender
 
         public void StartChannel(ConnectionFactory connectionFactory)
         {
-            LoggingManager.Debug(Name + " Channel starting up...");
+            LoggingManager.Debug(Name + " on " + connectionFactory.HostName + " with user: " + connectionFactory.UserName + " Channel starting up...");
             try
             {
                 Connection = connectionFactory.CreateConnection();

@@ -19,22 +19,29 @@ namespace MySynch.Q.Sender
         {
             LoggingManager.Debug("Constructing Publisher...");
             _senderConfig = ConfigurationManager.GetSection("sender") as SenderSection;
-            _senderQueues = _senderConfig.Queues.Cast<QueueElement>().Select(q=>new SenderQueue{Name=q.Name,QueueName=q.QueueName,HostName=q.HostName}).ToArray();
+            _senderQueues = _senderConfig.Queues.Cast<QueueElement>().Select(q=>new SenderQueue{Name=q.Name,QueueName=q.QueueName,HostName=q.HostName,UserName=q.UserName,Password=q.Password}).ToArray();
+            _connectionFactories = new List<ConnectionFactory>();
             LoggingManager.Debug("Publisher Constructed.");
         }
 
         SenderQueue[] _senderQueues;
-        IEnumerable<ConnectionFactory> _connectionFactories;
+        List<ConnectionFactory> _connectionFactories;
 
         internal void Initialize()
         {
             try
             {
                 LoggingManager.Debug("Initializing Publisher...");
-                _connectionFactories = _senderQueues.Select(q => q.HostName).Distinct().Select((h) => new ConnectionFactory { HostName = h });
+                
                 foreach (var senderQueue in _senderQueues)
                 {
-                    senderQueue.StartChannel(_connectionFactories.FirstOrDefault(f => f.HostName == senderQueue.HostName));
+                    var connectionFactory = _connectionFactories.FirstOrDefault(f => f.HostName == senderQueue.HostName);
+                    if (connectionFactory == null)
+                    {
+                        connectionFactory = new ConnectionFactory { HostName = senderQueue.HostName, UserName = senderQueue.UserName, Password = senderQueue.Password };
+                        _connectionFactories.Add(connectionFactory);
+                    }
+                    senderQueue.StartChannel(connectionFactory);
                 }
                 LoggingManager.Debug("Publisher Initialized.");
             }

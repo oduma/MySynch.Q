@@ -17,8 +17,8 @@ namespace MySynch.Q.Receiver
 
             try
             {
-
-                Connection = new ConnectionFactory { HostName = HostName }.CreateConnection();
+               
+                Connection = new ConnectionFactory { HostName = HostName,UserName=UserName,Password=Password }.CreateConnection();
                 Channel = Connection.CreateModel();
                 Channel.QueueDeclare(QueueName, true, false, false, null);
 
