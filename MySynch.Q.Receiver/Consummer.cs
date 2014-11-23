@@ -22,7 +22,9 @@ namespace MySynch.Q.Receiver
             _receiverQueue = new ReceiverQueue 
                 {   Name = receiverConfig.Name, 
                     QueueName = receiverConfig.QueueName, 
-                    HostName = receiverConfig.HostName 
+                    HostName = receiverConfig.HostName,
+                    UserName=receiverConfig.UserName,
+                    Password=receiverConfig.Password
                 };
             LoggingManager.Debug("Consummer Constructed.");
 
