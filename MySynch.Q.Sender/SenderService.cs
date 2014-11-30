@@ -20,9 +20,16 @@ namespace MySynch.Q.Sender
         public SenderService()
         {
             LoggingManager.Debug("Constructing Sender...");
+            AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
             InitializeComponent();
             _sender = new Publisher();
             LoggingManager.Debug("Sender constructed.");
+        }
+
+        void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
+        {
+            LoggingManager.Debug("An unhandled exception has happened. See the exceptions log.");
+            LoggingManager.LogSciendoSystemError(e.ExceptionObject as Exception);
         }
 
         protected override void OnStart(string[] args)

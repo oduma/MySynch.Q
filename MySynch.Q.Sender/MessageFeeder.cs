@@ -99,8 +99,13 @@ namespace MySynch.Q.Sender
 
             try
             {
-                stream = file.Open(FileMode.Open,
+                if((file.Attributes & FileAttributes.ReadOnly)==FileAttributes.ReadOnly)
+                    stream = file.Open(FileMode.Open,
+                         FileAccess.Read, FileShare.None);
+                else
+                    stream = file.Open(FileMode.Open,
                          FileAccess.ReadWrite, FileShare.None);
+
             }
             catch (IOException)
             {
