@@ -48,7 +48,7 @@
           ErrorControl="ignore"
           Interactive="no">
         </ServiceInstall>
-        <ServiceControl Id="StartReceiverService" Start="install" Stop="both" Remove="uninstall" Name="MySynch.Q.Receiver" Wait="yes" />
+        <!--<ServiceControl Id="StartReceiverService" Start="install" Stop="both" Remove="uninstall" Name="MySynch.Q.Receiver" Wait="yes" />-->
       </Component>
     </Feature>
   </Product>

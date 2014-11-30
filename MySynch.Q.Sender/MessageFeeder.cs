@@ -23,7 +23,6 @@ namespace MySynch.Q.Sender
             //if it is a directory ignore it
             if (!File.Exists(newPath))
                 return;
-            //queue an insert;
             // Wait if file is still open
             FileInfo fileInfo = new FileInfo(newPath);
             while (IsFileLocked(fileInfo))
