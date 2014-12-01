@@ -20,9 +20,16 @@ namespace MySynch.Q.Receiver
         public ReceiverService()
         {
             LoggingManager.Debug("Constructing Receiver...");
+            AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
             InitializeComponent();
             _receiver = new Consummer();
             LoggingManager.Debug("Receiver constructed.");
+        }
+
+        void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
+        {
+            LoggingManager.Debug("An unhandled exception has happened. See the exceptions log.");
+            LoggingManager.LogSciendoSystemError(e.ExceptionObject as Exception);
         }
 
         protected override void OnStart(string[] args)
