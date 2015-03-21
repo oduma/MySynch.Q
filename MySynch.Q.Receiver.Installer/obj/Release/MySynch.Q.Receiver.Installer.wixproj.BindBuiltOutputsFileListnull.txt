@@ -1,0 +1,3 @@
+C:\Code\Sciendo\MySynch.Q\MySynch.Q\MySynch.Q.Receiver.Installer\bin\Release\cab1.cab
+C:\Code\Sciendo\MySynch.Q\MySynch.Q\MySynch.Q.Receiver.Installer\bin\Release\MySynch.Q.Receiver.Installer.msi
+C:\Code\Sciendo\MySynch.Q\MySynch.Q\MySynch.Q.Receiver.Installer\bin\Release\MySynch.Q.Receiver.Installer.wixpdb

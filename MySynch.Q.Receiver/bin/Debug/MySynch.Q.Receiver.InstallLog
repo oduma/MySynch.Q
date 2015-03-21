@@ -1,0 +1,15 @@
+﻿Installing assembly 'C:\Code\Sciendo\MySynch.Q\MySynch.Q\MySynch.Q.Receiver\bin\Debug\MySynch.Q.Receiver.exe'.
+Affected parameters are:
+   logtoconsole = 
+   i = 
+   assemblypath = C:\Code\Sciendo\MySynch.Q\MySynch.Q\MySynch.Q.Receiver\bin\Debug\MySynch.Q.Receiver.exe
+   logfile = C:\Code\Sciendo\MySynch.Q\MySynch.Q\MySynch.Q.Receiver\bin\Debug\MySynch.Q.Receiver.InstallLog
+Installing service MySynch.Q.Receiver.Debug...
+Service MySynch.Q.Receiver.Debug has been successfully installed.
+Creating EventLog source MySynch.Q.Receiver.Debug in log Application...
+Committing assembly 'C:\Code\Sciendo\MySynch.Q\MySynch.Q\MySynch.Q.Receiver\bin\Debug\MySynch.Q.Receiver.exe'.
+Affected parameters are:
+   logtoconsole = 
+   i = 
+   assemblypath = C:\Code\Sciendo\MySynch.Q\MySynch.Q\MySynch.Q.Receiver\bin\Debug\MySynch.Q.Receiver.exe
+   logfile = C:\Code\Sciendo\MySynch.Q\MySynch.Q\MySynch.Q.Receiver\bin\Debug\MySynch.Q.Receiver.InstallLog

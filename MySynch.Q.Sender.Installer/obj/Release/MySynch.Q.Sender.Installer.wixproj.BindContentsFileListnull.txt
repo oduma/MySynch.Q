@@ -1,0 +1,6 @@
+..\sender\log4net.config
+..\sender\Sciendo.Common.dll
+..\sender\log4net.dll
+..\sender\MySynch.Q.Common.dll
+..\sender\MySynch.Q.Sender.exe
+..\sender\MySynch.Q.Sender.exe.config

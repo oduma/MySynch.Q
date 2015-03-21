@@ -1,0 +1,4 @@
+C:\Code\Sciendo\MySynch.Q\MySynch.Q\MySynch.Q.Common\bin\Release\MySynch.Q.Common.dll
+C:\Code\Sciendo\MySynch.Q\MySynch.Q\MySynch.Q.Common\bin\Release\MySynch.Q.Common.pdb
+C:\Code\Sciendo\MySynch.Q\MySynch.Q\MySynch.Q.Common\obj\Release\MySynch.Q.Common.dll
+C:\Code\Sciendo\MySynch.Q\MySynch.Q\MySynch.Q.Common\obj\Release\MySynch.Q.Common.pdb

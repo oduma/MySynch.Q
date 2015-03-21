@@ -1,0 +1,13 @@
+C:\Code\Sciendo\MySynch.Q\MySynch.Q\MySynch.Q.Receiver\bin\Debug\log4net.config
+C:\Code\Sciendo\MySynch.Q\MySynch.Q\MySynch.Q.Receiver\bin\Debug\MySynch.Q.Receiver.exe.config
+C:\Code\Sciendo\MySynch.Q\MySynch.Q\MySynch.Q.Receiver\bin\Debug\MySynch.Q.Receiver.exe
+C:\Code\Sciendo\MySynch.Q\MySynch.Q\MySynch.Q.Receiver\bin\Debug\MySynch.Q.Receiver.pdb
+C:\Code\Sciendo\MySynch.Q\MySynch.Q\MySynch.Q.Receiver\bin\Debug\log4net.dll
+C:\Code\Sciendo\MySynch.Q\MySynch.Q\MySynch.Q.Receiver\bin\Debug\Sciendo.Common.dll
+C:\Code\Sciendo\MySynch.Q\MySynch.Q\MySynch.Q.Receiver\bin\Debug\log4net.xml
+C:\Code\Sciendo\MySynch.Q\MySynch.Q\MySynch.Q.Receiver\bin\Debug\Sciendo.Common.pdb
+C:\Code\Sciendo\MySynch.Q\MySynch.Q\MySynch.Q.Receiver\obj\Debug\MySynch.Q.Receiver.exe
+C:\Code\Sciendo\MySynch.Q\MySynch.Q\MySynch.Q.Receiver\obj\Debug\MySynch.Q.Receiver.pdb
+C:\Code\Sciendo\MySynch.Q\MySynch.Q\MySynch.Q.Receiver\bin\Debug\MySynch.Q.Common.dll
+C:\Code\Sciendo\MySynch.Q\MySynch.Q\MySynch.Q.Receiver\bin\Debug\MySynch.Q.Common.pdb
+C:\Code\Sciendo\MySynch.Q\MySynch.Q\MySynch.Q.Receiver\obj\Debug\MySynch.Q.Receiver.csprojResolveAssemblyReference.cache
