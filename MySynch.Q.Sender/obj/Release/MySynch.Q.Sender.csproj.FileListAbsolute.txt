@@ -5,3 +5,6 @@ C:\Code\Sciendo\MySynch.Q\MySynch.Q\sender\MySynch.Q.Sender.pdb
 C:\Code\Sciendo\MySynch.Q\MySynch.Q\MySynch.Q.Sender\obj\Release\MySynch.Q.Sender.csprojResolveAssemblyReference.cache
 C:\Code\Sciendo\MySynch.Q\MySynch.Q\MySynch.Q.Sender\obj\Release\MySynch.Q.Sender.exe
 C:\Code\Sciendo\MySynch.Q\MySynch.Q\MySynch.Q.Sender\obj\Release\MySynch.Q.Sender.pdb
+C:\Code\m\MySynch.Q\sender\MySynch.Q.Sender.exe.config
+C:\Code\m\MySynch.Q\MySynch.Q.Sender\obj\Release\MySynch.Q.Sender.exe
+C:\Code\m\MySynch.Q\MySynch.Q.Sender\obj\Release\MySynch.Q.Sender.pdb
