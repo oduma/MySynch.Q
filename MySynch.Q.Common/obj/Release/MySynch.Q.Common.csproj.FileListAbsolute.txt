@@ -2,3 +2,13 @@ C:\Code\Sciendo\MySynch.Q\MySynch.Q\MySynch.Q.Common\bin\Release\MySynch.Q.Commo
 C:\Code\Sciendo\MySynch.Q\MySynch.Q\MySynch.Q.Common\bin\Release\MySynch.Q.Common.pdb
 C:\Code\Sciendo\MySynch.Q\MySynch.Q\MySynch.Q.Common\obj\Release\MySynch.Q.Common.dll
 C:\Code\Sciendo\MySynch.Q\MySynch.Q\MySynch.Q.Common\obj\Release\MySynch.Q.Common.pdb
+C:\Code\m\MySynch.Q\MySynch.Q.Common\bin\Release\MySynch.Q.Common.dll
+C:\Code\m\MySynch.Q\MySynch.Q.Common\bin\Release\MySynch.Q.Common.pdb
+C:\Code\m\MySynch.Q\MySynch.Q.Common\bin\Release\log4net.dll
+C:\Code\m\MySynch.Q\MySynch.Q.Common\bin\Release\Sciendo.Common.dll
+C:\Code\m\MySynch.Q\MySynch.Q.Common\bin\Release\log4net.xml
+C:\Code\m\MySynch.Q\MySynch.Q.Common\obj\Release\MySynch.Q.Common.csprojResolveAssemblyReference.cache
+C:\Code\m\MySynch.Q\MySynch.Q.Common\obj\Release\MySynch.Q.Common.dll
+C:\Code\m\MySynch.Q\MySynch.Q.Common\obj\Release\MySynch.Q.Common.pdb
+C:\Code\m\MySynch.Q\MySynch.Q.Common\bin\Release\RabbitMQ.Client.dll
+C:\Code\m\MySynch.Q\MySynch.Q.Common\bin\Release\RabbitMQ.Client.xml

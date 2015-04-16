@@ -46,3 +46,16 @@ Affected parameters are:
    logfile = C:\Code\Sciendo\MySynch.Q\MySynch.Q\MySynch.Q.Sender\bin\Debug\MySynch.Q.Sender.InstallLog
    assemblypath = C:\Code\Sciendo\MySynch.Q\MySynch.Q\MySynch.Q.Sender\bin\Debug\MySynch.Q.Sender.exe
    logtoconsole = 
+Installing assembly 'C:\Code\m\MySynch.Q\MySynch.Q.Sender\bin\Debug\MySynch.Q.Sender.exe'.
+Affected parameters are:
+   logtoconsole = 
+   logfile = C:\Code\m\MySynch.Q\MySynch.Q.Sender\bin\Debug\MySynch.Q.Sender.InstallLog
+   assemblypath = C:\Code\m\MySynch.Q\MySynch.Q.Sender\bin\Debug\MySynch.Q.Sender.exe
+Installing service MySynch.Q.Sender.Debug...
+Service MySynch.Q.Sender.Debug has been successfully installed.
+Creating EventLog source MySynch.Q.Sender.Debug in log Application...
+Committing assembly 'C:\Code\m\MySynch.Q\MySynch.Q.Sender\bin\Debug\MySynch.Q.Sender.exe'.
+Affected parameters are:
+   logtoconsole = 
+   logfile = C:\Code\m\MySynch.Q\MySynch.Q.Sender\bin\Debug\MySynch.Q.Sender.InstallLog
+   assemblypath = C:\Code\m\MySynch.Q\MySynch.Q.Sender\bin\Debug\MySynch.Q.Sender.exe

@@ -1,10 +1,6 @@
 ﻿using RabbitMQ.Client;
 using Sciendo.Common.Logging;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MySynch.Q.Sender
 {
@@ -23,7 +19,7 @@ namespace MySynch.Q.Sender
             {
                 Connection = connectionFactory.CreateConnection();
                 Channel = Connection.CreateModel();
-                Channel.QueueDeclare(QueueName, true, false, false, null);
+                Channel.QueueDeclare(QueueName, true, false, true, null);
                 LoggingManager.Debug(Name + " Channel started up.");
             }
             catch (Exception ex)

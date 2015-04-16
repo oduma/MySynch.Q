@@ -1,0 +1,62 @@
+[(null)] , RabbitMQ.Client.Exceptions.BrokerUnreachableException: None of the specified endpoints were reachable ---> RabbitMQ.Client.Exceptions.ConnectFailureException: Connection failed ---> System.Net.Sockets.SocketException: No such host is known
+   at System.Net.Sockets.Socket.EndConnect(IAsyncResult asyncResult)
+   at System.Net.Sockets.TcpClient.EndConnect(IAsyncResult asyncResult)
+   at RabbitMQ.Client.Impl.SocketFrameHandler.Connect(TcpClient socket, AmqpTcpEndpoint endpoint, Int32 timeout)
+   --- End of inner exception stack trace ---
+   at RabbitMQ.Client.Impl.SocketFrameHandler.Connect(TcpClient socket, AmqpTcpEndpoint endpoint, Int32 timeout)
+   at RabbitMQ.Client.Impl.SocketFrameHandler..ctor(AmqpTcpEndpoint endpoint, Func`2 socketFactory, Int32 timeout)
+   at RabbitMQ.Client.Framing.Impl.ProtocolBase.CreateFrameHandler(AmqpTcpEndpoint endpoint, Func`2 socketFactory, Int32 timeout)
+   at RabbitMQ.Client.ConnectionFactory.CreateFrameHandler()
+   at RabbitMQ.Client.ConnectionFactory.CreateConnection()
+   --- End of inner exception stack trace ---
+   at RabbitMQ.Client.ConnectionFactory.CreateConnection()
+   at MySynch.Q.Sender.SenderQueue.StartChannel(ConnectionFactory connectionFactory) in c:\Code\m\MySynch.Q\MySynch.Q.Sender\SenderQueue.cs:line 25
+, 2015-04-15 18:25:25,361
+[(null)] , RabbitMQ.Client.Exceptions.BrokerUnreachableException: None of the specified endpoints were reachable ---> RabbitMQ.Client.Exceptions.ConnectFailureException: Connection failed ---> System.Net.Sockets.SocketException: No such host is known
+   at System.Net.Sockets.Socket.EndConnect(IAsyncResult asyncResult)
+   at System.Net.Sockets.TcpClient.EndConnect(IAsyncResult asyncResult)
+   at RabbitMQ.Client.Impl.SocketFrameHandler.Connect(TcpClient socket, AmqpTcpEndpoint endpoint, Int32 timeout)
+   --- End of inner exception stack trace ---
+   at RabbitMQ.Client.Impl.SocketFrameHandler.Connect(TcpClient socket, AmqpTcpEndpoint endpoint, Int32 timeout)
+   at RabbitMQ.Client.Impl.SocketFrameHandler..ctor(AmqpTcpEndpoint endpoint, Func`2 socketFactory, Int32 timeout)
+   at RabbitMQ.Client.Framing.Impl.ProtocolBase.CreateFrameHandler(AmqpTcpEndpoint endpoint, Func`2 socketFactory, Int32 timeout)
+   at RabbitMQ.Client.ConnectionFactory.CreateFrameHandler()
+   at RabbitMQ.Client.ConnectionFactory.CreateConnection()
+   --- End of inner exception stack trace ---
+   at RabbitMQ.Client.ConnectionFactory.CreateConnection()
+   at MySynch.Q.Sender.SenderQueue.StartChannel(ConnectionFactory connectionFactory) in c:\Code\m\MySynch.Q\MySynch.Q.Sender\SenderQueue.cs:line 25
+, 2015-04-15 18:30:13,520
+[(null)] , RabbitMQ.Client.Exceptions.OperationInterruptedException: The AMQP operation was interrupted: AMQP close-reason, initiated by Peer, code=406, text="PRECONDITION_FAILED - inequivalent arg 'auto_delete' for queue 'queue1' in vhost '/': received 'true' but current is 'false'", classId=50, methodId=10, cause=
+   at RabbitMQ.Client.Impl.SimpleBlockingRpcContinuation.GetReply()
+   at RabbitMQ.Client.Impl.ModelBase.QueueDeclare(String queue, Boolean passive, Boolean durable, Boolean exclusive, Boolean autoDelete, IDictionary`2 arguments)
+   at RabbitMQ.Client.Impl.ModelBase.QueueDeclare(String queue, Boolean durable, Boolean exclusive, Boolean autoDelete, IDictionary`2 arguments)
+   at MySynch.Q.Sender.SenderQueue.StartChannel(ConnectionFactory connectionFactory) in c:\Code\m\MySynch.Q\MySynch.Q.Sender\SenderQueue.cs:line 22
+, 2015-04-15 19:06:53,185
+
+
+=====================[(null)] , System.Configuration.ConfigurationErrorsException: Unrecognized attribute 'feedbackQueue'. Note that attribute names are case-sensitive. (C:\Code\m\MySynch.Q\MySynch.Q.Sender\bin\Debug\MySynch.Q.Sender.exe.Config line 8)
+   at System.Configuration.BaseConfigurationRecord.EvaluateOne(String[] keys, SectionInput input, Boolean isTrusted, FactoryRecord factoryRecord, SectionRecord sectionRecord, Object parentResult)
+   at System.Configuration.BaseConfigurationRecord.Evaluate(FactoryRecord factoryRecord, SectionRecord sectionRecord, Object parentResult, Boolean getLkg, Boolean getRuntimeObject, Object& result, Object& resultRuntimeObject)
+   at System.Configuration.BaseConfigurationRecord.GetSectionRecursive(String configKey, Boolean getLkg, Boolean checkPermission, Boolean getRuntimeObject, Boolean requestIsHere, Object& result, Object& resultRuntimeObject)
+   at System.Configuration.BaseConfigurationRecord.GetSectionRecursive(String configKey, Boolean getLkg, Boolean checkPermission, Boolean getRuntimeObject, Boolean requestIsHere, Object& result, Object& resultRuntimeObject)
+   at System.Configuration.BaseConfigurationRecord.GetSectionRecursive(String configKey, Boolean getLkg, Boolean checkPermission, Boolean getRuntimeObject, Boolean requestIsHere, Object& result, Object& resultRuntimeObject)
+   at System.Configuration.BaseConfigurationRecord.GetSection(String configKey)
+   at System.Configuration.ClientConfigurationSystem.System.Configuration.Internal.IInternalConfigSystem.GetSection(String sectionName)
+   at System.Configuration.ConfigurationManager.GetSection(String sectionName)
+   at MySynch.Q.Sender.Publisher..ctor() in c:\Code\m\MySynch.Q\MySynch.Q.Sender\Publisher.cs:line 21
+   at MySynch.Q.Sender.SenderService..ctor() in c:\Code\m\MySynch.Q\MySynch.Q.Sender\SenderService.cs:line 25
+   at MySynch.Q.Sender.Program.Main() in c:\Code\m\MySynch.Q\MySynch.Q.Sender\Program.cs:line 18
+, 2015-04-15 22:28:03,693
+[(null)] , System.Configuration.ConfigurationErrorsException: Unrecognized attribute 'feedbackQueue'. Note that attribute names are case-sensitive. (C:\Code\m\MySynch.Q\MySynch.Q.Sender\bin\Debug\MySynch.Q.Sender.exe.Config line 8)
+   at System.Configuration.BaseConfigurationRecord.EvaluateOne(String[] keys, SectionInput input, Boolean isTrusted, FactoryRecord factoryRecord, SectionRecord sectionRecord, Object parentResult)
+   at System.Configuration.BaseConfigurationRecord.Evaluate(FactoryRecord factoryRecord, SectionRecord sectionRecord, Object parentResult, Boolean getLkg, Boolean getRuntimeObject, Object& result, Object& resultRuntimeObject)
+   at System.Configuration.BaseConfigurationRecord.GetSectionRecursive(String configKey, Boolean getLkg, Boolean checkPermission, Boolean getRuntimeObject, Boolean requestIsHere, Object& result, Object& resultRuntimeObject)
+   at System.Configuration.BaseConfigurationRecord.GetSectionRecursive(String configKey, Boolean getLkg, Boolean checkPermission, Boolean getRuntimeObject, Boolean requestIsHere, Object& result, Object& resultRuntimeObject)
+   at System.Configuration.BaseConfigurationRecord.GetSectionRecursive(String configKey, Boolean getLkg, Boolean checkPermission, Boolean getRuntimeObject, Boolean requestIsHere, Object& result, Object& resultRuntimeObject)
+   at System.Configuration.BaseConfigurationRecord.GetSection(String configKey)
+   at System.Configuration.ClientConfigurationSystem.System.Configuration.Internal.IInternalConfigSystem.GetSection(String sectionName)
+   at System.Configuration.ConfigurationManager.GetSection(String sectionName)
+   at MySynch.Q.Sender.Publisher..ctor() in c:\Code\m\MySynch.Q\MySynch.Q.Sender\Publisher.cs:line 21
+   at MySynch.Q.Sender.SenderService..ctor() in c:\Code\m\MySynch.Q\MySynch.Q.Sender\SenderService.cs:line 25
+   at MySynch.Q.Sender.Program.Main() in c:\Code\m\MySynch.Q\MySynch.Q.Sender\Program.cs:line 18
+, 2015-04-15 22:31:13,457

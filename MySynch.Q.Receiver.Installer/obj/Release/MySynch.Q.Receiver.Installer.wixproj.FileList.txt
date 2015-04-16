@@ -5,3 +5,6 @@ C:\Code\Sciendo\MySynch.Q\MySynch.Q\MySynch.Q.Receiver.Installer\bin\Release\MyS
 obj\Release\MySynch.Q.Receiver.Installer.wixproj.BindContentsFileListnull.txt
 obj\Release\MySynch.Q.Receiver.Installer.wixproj.BindOutputsFileListnull.txt
 obj\Release\MySynch.Q.Receiver.Installer.wixproj.BindBuiltOutputsFileListnull.txt
+C:\Code\m\MySynch.Q\MySynch.Q.Receiver.Installer\bin\Release\cab1.cab
+C:\Code\m\MySynch.Q\MySynch.Q.Receiver.Installer\bin\Release\MySynch.Q.Receiver.Installer.msi
+C:\Code\m\MySynch.Q\MySynch.Q.Receiver.Installer\bin\Release\MySynch.Q.Receiver.Installer.wixpdb

@@ -5,3 +5,9 @@ Parameter name: bufferSize
    at System.IO.File.Create(String path, Int32 bufferSize)
    at MySynch.Q.Receiver.MessageApplyer.ApplyUpSert(String sourceRootPath, String name, Byte[] body) in c:\Code\Sciendo\MySynch.Q\MySynch.Q\MySynch.Q.Receiver\MessageApplyer.cs:line 50
 , 2014-11-23 18:49:03,867
+[(null)] , RabbitMQ.Client.Exceptions.OperationInterruptedException: The AMQP operation was interrupted: AMQP close-reason, initiated by Peer, code=406, text="PRECONDITION_FAILED - inequivalent arg 'auto_delete' for queue 'queue1' in vhost '/': received 'true' but current is 'false'", classId=50, methodId=10, cause=
+   at RabbitMQ.Client.Impl.SimpleBlockingRpcContinuation.GetReply()
+   at RabbitMQ.Client.Impl.ModelBase.QueueDeclare(String queue, Boolean passive, Boolean durable, Boolean exclusive, Boolean autoDelete, IDictionary`2 arguments)
+   at RabbitMQ.Client.Impl.ModelBase.QueueDeclare(String queue, Boolean durable, Boolean exclusive, Boolean autoDelete, IDictionary`2 arguments)
+   at MySynch.Q.Receiver.ReceiverQueue.StartChannel() in c:\Code\m\MySynch.Q\MySynch.Q.Receiver\ReceiverQueue.cs:line 23
+, 2015-04-15 19:06:57,583
