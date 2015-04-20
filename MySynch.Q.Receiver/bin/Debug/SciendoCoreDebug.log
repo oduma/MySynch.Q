@@ -1209,3 +1209,54 @@
 2015-04-16 08:07:29,389 Thread: [14] - [MySynch.Q.Receiver.ReceiverQueue.StopChannels] - queue1 Channel shutted down.
 2015-04-16 08:07:29,394 Thread: [14] - [MySynch.Q.Receiver.Consummer.Stop] - Publisher Stopped.
 2015-04-16 08:07:29,398 Thread: [14] - [MySynch.Q.Receiver.ReceiverService.OnStop] - Receiver stopped.
+2015-04-17 22:27:55,823 Thread: [1] - [MySynch.Q.Receiver.ReceiverService..ctor] - Constructing Receiver...
+2015-04-17 22:27:55,863 Thread: [1] - [MySynch.Q.Receiver.Consummer..ctor] - Constructing Consummer...
+2015-04-17 22:27:55,873 Thread: [1] - [MySynch.Q.Receiver.Consummer..ctor] - Consummer Constructed.
+2015-04-17 22:27:55,878 Thread: [1] - [MySynch.Q.Receiver.ReceiverService..ctor] - Receiver constructed.
+2015-04-17 22:27:55,884 Thread: [6] - [MySynch.Q.Receiver.ReceiverService.OnStart] - Starting Receiver...
+2015-04-17 22:27:55,890 Thread: [6] - [MySynch.Q.Receiver.Consummer.Initialize] - Initializing Consummer ...
+2015-04-17 22:27:55,898 Thread: [6] - [MySynch.Q.Receiver.ReceiverQueue.StartChannels] - queue1 Channel starting up...
+2015-04-17 22:27:55,972 Thread: [6] - [MySynch.Q.Receiver.ReceiverQueue.StartChannels] - queue1 Channel started up.
+2015-04-17 22:27:55,978 Thread: [6] - [MySynch.Q.Receiver.Consummer.Initialize] - Consummer Initialized.
+2015-04-17 22:27:55,985 Thread: [6] - [MySynch.Q.Receiver.ReceiverService.OnStart] - Receiver started.
+2015-04-17 22:27:55,985 Thread: [8] - [MySynch.Q.Receiver.Consummer.TryStart] - More: True
+2015-04-17 22:27:56,000 Thread: [8] - [MySynch.Q.Receiver.MessageApplyer.ApplyMessage] - Applying a message...
+2015-04-17 22:27:56,130 Thread: [8] - [MySynch.Q.Receiver.MessageApplyer.ApplyDelete] - Applying delete to C:\Code\m\Target of C:\Code\m\Music\S\Mr. Scruff\Ninja Tuna\Kalimba8.mp3
+2015-04-17 22:27:56,137 Thread: [8] - [MySynch.Q.Receiver.MessageApplyer.ApplyDelete] - Transformed name: C:\Code\m\Target\S\Mr. Scruff\Ninja Tuna\Kalimba8.mp3
+2015-04-17 22:27:56,144 Thread: [8] - [MySynch.Q.Receiver.MessageApplyer.ApplyMessage] - Message applied.
+2015-04-17 22:27:56,152 Thread: [8] - [MySynch.Q.Receiver.MessageApplyer.ApplyMessage] - Applying a message...
+2015-04-17 22:27:56,949 Thread: [8] - [MySynch.Q.Receiver.MessageApplyer.ApplyUpSert] - Applying upsert from C:\Code\m\Music to C:\Code\m\Target of C:\Code\m\Music\S\Mr. Scruff\Ninja Tuna\Kalimba9.mp3
+2015-04-17 22:27:56,963 Thread: [8] - [MySynch.Q.Receiver.MessageApplyer.ApplyUpSert] - Upsert applied.
+2015-04-17 22:27:56,969 Thread: [8] - [MySynch.Q.Receiver.MessageApplyer.ApplyMessage] - Message applied.
+2015-04-17 22:27:56,974 Thread: [8] - [MySynch.Q.Receiver.MessageApplyer.ApplyMessage] - Applying a message...
+2015-04-17 22:27:56,980 Thread: [8] - [MySynch.Q.Receiver.MessageApplyer.ApplyDelete] - Applying delete to C:\Code\m\Target of C:\Code\m\Music\S\Mr. Scruff\Ninja Tuna\Kalimba9.mp3
+2015-04-17 22:27:56,986 Thread: [8] - [MySynch.Q.Receiver.MessageApplyer.ApplyDelete] - Transformed name: C:\Code\m\Target\S\Mr. Scruff\Ninja Tuna\Kalimba9.mp3
+2015-04-17 22:27:56,992 Thread: [8] - [MySynch.Q.Receiver.MessageApplyer.ApplyMessage] - Message applied.
+2015-04-17 22:27:56,997 Thread: [8] - [MySynch.Q.Receiver.MessageApplyer.ApplyMessage] - Applying a message...
+2015-04-17 22:27:57,788 Thread: [8] - [MySynch.Q.Receiver.MessageApplyer.ApplyUpSert] - Applying upsert from C:\Code\m\Music to C:\Code\m\Target of C:\Code\m\Music\S\Mr. Scruff\Ninja Tuna\Kalimbaa.mp3
+2015-04-17 22:27:57,798 Thread: [8] - [MySynch.Q.Receiver.MessageApplyer.ApplyUpSert] - Upsert applied.
+2015-04-17 22:27:57,804 Thread: [8] - [MySynch.Q.Receiver.MessageApplyer.ApplyMessage] - Message applied.
+2015-04-17 22:27:57,808 Thread: [8] - [MySynch.Q.Receiver.MessageApplyer.ApplyMessage] - Applying a message...
+2015-04-17 22:27:57,813 Thread: [8] - [MySynch.Q.Receiver.MessageApplyer.ApplyDelete] - Applying delete to C:\Code\m\Target of C:\Code\m\Music\S\Mr. Scruff\Ninja Tuna\Kalimbaa.mp3
+2015-04-17 22:27:57,818 Thread: [8] - [MySynch.Q.Receiver.MessageApplyer.ApplyDelete] - Transformed name: C:\Code\m\Target\S\Mr. Scruff\Ninja Tuna\Kalimbaa.mp3
+2015-04-17 22:27:57,824 Thread: [8] - [MySynch.Q.Receiver.MessageApplyer.ApplyMessage] - Message applied.
+2015-04-17 22:27:57,829 Thread: [8] - [MySynch.Q.Receiver.MessageApplyer.ApplyMessage] - Applying a message...
+2015-04-17 22:27:58,673 Thread: [8] - [MySynch.Q.Receiver.MessageApplyer.ApplyUpSert] - Applying upsert from C:\Code\m\Music to C:\Code\m\Target of C:\Code\m\Music\S\Mr. Scruff\Ninja Tuna\Kalimbab.mp3
+2015-04-17 22:27:58,683 Thread: [8] - [MySynch.Q.Receiver.MessageApplyer.ApplyUpSert] - Upsert applied.
+2015-04-17 22:27:58,688 Thread: [8] - [MySynch.Q.Receiver.MessageApplyer.ApplyMessage] - Message applied.
+2015-04-17 22:27:58,693 Thread: [8] - [MySynch.Q.Receiver.MessageApplyer.ApplyMessage] - Applying a message...
+2015-04-17 22:27:58,698 Thread: [8] - [MySynch.Q.Receiver.MessageApplyer.ApplyDelete] - Applying delete to C:\Code\m\Target of C:\Code\m\Music\S\Mr. Scruff\Ninja Tuna\Kalimbab.mp3
+2015-04-17 22:27:58,703 Thread: [8] - [MySynch.Q.Receiver.MessageApplyer.ApplyDelete] - Transformed name: C:\Code\m\Target\S\Mr. Scruff\Ninja Tuna\Kalimbab.mp3
+2015-04-17 22:27:58,709 Thread: [8] - [MySynch.Q.Receiver.MessageApplyer.ApplyMessage] - Message applied.
+2015-04-17 22:27:58,714 Thread: [8] - [MySynch.Q.Receiver.MessageApplyer.ApplyMessage] - Applying a message...
+2015-04-17 22:27:59,507 Thread: [8] - [MySynch.Q.Receiver.MessageApplyer.ApplyUpSert] - Applying upsert from C:\Code\m\Music to C:\Code\m\Target of C:\Code\m\Music\S\Mr. Scruff\Ninja Tuna\Kalimbac.mp3
+2015-04-17 22:27:59,516 Thread: [8] - [MySynch.Q.Receiver.MessageApplyer.ApplyUpSert] - Upsert applied.
+2015-04-17 22:27:59,521 Thread: [8] - [MySynch.Q.Receiver.MessageApplyer.ApplyMessage] - Message applied.
+2015-04-17 22:28:12,649 Thread: [8] - [MySynch.Q.Receiver.MessageApplyer.ApplyMessage] - Applying a message...
+2015-04-17 22:28:12,655 Thread: [8] - [MySynch.Q.Receiver.MessageApplyer.ApplyDelete] - Applying delete to C:\Code\m\Target of C:\Code\m\Music\S\Mr. Scruff\Ninja Tuna\Kalimbah.mp3
+2015-04-17 22:28:12,661 Thread: [8] - [MySynch.Q.Receiver.MessageApplyer.ApplyDelete] - Transformed name: C:\Code\m\Target\S\Mr. Scruff\Ninja Tuna\Kalimbah.mp3
+2015-04-17 22:28:12,666 Thread: [8] - [MySynch.Q.Receiver.MessageApplyer.ApplyMessage] - Message applied.
+2015-04-17 22:28:12,672 Thread: [8] - [MySynch.Q.Receiver.MessageApplyer.ApplyMessage] - Applying a message...
+2015-04-17 22:28:12,679 Thread: [8] - [MySynch.Q.Receiver.MessageApplyer.ApplyDelete] - Applying delete to C:\Code\m\Target of C:\Code\m\Music\S\Mr. Scruff\Ninja Tuna\Kalimbai.mp3
+2015-04-17 22:28:12,684 Thread: [8] - [MySynch.Q.Receiver.MessageApplyer.ApplyDelete] - Transformed name: C:\Code\m\Target\S\Mr. Scruff\Ninja Tuna\Kalimbai.mp3
+2015-04-17 22:28:12,690 Thread: [8] - [MySynch.Q.Receiver.MessageApplyer.ApplyMessage] - Message applied.
