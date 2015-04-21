@@ -1,0 +1,45 @@
+﻿Uninstalling assembly 'C:\Code\m\MySynch.Q\MySynch.Q.Sender\bin\Debug\MySynch.Q.Sender.exe'.
+Affected parameters are:
+   logtoconsole = 
+   logfile = C:\Code\m\MySynch.Q\MySynch.Q.Sender\bin\Debug\MySynch.Q.Sender.InstallLog
+   assemblypath = C:\Code\m\MySynch.Q\MySynch.Q.Sender\bin\Debug\MySynch.Q.Sender.exe
+Removing EventLog source Sciendo Synch Sender (Debug).
+Warning: The source Sciendo Synch Sender (Debug) is not registered on the local machine.
+Service Sciendo Synch Sender (Debug) is being removed from the system...
+An exception occurred during the uninstallation of the System.ServiceProcess.ServiceInstaller installer.
+System.ComponentModel.Win32Exception: The specified service does not exist as an installed service
+An exception occurred while uninstalling. This exception will be ignored and the uninstall will continue. However, the application might not be fully uninstalled after the uninstall is complete.
+Installing assembly 'C:\Code\m\MySynch.Q\MySynch.Q.Sender\bin\Debug\MySynch.Q.Sender.exe'.
+Affected parameters are:
+   logtoconsole = 
+   logfile = C:\Code\m\MySynch.Q\MySynch.Q.Sender\bin\Debug\MySynch.Q.Sender.InstallLog
+   assemblypath = C:\Code\m\MySynch.Q\MySynch.Q.Sender\bin\Debug\MySynch.Q.Sender.exe
+Installing service Sciendo Synch Sender (Debug)...
+Service Sciendo Synch Sender (Debug) has been successfully installed.
+Creating EventLog source Sciendo Synch Sender (Debug) in log Application...
+Committing assembly 'C:\Code\m\MySynch.Q\MySynch.Q.Sender\bin\Debug\MySynch.Q.Sender.exe'.
+Affected parameters are:
+   logtoconsole = 
+   logfile = C:\Code\m\MySynch.Q\MySynch.Q.Sender\bin\Debug\MySynch.Q.Sender.InstallLog
+   assemblypath = C:\Code\m\MySynch.Q\MySynch.Q.Sender\bin\Debug\MySynch.Q.Sender.exe
+Uninstalling assembly 'C:\Code\m\MySynch.Q\MySynch.Q.Sender\bin\Debug\MySynch.Q.Sender.exe'.
+Affected parameters are:
+   logtoconsole = 
+   logfile = C:\Code\m\MySynch.Q\MySynch.Q.Sender\bin\Debug\MySynch.Q.Sender.InstallLog
+   assemblypath = C:\Code\m\MySynch.Q\MySynch.Q.Sender\bin\Debug\MySynch.Q.Sender.exe
+Removing EventLog source Sciendo Synch Sender (Debug).
+Service Sciendo Synch Sender (Debug) is being removed from the system...
+Service Sciendo Synch Sender (Debug) was successfully removed from the system.
+Installing assembly 'C:\Code\m\MySynch.Q\MySynch.Q.Sender\bin\Debug\MySynch.Q.Sender.exe'.
+Affected parameters are:
+   logtoconsole = 
+   logfile = C:\Code\m\MySynch.Q\MySynch.Q.Sender\bin\Debug\MySynch.Q.Sender.InstallLog
+   assemblypath = C:\Code\m\MySynch.Q\MySynch.Q.Sender\bin\Debug\MySynch.Q.Sender.exe
+Installing service Sciendo Synch Sender (Debug)...
+Service Sciendo Synch Sender (Debug) has been successfully installed.
+Creating EventLog source Sciendo Synch Sender (Debug) in log Application...
+Committing assembly 'C:\Code\m\MySynch.Q\MySynch.Q.Sender\bin\Debug\MySynch.Q.Sender.exe'.
+Affected parameters are:
+   logtoconsole = 
+   logfile = C:\Code\m\MySynch.Q\MySynch.Q.Sender\bin\Debug\MySynch.Q.Sender.InstallLog
+   assemblypath = C:\Code\m\MySynch.Q\MySynch.Q.Sender\bin\Debug\MySynch.Q.Sender.exe

@@ -1,13 +1,11 @@
 ﻿using System.ComponentModel;
+using System.Configuration;
 using System.ServiceProcess;
 namespace MySynch.Q.Sender
 {
 
     partial class SenderInstaller
     {
-
-        private ServiceProcessInstaller process;
-        private ServiceInstaller service;
 
 
         /// <summary>
@@ -37,20 +35,6 @@ namespace MySynch.Q.Sender
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
-
-            process = new ServiceProcessInstaller();
-            process.Account = ServiceAccount.LocalSystem;
-            service = new ServiceInstaller();
-#if (DEBUG)
-            service.ServiceName = "MySynch.Q.Sender.Debug";
-#endif
-#if (!DEBUG)
-            service.ServiceName = "MySynch.Q.Sender";
-#endif
-            Installers.Add(process);
-            Installers.Add(service);
-
-
         }
 
         #endregion
