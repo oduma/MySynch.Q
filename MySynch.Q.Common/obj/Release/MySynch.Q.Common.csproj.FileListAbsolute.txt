@@ -13,3 +13,11 @@ C:\Code\m\MySynch.Q\MySynch.Q.Common\bin\Release\RabbitMQ.Client.dll
 C:\Code\m\MySynch.Q\MySynch.Q.Common\bin\Release\RabbitMQ.Client.xml
 C:\Code\m\MySynch.Q\MySynch.Q.Common\bin\Release\Newtonsoft.Json.dll
 C:\Code\m\MySynch.Q\MySynch.Q.Common\bin\Release\Newtonsoft.Json.xml
+C:\Code\Sciendo\MySynch.Q\MySynch.Q\MySynch.Q.Common\bin\Release\log4net.dll
+C:\Code\Sciendo\MySynch.Q\MySynch.Q\MySynch.Q.Common\bin\Release\Newtonsoft.Json.dll
+C:\Code\Sciendo\MySynch.Q\MySynch.Q\MySynch.Q.Common\bin\Release\RabbitMQ.Client.dll
+C:\Code\Sciendo\MySynch.Q\MySynch.Q\MySynch.Q.Common\bin\Release\Sciendo.Common.dll
+C:\Code\Sciendo\MySynch.Q\MySynch.Q\MySynch.Q.Common\bin\Release\log4net.xml
+C:\Code\Sciendo\MySynch.Q\MySynch.Q\MySynch.Q.Common\bin\Release\Newtonsoft.Json.xml
+C:\Code\Sciendo\MySynch.Q\MySynch.Q\MySynch.Q.Common\bin\Release\RabbitMQ.Client.xml
+C:\Code\Sciendo\MySynch.Q\MySynch.Q\MySynch.Q.Common\obj\Release\MySynch.Q.Common.csprojResolveAssemblyReference.cache

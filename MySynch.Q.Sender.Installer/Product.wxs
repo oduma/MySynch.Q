@@ -8,6 +8,7 @@
     <Property Id="SRCQUEUEHOSTNAME" Value="localhost"/>
     <Property Id="MINMEM" Value="0"/>
     
+    
     <MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
 		<MediaTemplate />
     <Condition Message='This setup requires the .NET Framework 4.5 installed.'>
