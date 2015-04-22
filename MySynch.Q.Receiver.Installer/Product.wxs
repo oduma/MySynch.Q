@@ -5,6 +5,7 @@
     <PropertyRef Id="NETFRAMEWORK45"></PropertyRef>
     <Property Id="RCVROOTDIRVAL" Value="C:\"/>
     <Property Id="WIXUI_INSTALLDIR" Value="INSTALLLOCATION" />
+    <Property Id="RCVQUEUEHOSTNAME" Value="localhost"/>
 
     <MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
     <MediaTemplate />
@@ -36,6 +37,11 @@
                       ElementPath="//receiver/@localRootFolder"
                       Value="[RCVROOTDIRVAL]"
                       File="[#MySynch.Q.Receiver.exe.config]" />
+        <util:XmlFile Id="SetQueueHostName"
+                        Action="setValue"
+                        ElementPath="//receiver/@hostName"
+                        Value="[RCVQUEUEHOSTNAME]"
+                        File="[#MySynch.Q.Receiver.exe.config]" />
       </Component>
       <Component Id="MySynch.Q.Receiver.Service" Directory="INSTALLLOCATION" Guid="{28739BAE-104D-4A5C-B765-46FCDA963C6C}">
         <File Id="MySynch.Q.Receiver.exe" Name="MySynch.Q.Receiver.exe" Source="..\receiver\MySynch.Q.Receiver.exe" Vital="yes" KeyPath="yes"/>
@@ -45,7 +51,7 @@
           Vital="yes"
           Name="MySynch.Q.Receiver"
           DisplayName="MySynch Queue Receiver"
-          Description="Populates folder [RCVROOTDIRVAL] based on any changes from a queue"
+          Description="Populates folder [RCVROOTDIRVAL] based on any changes from the queue: queue1@[RCVQUEUEHOSTNAME]."
           Start="auto"
           Account="NT Authority\NetworkService"
           ErrorControl="ignore"
@@ -137,6 +143,9 @@
           <Publish Property="VALTEMP" Value="[RCVROOTDIRVAL]" Order="1">1</Publish>
           <Publish Event="SpawnDialog" Value="SrcDirDlg" Order="2">1</Publish>
         </Control>
+        <!-- Queue Host Name prompt-->
+        <Control Id="QueueHostNameLabel" Type ="Text" X="45" Y="103" Width="100" Height="15" TabSkip="no" Text="&amp;Queue Host Name:"/>
+        <Control Id="QueueHostNameValue" Type ="Edit" X="45" Y="118" Width="215" Height="18" Property="RCVQUEUEHOSTNAME"/>
         <!-- Back button -->
         <Control Id="Back" Type="PushButton" X="180" Y="243"
                 Width="56" Height="17" Text="&amp;Back">

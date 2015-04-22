@@ -5,6 +5,8 @@
     <PropertyRef Id="NETFRAMEWORK45"></PropertyRef>
     <Property Id="SRCROOTDIRVAL" Value="C:\"/>
     <Property Id="WIXUI_INSTALLDIR" Value="INSTALLLOCATION" />
+    <Property Id="SRCQUEUEHOSTNAME" Value="localhost"/>
+    <Property Id="MINMEM" Value="0"/>
     
     <MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
 		<MediaTemplate />
@@ -42,6 +44,17 @@
                       ElementPath="//sender/@localRootFolder"
                       Value="[SRCROOTDIRVAL]"
                       File="[#MySynch.Q.Sender.exe.config]" />
+        <util:XmlFile Id="SetQueueHostName"
+                Action="setValue"
+                ElementPath="//sender/queues/add/@hostName"
+                Value="[SRCQUEUEHOSTNAME]"
+                File="[#MySynch.Q.Sender.exe.config]" />
+        <util:XmlFile Id="SetMinMemory"
+                      Action="setValue"
+                      ElementPath="//sender/@minMem"
+                      Value="[MINMEM]"
+                      File="[#MySynch.Q.Sender.exe.config]" />
+
       </Component>
       <Component Id="MySynch.Q.Sender.Service" Directory="INSTALLLOCATION" Guid="{A57774C4-F4E5-4E14-9B4B-09C8BD6EFCAC}">
         <File Id="MySynch.Q.Sender.exe" Name="MySynch.Q.Sender.exe" Source="..\sender\MySynch.Q.Sender.exe" Vital="yes" KeyPath="yes"/>
@@ -51,7 +64,7 @@
           Vital="yes"
           Name="MySynch.Q.Sender"
           DisplayName="MySynch Queue Sender"
-          Description="Monitores folder [SRCROOTDIRVAL] and publishes any changes to a number of queues"
+          Description="Monitores folder [SRCROOTDIRVAL] and publishes any changes to all the queues at the *@[SRCQUEUEHOSTNAME]."
           Start="auto"
           Account="NT Authority\NetworkService"
           ErrorControl="ignore"
@@ -143,6 +156,13 @@
           <Publish Property="VALTEMP" Value="[SRCROOTDIRVAL]" Order="1">1</Publish>
           <Publish Event="SpawnDialog" Value="SrcDirDlg" Order="2">1</Publish>
         </Control>
+        <!-- Queue Host Name prompt-->
+        <Control Id="QueueHostNameLabel" Type ="Text" X="45" Y="103" Width="100" Height="15" TabSkip="no" Text="&amp;Queue Host Name:"/>
+        <Control Id="QueueHostNameValue" Type ="Edit" X="45" Y="118" Width="215" Height="18" Property="SRCQUEUEHOSTNAME"/>
+
+        <!-- Min Mem prompt-->
+        <Control Id="MinMemLabel" Type ="Text" X="45" Y="136" Width="100" Height="15" TabSkip="no" Text="&amp;Minimum memory on the Queue Host:"/>
+        <Control Id="MinMemValue" Type ="Edit" X="45" Y="151" Width="215" Height="18" Integer="yes" Property="MINMEM"/>
         
         <!-- Back button -->
         <Control Id="Back" Type="PushButton" X="180" Y="243"
