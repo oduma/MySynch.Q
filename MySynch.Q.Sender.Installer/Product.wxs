@@ -5,6 +5,8 @@
     <PropertyRef Id="NETFRAMEWORK45"></PropertyRef>
     <Property Id="SRCROOTDIRVAL" Value="C:\"/>
     <Property Id="WIXUI_INSTALLDIR" Value="INSTALLLOCATION" />
+    <Property Id="SRCQUEUEHOSTNAME" Value="localhost"/>
+    <Property Id="MINMEM" Value="0"/>
     
     <MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
 		<MediaTemplate />
@@ -26,6 +28,15 @@
         <Component Id="cmpF31C7040A3E2641BA02B7469779D9AFB" Directory="INSTALLLOCATION" Guid="{939048D8-EDAF-4868-A636-1D43B4101713}">
           <File Id="fil67F4776D7542131532AF6885E3E84C7D" KeyPath="yes" Source="..\sender\Sciendo.Common.dll" />
         </Component>
+      <Component Id="cmpBF88D0995D4B4477B5CC50EFCC0669B5" Directory="INSTALLLOCATION" Guid="{BF88D099-5D4B-4477-B5CC-50EFCC0669B5}">
+        <File Id="filBF88D0995D4B4477B5CC50EFCC0669B5" KeyPath="yes" Source="..\sender\Newtonsoft.Json.dll" />
+      </Component>
+      <Component Id="cmp304E3306A1574B33AACC7019DDCB7A7D" Directory="INSTALLLOCATION" Guid="{304E3306-A157-4B33-AACC-7019DDCB7A7D}">
+        <File Id="fil304E3306A1574B33AACC7019DDCB7A7D" KeyPath="yes" Source="..\sender\RabbitMQ.Client.dll" />
+      </Component>
+      <Component Id="cmp287848F0AB75467089B91924621826CB" Directory="INSTALLLOCATION" Guid="{287848F0-AB75-4670-89B9-1924621826CB}">
+        <File Id="fil287848F0AB75467089B91924621826CB" KeyPath="yes" Source="..\sender\System.Net.Http.Formatting.dll" />
+      </Component>
       <Component Id="MySynch.Q.Sender.exe.config" Directory="INSTALLLOCATION" Guid="{7C74FEB9-2A53-4E73-86A9-C1D001FEAAF5}">
         <File Id="MySynch.Q.Sender.exe.config" KeyPath="yes" Source="..\sender\MySynch.Q.Sender.exe.config" />
         <util:XmlFile Id="SetSenderRootFolder"
@@ -33,6 +44,17 @@
                       ElementPath="//sender/@localRootFolder"
                       Value="[SRCROOTDIRVAL]"
                       File="[#MySynch.Q.Sender.exe.config]" />
+        <util:XmlFile Id="SetQueueHostName"
+                Action="setValue"
+                ElementPath="//sender/queues/add/@hostName"
+                Value="[SRCQUEUEHOSTNAME]"
+                File="[#MySynch.Q.Sender.exe.config]" />
+        <util:XmlFile Id="SetMinMemory"
+                      Action="setValue"
+                      ElementPath="//sender/@minMem"
+                      Value="[MINMEM]"
+                      File="[#MySynch.Q.Sender.exe.config]" />
+
       </Component>
       <Component Id="MySynch.Q.Sender.Service" Directory="INSTALLLOCATION" Guid="{A57774C4-F4E5-4E14-9B4B-09C8BD6EFCAC}">
         <File Id="MySynch.Q.Sender.exe" Name="MySynch.Q.Sender.exe" Source="..\sender\MySynch.Q.Sender.exe" Vital="yes" KeyPath="yes"/>
@@ -42,7 +64,7 @@
           Vital="yes"
           Name="MySynch.Q.Sender"
           DisplayName="MySynch Queue Sender"
-          Description="Monitores folder [SRCROOTDIRVAL] and publishes any changes to a number of queues"
+          Description="Monitores folder [SRCROOTDIRVAL] and publishes any changes to all the queues at the *@[SRCQUEUEHOSTNAME]."
           Start="auto"
           Account="NT Authority\NetworkService"
           ErrorControl="ignore"
@@ -50,6 +72,7 @@
         </ServiceInstall>
         <ServiceControl Id="StartSenderService" Start="install" Stop="both" Remove="uninstall" Name="MySynch.Q.Sender" Wait="yes" />
       </Component>
+      <ComponentRef Id="LOGS"/>
     </Feature>
   </Product>
 
@@ -72,6 +95,21 @@
         </Directory>
       </Directory>
       <Directory Id="DesktopFolder" Name="Desktop" />
+      <Directory Id="LOGS" Name="Logs">
+        <Directory Id="SciendoLogs" Name ="Sciendo">
+          <Directory Id="MySynch.Q.Logs" Name="MySynch.Q">
+            <Directory Id ="Sender.Logs" Name="Sender">
+              <Directory Id="Release.Logs" Name="Release">
+                <Component Id="LOGS" Guid="{2910639A-CC21-40C0-9B92-62A2BF55AEC3}"
+                SharedDllRefCount="no" KeyPath="no" NeverOverwrite="no" Permanent="no" Transitive="no"
+                Win64="no" Location="either">
+                  <CreateFolder/>
+                </Component>
+              </Directory>
+            </Directory>
+          </Directory>
+        </Directory>
+      </Directory>
     </Directory>
     <UI Id="MyWixUI">
       <TextStyle Id="WixUI_Font_Normal" FaceName="Tahoma" Size="8" />
@@ -118,6 +156,14 @@
           <Publish Property="VALTEMP" Value="[SRCROOTDIRVAL]" Order="1">1</Publish>
           <Publish Event="SpawnDialog" Value="SrcDirDlg" Order="2">1</Publish>
         </Control>
+        <!-- Queue Host Name prompt-->
+        <Control Id="QueueHostNameLabel" Type ="Text" X="45" Y="103" Width="100" Height="15" TabSkip="no" Text="&amp;Queue Host Name:"/>
+        <Control Id="QueueHostNameValue" Type ="Edit" X="45" Y="118" Width="215" Height="18" Property="SRCQUEUEHOSTNAME"/>
+
+        <!-- Min Mem prompt-->
+        <Control Id="MinMemLabel" Type ="Text" X="45" Y="136" Width="100" Height="15" TabSkip="no" Text="&amp;Minimum memory on the Queue Host:"/>
+        <Control Id="MinMemValue" Type ="Edit" X="45" Y="151" Width="215" Height="18" Integer="yes" Property="MINMEM"/>
+        
         <!-- Back button -->
         <Control Id="Back" Type="PushButton" X="180" Y="243"
                 Width="56" Height="17" Text="&amp;Back">

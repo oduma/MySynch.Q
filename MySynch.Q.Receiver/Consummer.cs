@@ -1,4 +1,5 @@
-﻿using RabbitMQ.Client.Events;
+﻿using MySynch.Q.Common.Contracts;
+using RabbitMQ.Client.Events;
 using Sciendo.Common.Logging;
 using System;
 using System.Collections.Generic;
@@ -6,6 +7,7 @@ using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading;
+using Sciendo.Common.Serialization;
 
 namespace MySynch.Q.Receiver
 {
@@ -35,7 +37,7 @@ namespace MySynch.Q.Receiver
             try
             {
                 LoggingManager.Debug("Initializing Consummer ...");
-                _receiverQueue.StartChannel();
+                _receiverQueue.StartChannels();
                 LoggingManager.Debug("Consummer Initialized.");
             }
             catch (Exception ex)
@@ -50,7 +52,7 @@ namespace MySynch.Q.Receiver
             LoggingManager.Debug("Stoping Consumer...");
             More = false;
             Thread.Sleep(2000);
-            _receiverQueue.StopChannel();
+            _receiverQueue.StopChannels();
             LoggingManager.Debug("Publisher Stopped.");
         }
 
@@ -58,6 +60,7 @@ namespace MySynch.Q.Receiver
         {
             var messageApplyer = new MessageApplyer(_rootPath);
             More = true;
+            LoggingManager.Debug("More: " + More);
             while(More)
             {
                 messageApplyer.ApplyMessage(((BasicDeliverEventArgs)_receiverQueue.Consumer.Queue.Dequeue()).Body);

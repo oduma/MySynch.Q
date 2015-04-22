@@ -1,0 +1,224 @@
+[(null)] , RabbitMQ.Client.Exceptions.BrokerUnreachableException: None of the specified endpoints were reachable ---> RabbitMQ.Client.Exceptions.ConnectFailureException: Connection failed ---> System.Net.Sockets.SocketException: No such host is known
+   at System.Net.Sockets.Socket.EndConnect(IAsyncResult asyncResult)
+   at System.Net.Sockets.TcpClient.EndConnect(IAsyncResult asyncResult)
+   at RabbitMQ.Client.Impl.SocketFrameHandler.Connect(TcpClient socket, AmqpTcpEndpoint endpoint, Int32 timeout)
+   --- End of inner exception stack trace ---
+   at RabbitMQ.Client.Impl.SocketFrameHandler.Connect(TcpClient socket, AmqpTcpEndpoint endpoint, Int32 timeout)
+   at RabbitMQ.Client.Impl.SocketFrameHandler..ctor(AmqpTcpEndpoint endpoint, Func`2 socketFactory, Int32 timeout)
+   at RabbitMQ.Client.Framing.Impl.ProtocolBase.CreateFrameHandler(AmqpTcpEndpoint endpoint, Func`2 socketFactory, Int32 timeout)
+   at RabbitMQ.Client.ConnectionFactory.CreateFrameHandler()
+   at RabbitMQ.Client.ConnectionFactory.CreateConnection()
+   --- End of inner exception stack trace ---
+   at RabbitMQ.Client.ConnectionFactory.CreateConnection()
+   at MySynch.Q.Sender.SenderQueue.StartChannel(ConnectionFactory connectionFactory) in c:\Code\m\MySynch.Q\MySynch.Q.Sender\SenderQueue.cs:line 25
+, 2015-04-15 18:25:25,361
+[(null)] , RabbitMQ.Client.Exceptions.BrokerUnreachableException: None of the specified endpoints were reachable ---> RabbitMQ.Client.Exceptions.ConnectFailureException: Connection failed ---> System.Net.Sockets.SocketException: No such host is known
+   at System.Net.Sockets.Socket.EndConnect(IAsyncResult asyncResult)
+   at System.Net.Sockets.TcpClient.EndConnect(IAsyncResult asyncResult)
+   at RabbitMQ.Client.Impl.SocketFrameHandler.Connect(TcpClient socket, AmqpTcpEndpoint endpoint, Int32 timeout)
+   --- End of inner exception stack trace ---
+   at RabbitMQ.Client.Impl.SocketFrameHandler.Connect(TcpClient socket, AmqpTcpEndpoint endpoint, Int32 timeout)
+   at RabbitMQ.Client.Impl.SocketFrameHandler..ctor(AmqpTcpEndpoint endpoint, Func`2 socketFactory, Int32 timeout)
+   at RabbitMQ.Client.Framing.Impl.ProtocolBase.CreateFrameHandler(AmqpTcpEndpoint endpoint, Func`2 socketFactory, Int32 timeout)
+   at RabbitMQ.Client.ConnectionFactory.CreateFrameHandler()
+   at RabbitMQ.Client.ConnectionFactory.CreateConnection()
+   --- End of inner exception stack trace ---
+   at RabbitMQ.Client.ConnectionFactory.CreateConnection()
+   at MySynch.Q.Sender.SenderQueue.StartChannel(ConnectionFactory connectionFactory) in c:\Code\m\MySynch.Q\MySynch.Q.Sender\SenderQueue.cs:line 25
+, 2015-04-15 18:30:13,520
+[(null)] , RabbitMQ.Client.Exceptions.OperationInterruptedException: The AMQP operation was interrupted: AMQP close-reason, initiated by Peer, code=406, text="PRECONDITION_FAILED - inequivalent arg 'auto_delete' for queue 'queue1' in vhost '/': received 'true' but current is 'false'", classId=50, methodId=10, cause=
+   at RabbitMQ.Client.Impl.SimpleBlockingRpcContinuation.GetReply()
+   at RabbitMQ.Client.Impl.ModelBase.QueueDeclare(String queue, Boolean passive, Boolean durable, Boolean exclusive, Boolean autoDelete, IDictionary`2 arguments)
+   at RabbitMQ.Client.Impl.ModelBase.QueueDeclare(String queue, Boolean durable, Boolean exclusive, Boolean autoDelete, IDictionary`2 arguments)
+   at MySynch.Q.Sender.SenderQueue.StartChannel(ConnectionFactory connectionFactory) in c:\Code\m\MySynch.Q\MySynch.Q.Sender\SenderQueue.cs:line 22
+, 2015-04-15 19:06:53,185
+
+
+=====================[(null)] , System.Configuration.ConfigurationErrorsException: Unrecognized attribute 'feedbackQueue'. Note that attribute names are case-sensitive. (C:\Code\m\MySynch.Q\MySynch.Q.Sender\bin\Debug\MySynch.Q.Sender.exe.Config line 8)
+   at System.Configuration.BaseConfigurationRecord.EvaluateOne(String[] keys, SectionInput input, Boolean isTrusted, FactoryRecord factoryRecord, SectionRecord sectionRecord, Object parentResult)
+   at System.Configuration.BaseConfigurationRecord.Evaluate(FactoryRecord factoryRecord, SectionRecord sectionRecord, Object parentResult, Boolean getLkg, Boolean getRuntimeObject, Object& result, Object& resultRuntimeObject)
+   at System.Configuration.BaseConfigurationRecord.GetSectionRecursive(String configKey, Boolean getLkg, Boolean checkPermission, Boolean getRuntimeObject, Boolean requestIsHere, Object& result, Object& resultRuntimeObject)
+   at System.Configuration.BaseConfigurationRecord.GetSectionRecursive(String configKey, Boolean getLkg, Boolean checkPermission, Boolean getRuntimeObject, Boolean requestIsHere, Object& result, Object& resultRuntimeObject)
+   at System.Configuration.BaseConfigurationRecord.GetSectionRecursive(String configKey, Boolean getLkg, Boolean checkPermission, Boolean getRuntimeObject, Boolean requestIsHere, Object& result, Object& resultRuntimeObject)
+   at System.Configuration.BaseConfigurationRecord.GetSection(String configKey)
+   at System.Configuration.ClientConfigurationSystem.System.Configuration.Internal.IInternalConfigSystem.GetSection(String sectionName)
+   at System.Configuration.ConfigurationManager.GetSection(String sectionName)
+   at MySynch.Q.Sender.Publisher..ctor() in c:\Code\m\MySynch.Q\MySynch.Q.Sender\Publisher.cs:line 21
+   at MySynch.Q.Sender.SenderService..ctor() in c:\Code\m\MySynch.Q\MySynch.Q.Sender\SenderService.cs:line 25
+   at MySynch.Q.Sender.Program.Main() in c:\Code\m\MySynch.Q\MySynch.Q.Sender\Program.cs:line 18
+, 2015-04-15 22:28:03,693
+[(null)] , System.Configuration.ConfigurationErrorsException: Unrecognized attribute 'feedbackQueue'. Note that attribute names are case-sensitive. (C:\Code\m\MySynch.Q\MySynch.Q.Sender\bin\Debug\MySynch.Q.Sender.exe.Config line 8)
+   at System.Configuration.BaseConfigurationRecord.EvaluateOne(String[] keys, SectionInput input, Boolean isTrusted, FactoryRecord factoryRecord, SectionRecord sectionRecord, Object parentResult)
+   at System.Configuration.BaseConfigurationRecord.Evaluate(FactoryRecord factoryRecord, SectionRecord sectionRecord, Object parentResult, Boolean getLkg, Boolean getRuntimeObject, Object& result, Object& resultRuntimeObject)
+   at System.Configuration.BaseConfigurationRecord.GetSectionRecursive(String configKey, Boolean getLkg, Boolean checkPermission, Boolean getRuntimeObject, Boolean requestIsHere, Object& result, Object& resultRuntimeObject)
+   at System.Configuration.BaseConfigurationRecord.GetSectionRecursive(String configKey, Boolean getLkg, Boolean checkPermission, Boolean getRuntimeObject, Boolean requestIsHere, Object& result, Object& resultRuntimeObject)
+   at System.Configuration.BaseConfigurationRecord.GetSectionRecursive(String configKey, Boolean getLkg, Boolean checkPermission, Boolean getRuntimeObject, Boolean requestIsHere, Object& result, Object& resultRuntimeObject)
+   at System.Configuration.BaseConfigurationRecord.GetSection(String configKey)
+   at System.Configuration.ClientConfigurationSystem.System.Configuration.Internal.IInternalConfigSystem.GetSection(String sectionName)
+   at System.Configuration.ConfigurationManager.GetSection(String sectionName)
+   at MySynch.Q.Sender.Publisher..ctor() in c:\Code\m\MySynch.Q\MySynch.Q.Sender\Publisher.cs:line 21
+   at MySynch.Q.Sender.SenderService..ctor() in c:\Code\m\MySynch.Q\MySynch.Q.Sender\SenderService.cs:line 25
+   at MySynch.Q.Sender.Program.Main() in c:\Code\m\MySynch.Q\MySynch.Q.Sender\Program.cs:line 18
+, 2015-04-15 22:31:13,457
+[(null)] , System.Configuration.ConfigurationErrorsException: The default value for the property 'minFreeMemory' has different type than the one of the property itself. (C:\Code\m\MySynch.Q\MySynch.Q.Sender\bin\Debug\MySynch.Q.Sender.exe.Config line 8)
+   at System.Configuration.BaseConfigurationRecord.EvaluateOne(String[] keys, SectionInput input, Boolean isTrusted, FactoryRecord factoryRecord, SectionRecord sectionRecord, Object parentResult)
+   at System.Configuration.BaseConfigurationRecord.Evaluate(FactoryRecord factoryRecord, SectionRecord sectionRecord, Object parentResult, Boolean getLkg, Boolean getRuntimeObject, Object& result, Object& resultRuntimeObject)
+   at System.Configuration.BaseConfigurationRecord.GetSectionRecursive(String configKey, Boolean getLkg, Boolean checkPermission, Boolean getRuntimeObject, Boolean requestIsHere, Object& result, Object& resultRuntimeObject)
+   at System.Configuration.BaseConfigurationRecord.GetSectionRecursive(String configKey, Boolean getLkg, Boolean checkPermission, Boolean getRuntimeObject, Boolean requestIsHere, Object& result, Object& resultRuntimeObject)
+   at System.Configuration.BaseConfigurationRecord.GetSectionRecursive(String configKey, Boolean getLkg, Boolean checkPermission, Boolean getRuntimeObject, Boolean requestIsHere, Object& result, Object& resultRuntimeObject)
+   at System.Configuration.BaseConfigurationRecord.GetSection(String configKey)
+   at System.Configuration.ClientConfigurationSystem.System.Configuration.Internal.IInternalConfigSystem.GetSection(String sectionName)
+   at System.Configuration.ConfigurationManager.GetSection(String sectionName)
+   at MySynch.Q.Sender.Publisher..ctor() in c:\Code\m\MySynch.Q\MySynch.Q.Sender\Publisher.cs:line 21
+   at MySynch.Q.Sender.SenderService..ctor() in c:\Code\m\MySynch.Q\MySynch.Q.Sender\SenderService.cs:line 25
+   at MySynch.Q.Sender.Program.Main() in c:\Code\m\MySynch.Q\MySynch.Q.Sender\Program.cs:line 18
+, 2015-04-17 08:41:37,115
+[(null)] , System.Configuration.ConfigurationErrorsException: The default value for the property 'minFreeMemory' has different type than the one of the property itself. (C:\Code\m\MySynch.Q\MySynch.Q.Sender\bin\Debug\MySynch.Q.Sender.exe.Config line 8)
+   at System.Configuration.BaseConfigurationRecord.EvaluateOne(String[] keys, SectionInput input, Boolean isTrusted, FactoryRecord factoryRecord, SectionRecord sectionRecord, Object parentResult)
+   at System.Configuration.BaseConfigurationRecord.Evaluate(FactoryRecord factoryRecord, SectionRecord sectionRecord, Object parentResult, Boolean getLkg, Boolean getRuntimeObject, Object& result, Object& resultRuntimeObject)
+   at System.Configuration.BaseConfigurationRecord.GetSectionRecursive(String configKey, Boolean getLkg, Boolean checkPermission, Boolean getRuntimeObject, Boolean requestIsHere, Object& result, Object& resultRuntimeObject)
+   at System.Configuration.BaseConfigurationRecord.GetSectionRecursive(String configKey, Boolean getLkg, Boolean checkPermission, Boolean getRuntimeObject, Boolean requestIsHere, Object& result, Object& resultRuntimeObject)
+   at System.Configuration.BaseConfigurationRecord.GetSectionRecursive(String configKey, Boolean getLkg, Boolean checkPermission, Boolean getRuntimeObject, Boolean requestIsHere, Object& result, Object& resultRuntimeObject)
+   at System.Configuration.BaseConfigurationRecord.GetSection(String configKey)
+   at System.Configuration.ClientConfigurationSystem.System.Configuration.Internal.IInternalConfigSystem.GetSection(String sectionName)
+   at System.Configuration.ConfigurationManager.GetSection(String sectionName)
+   at MySynch.Q.Sender.Publisher..ctor() in c:\Code\m\MySynch.Q\MySynch.Q.Sender\Publisher.cs:line 21
+   at MySynch.Q.Sender.SenderService..ctor() in c:\Code\m\MySynch.Q\MySynch.Q.Sender\SenderService.cs:line 25
+   at MySynch.Q.Sender.Program.Main() in c:\Code\m\MySynch.Q\MySynch.Q.Sender\Program.cs:line 18
+, 2015-04-17 08:47:35,037
+[(null)] , System.AggregateException: One or more errors occurred. ---> System.Net.Http.HttpRequestException: Response status code does not indicate success: 401 (Unauthorized).
+   --- End of inner exception stack trace ---
+   at System.Threading.Tasks.Task.ThrowIfExceptional(Boolean includeTaskCanceledExceptions)
+   at System.Threading.Tasks.Task`1.GetResultCore(Boolean waitCompletionNotification)
+   at System.Threading.Tasks.Task`1.get_Result()
+   at MySynch.Q.Sender.SenderQueue.TryQuery(String url) in c:\Code\m\MySynch.Q\MySynch.Q.Sender\SenderQueue.cs:line 67
+   at MySynch.Q.Sender.SenderQueue.ShouldSendMessage() in c:\Code\m\MySynch.Q\MySynch.Q.Sender\SenderQueue.cs:line 51
+   at MySynch.Q.Sender.Publisher.ShouldPublishMessage() in c:\Code\m\MySynch.Q\MySynch.Q.Sender\Publisher.cs:line 71
+   at MySynch.Q.Sender.MessageFeeder.fsWatcher_Renamed(String oldPath, String newPath) in c:\Code\m\MySynch.Q\MySynch.Q.Sender\MessageFeeder.cs:line 37
+   at MySynch.Q.Common.DirectoryMonitor.FireEvent(String path, PendingEvent evt) in c:\Code\m\MySynch.Q\MySynch.Q.Common\DirectoryMonitor.cs:line 203
+   at MySynch.Q.Common.DirectoryMonitor.<>c__DisplayClass8.<OnTimeout>b__6(String key) in c:\Code\m\MySynch.Q\MySynch.Q.Common\DirectoryMonitor.cs:line 162
+   at System.Collections.Generic.List`1.ForEach(Action`1 action)
+   at MySynch.Q.Common.DirectoryMonitor.OnTimeout(Object state) in c:\Code\m\MySynch.Q\MySynch.Q.Common\DirectoryMonitor.cs:line 159
+   at System.Threading.TimerQueueTimer.CallCallbackInContext(Object state)
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state, Boolean preserveSyncCtx)
+   at System.Threading.ExecutionContext.Run(ExecutionContext executionContext, ContextCallback callback, Object state, Boolean preserveSyncCtx)
+   at System.Threading.TimerQueueTimer.CallCallback()
+   at System.Threading.TimerQueueTimer.Fire()
+   at System.Threading.TimerQueue.FireNextTimers()
+   at System.Threading.TimerQueue.AppDomainTimerCallback()
+---> (Inner Exception #0) System.Net.Http.HttpRequestException: Response status code does not indicate success: 401 (Unauthorized).<---
+
+, 2015-04-17 08:52:53,579
+[(null)] , System.FormatException: Input string was not in a correct format.
+   at System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer& number, NumberFormatInfo info, Boolean parseDecimal)
+   at System.Number.ParseInt64(String value, NumberStyles options, NumberFormatInfo numfmt)
+   at System.Convert.ToInt64(String value)
+   at MySynch.Q.Sender.SenderQueue.ShouldSendMessage() in c:\Code\m\MySynch.Q\MySynch.Q.Sender\SenderQueue.cs:line 59
+   at MySynch.Q.Sender.Publisher.ShouldPublishMessage() in c:\Code\m\MySynch.Q\MySynch.Q.Sender\Publisher.cs:line 71
+   at MySynch.Q.Sender.MessageFeeder.fsWatcher_Renamed(String oldPath, String newPath) in c:\Code\m\MySynch.Q\MySynch.Q.Sender\MessageFeeder.cs:line 37
+   at MySynch.Q.Common.DirectoryMonitor.FireEvent(String path, PendingEvent evt) in c:\Code\m\MySynch.Q\MySynch.Q.Common\DirectoryMonitor.cs:line 203
+   at MySynch.Q.Common.DirectoryMonitor.<>c__DisplayClass8.<OnTimeout>b__6(String key) in c:\Code\m\MySynch.Q\MySynch.Q.Common\DirectoryMonitor.cs:line 162
+   at System.Collections.Generic.List`1.ForEach(Action`1 action)
+   at MySynch.Q.Common.DirectoryMonitor.OnTimeout(Object state) in c:\Code\m\MySynch.Q\MySynch.Q.Common\DirectoryMonitor.cs:line 159
+   at System.Threading.TimerQueueTimer.CallCallbackInContext(Object state)
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state, Boolean preserveSyncCtx)
+   at System.Threading.ExecutionContext.Run(ExecutionContext executionContext, ContextCallback callback, Object state, Boolean preserveSyncCtx)
+   at System.Threading.TimerQueueTimer.CallCallback()
+   at System.Threading.TimerQueueTimer.Fire()
+   at System.Threading.TimerQueue.FireNextTimers()
+   at System.Threading.TimerQueue.AppDomainTimerCallback()
+, 2015-04-17 21:59:34,765
+[(null)] , System.FormatException: Input string was not in a correct format.
+   at System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer& number, NumberFormatInfo info, Boolean parseDecimal)
+   at System.Number.ParseInt64(String value, NumberStyles options, NumberFormatInfo numfmt)
+   at System.Convert.ToInt64(String value)
+   at MySynch.Q.Sender.SenderQueue.ShouldSendMessage() in c:\Code\m\MySynch.Q\MySynch.Q.Sender\SenderQueue.cs:line 59
+   at MySynch.Q.Sender.Publisher.ShouldPublishMessage() in c:\Code\m\MySynch.Q\MySynch.Q.Sender\Publisher.cs:line 71
+   at MySynch.Q.Sender.MessageFeeder.fsWatcher_Renamed(String oldPath, String newPath) in c:\Code\m\MySynch.Q\MySynch.Q.Sender\MessageFeeder.cs:line 37
+   at MySynch.Q.Common.DirectoryMonitor.FireEvent(String path, PendingEvent evt) in c:\Code\m\MySynch.Q\MySynch.Q.Common\DirectoryMonitor.cs:line 203
+   at MySynch.Q.Common.DirectoryMonitor.<>c__DisplayClass8.<OnTimeout>b__6(String key) in c:\Code\m\MySynch.Q\MySynch.Q.Common\DirectoryMonitor.cs:line 162
+   at System.Collections.Generic.List`1.ForEach(Action`1 action)
+   at MySynch.Q.Common.DirectoryMonitor.OnTimeout(Object state) in c:\Code\m\MySynch.Q\MySynch.Q.Common\DirectoryMonitor.cs:line 159
+   at System.Threading.TimerQueueTimer.CallCallbackInContext(Object state)
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state, Boolean preserveSyncCtx)
+   at System.Threading.ExecutionContext.Run(ExecutionContext executionContext, ContextCallback callback, Object state, Boolean preserveSyncCtx)
+   at System.Threading.TimerQueueTimer.CallCallback()
+   at System.Threading.TimerQueueTimer.Fire()
+   at System.Threading.TimerQueue.FireNextTimers()
+   at System.Threading.TimerQueue.AppDomainTimerCallback()
+, 2015-04-17 22:06:06,836
+[(null)] , System.FormatException: Input string was not in a correct format.
+   at System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer& number, NumberFormatInfo info, Boolean parseDecimal)
+   at System.Number.ParseInt64(String value, NumberStyles options, NumberFormatInfo numfmt)
+   at System.Convert.ToInt64(String value)
+   at MySynch.Q.Sender.SenderQueue.ShouldSendMessage() in c:\Code\m\MySynch.Q\MySynch.Q.Sender\SenderQueue.cs:line 59
+   at MySynch.Q.Sender.Publisher.ShouldPublishMessage() in c:\Code\m\MySynch.Q\MySynch.Q.Sender\Publisher.cs:line 71
+   at MySynch.Q.Sender.MessageFeeder.fsWatcher_Renamed(String oldPath, String newPath) in c:\Code\m\MySynch.Q\MySynch.Q.Sender\MessageFeeder.cs:line 37
+   at MySynch.Q.Common.DirectoryMonitor.FireEvent(String path, PendingEvent evt) in c:\Code\m\MySynch.Q\MySynch.Q.Common\DirectoryMonitor.cs:line 203
+   at MySynch.Q.Common.DirectoryMonitor.<>c__DisplayClass8.<OnTimeout>b__6(String key) in c:\Code\m\MySynch.Q\MySynch.Q.Common\DirectoryMonitor.cs:line 162
+   at System.Collections.Generic.List`1.ForEach(Action`1 action)
+   at MySynch.Q.Common.DirectoryMonitor.OnTimeout(Object state) in c:\Code\m\MySynch.Q\MySynch.Q.Common\DirectoryMonitor.cs:line 159
+   at System.Threading.TimerQueueTimer.CallCallbackInContext(Object state)
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state, Boolean preserveSyncCtx)
+   at System.Threading.ExecutionContext.Run(ExecutionContext executionContext, ContextCallback callback, Object state, Boolean preserveSyncCtx)
+   at System.Threading.TimerQueueTimer.CallCallback()
+   at System.Threading.TimerQueueTimer.Fire()
+   at System.Threading.TimerQueue.FireNextTimers()
+   at System.Threading.TimerQueue.AppDomainTimerCallback()
+, 2015-04-17 22:09:46,294
+[(null)] , System.FormatException: Input string was not in a correct format.
+   at System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer& number, NumberFormatInfo info, Boolean parseDecimal)
+   at System.Number.ParseInt64(String value, NumberStyles options, NumberFormatInfo numfmt)
+   at System.Convert.ToInt64(String value)
+   at MySynch.Q.Sender.SenderQueue.ShouldSendMessage() in c:\Code\m\MySynch.Q\MySynch.Q.Sender\SenderQueue.cs:line 59
+   at MySynch.Q.Sender.Publisher.ShouldPublishMessage() in c:\Code\m\MySynch.Q\MySynch.Q.Sender\Publisher.cs:line 71
+   at MySynch.Q.Sender.MessageFeeder.fsWatcher_Renamed(String oldPath, String newPath) in c:\Code\m\MySynch.Q\MySynch.Q.Sender\MessageFeeder.cs:line 37
+   at MySynch.Q.Common.DirectoryMonitor.FireEvent(String path, PendingEvent evt) in c:\Code\m\MySynch.Q\MySynch.Q.Common\DirectoryMonitor.cs:line 203
+   at MySynch.Q.Common.DirectoryMonitor.<>c__DisplayClass8.<OnTimeout>b__6(String key) in c:\Code\m\MySynch.Q\MySynch.Q.Common\DirectoryMonitor.cs:line 162
+   at System.Collections.Generic.List`1.ForEach(Action`1 action)
+   at MySynch.Q.Common.DirectoryMonitor.OnTimeout(Object state) in c:\Code\m\MySynch.Q\MySynch.Q.Common\DirectoryMonitor.cs:line 159
+   at System.Threading.TimerQueueTimer.CallCallbackInContext(Object state)
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state, Boolean preserveSyncCtx)
+   at System.Threading.ExecutionContext.Run(ExecutionContext executionContext, ContextCallback callback, Object state, Boolean preserveSyncCtx)
+   at System.Threading.TimerQueueTimer.CallCallback()
+   at System.Threading.TimerQueueTimer.Fire()
+   at System.Threading.TimerQueue.FireNextTimers()
+   at System.Threading.TimerQueue.AppDomainTimerCallback()
+, 2015-04-17 22:16:28,770
+[(null)] , System.FormatException: Input string was not in a correct format.
+   at System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer& number, NumberFormatInfo info, Boolean parseDecimal)
+   at System.Number.ParseInt64(String value, NumberStyles options, NumberFormatInfo numfmt)
+   at System.Convert.ToInt64(String value)
+   at MySynch.Q.Sender.SenderQueue.ShouldSendMessage() in c:\Code\m\MySynch.Q\MySynch.Q.Sender\SenderQueue.cs:line 59
+   at MySynch.Q.Sender.Publisher.ShouldPublishMessage() in c:\Code\m\MySynch.Q\MySynch.Q.Sender\Publisher.cs:line 71
+   at MySynch.Q.Sender.MessageFeeder.fsWatcher_Renamed(String oldPath, String newPath) in c:\Code\m\MySynch.Q\MySynch.Q.Sender\MessageFeeder.cs:line 37
+   at MySynch.Q.Common.DirectoryMonitor.FireEvent(String path, PendingEvent evt) in c:\Code\m\MySynch.Q\MySynch.Q.Common\DirectoryMonitor.cs:line 203
+   at MySynch.Q.Common.DirectoryMonitor.<>c__DisplayClass8.<OnTimeout>b__6(String key) in c:\Code\m\MySynch.Q\MySynch.Q.Common\DirectoryMonitor.cs:line 162
+   at System.Collections.Generic.List`1.ForEach(Action`1 action)
+   at MySynch.Q.Common.DirectoryMonitor.OnTimeout(Object state) in c:\Code\m\MySynch.Q\MySynch.Q.Common\DirectoryMonitor.cs:line 159
+   at System.Threading.TimerQueueTimer.CallCallbackInContext(Object state)
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state, Boolean preserveSyncCtx)
+   at System.Threading.ExecutionContext.Run(ExecutionContext executionContext, ContextCallback callback, Object state, Boolean preserveSyncCtx)
+   at System.Threading.TimerQueueTimer.CallCallback()
+   at System.Threading.TimerQueueTimer.Fire()
+   at System.Threading.TimerQueue.FireNextTimers()
+   at System.Threading.TimerQueue.AppDomainTimerCallback()
+, 2015-04-17 22:18:09,112
+[(null)] , System.IO.FileNotFoundException: Could not find file 'C:\Code\m\Music\S\Mr. Scruff\Ninja Tuna\Kalimbai.mp3'.
+File name: 'C:\Code\m\Music\S\Mr. Scruff\Ninja Tuna\Kalimbai.mp3'
+   at System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
+   at System.IO.FileInfo.get_Length()
+   at MySynch.Q.Sender.MessageFeeder.GetFileContent(String filePath) in c:\Code\m\MySynch.Q\MySynch.Q.Sender\MessageFeeder.cs:line 51
+   at MySynch.Q.Sender.MessageFeeder.fsWatcher_Renamed(String oldPath, String newPath) in c:\Code\m\MySynch.Q\MySynch.Q.Sender\MessageFeeder.cs:line 43
+   at MySynch.Q.Common.DirectoryMonitor.FireEvent(String path, PendingEvent evt) in c:\Code\m\MySynch.Q\MySynch.Q.Common\DirectoryMonitor.cs:line 203
+   at MySynch.Q.Common.DirectoryMonitor.<>c__DisplayClass8.<OnTimeout>b__6(String key) in c:\Code\m\MySynch.Q\MySynch.Q.Common\DirectoryMonitor.cs:line 162
+   at System.Collections.Generic.List`1.ForEach(Action`1 action)
+   at MySynch.Q.Common.DirectoryMonitor.OnTimeout(Object state) in c:\Code\m\MySynch.Q\MySynch.Q.Common\DirectoryMonitor.cs:line 159
+   at System.Threading.TimerQueueTimer.CallCallbackInContext(Object state)
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state, Boolean preserveSyncCtx)
+   at System.Threading.ExecutionContext.Run(ExecutionContext executionContext, ContextCallback callback, Object state, Boolean preserveSyncCtx)
+   at System.Threading.TimerQueueTimer.CallCallback()
+   at System.Threading.TimerQueueTimer.Fire()
+   at System.Threading.TimerQueue.FireNextTimers()
+   at System.Threading.TimerQueue.AppDomainTimerCallback()
+, 2015-04-17 22:28:12,678

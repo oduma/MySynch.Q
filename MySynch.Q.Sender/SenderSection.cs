@@ -1,16 +1,18 @@
 ﻿using MySynch.Q.Common.Configuration;
-using System;
-using System.Collections.Generic;
 using System.Configuration;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MySynch.Q.Sender
 {
     
     public class SenderSection:BaseConfigurationSection
     {
+        [ConfigurationProperty("minMem", DefaultValue = "", IsRequired = true)]
+        public string MinFreeMemory
+        {
+            get { return (string)this["minMem"]; }
+            set { this["minMem"] = value; }
+        }
+
         [ConfigurationProperty("queues")]
         public QueueElementCollection Queues
         {
@@ -81,7 +83,6 @@ namespace MySynch.Q.Sender
             get { return (string)this["password"]; }
             set { this["password"] = value; }
         }
-
     }
  
 }

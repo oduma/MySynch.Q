@@ -2,11 +2,8 @@
 using Sciendo.Common.Logging;
 using Sciendo.Common.Serialization;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace MySynch.Q.Receiver
 {
@@ -34,7 +31,6 @@ namespace MySynch.Q.Receiver
             {
                 LoggingManager.Debug("Empty message NOT applied.");
             }
-
         }
 
         private void ApplyUpSert(string sourceRootPath, string name, byte[] body)

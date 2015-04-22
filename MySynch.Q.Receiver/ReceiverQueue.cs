@@ -1,30 +1,25 @@
 ﻿using RabbitMQ.Client;
-using RabbitMQ.Client.Events;
 using Sciendo.Common.Logging;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace MySynch.Q.Receiver
 {
     public class ReceiverQueue:ReceiverSection
     {
 
-        public void StartChannel()
+        public void StartChannels()
         {
             LoggingManager.Debug(Name + " Channel starting up...");
 
             try
             {
                
-                Connection = new ConnectionFactory { HostName = HostName,UserName=UserName,Password=Password }.CreateConnection();
+                Connection = new ConnectionFactory { HostName = HostName,UserName=UserName,Password=Password}.CreateConnection();
                 Channel = Connection.CreateModel();
-                Channel.QueueDeclare(QueueName, true, false, false, null);
+                Channel.QueueDeclare(QueueName, true, false, true, null);
 
                 Consumer = new QueueingBasicConsumer(Channel);
                 Channel.BasicConsume(QueueName, true, Consumer);
-
                 LoggingManager.Debug(Name + " Channel started up.");
             }
             catch (Exception ex)
@@ -39,7 +34,7 @@ namespace MySynch.Q.Receiver
 
         public IModel Channel { get; set; }
 
-        internal void StopChannel()
+        internal void StopChannels()
         {
             LoggingManager.Debug(Name + " Channel shutting down...");
 

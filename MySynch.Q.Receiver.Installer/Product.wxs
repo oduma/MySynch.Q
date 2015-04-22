@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi" xmlns:util="http://schemas.microsoft.com/wix/UtilExtension" >
   <Product Id="*" Name="MySynch.Q.Receiver" Language="1033" Version="1.0.0.0" Manufacturer="Sciendo" UpgradeCode="{615BEC0F-01E9-47BE-9F50-E2DD72F15E61}">
-    <Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
+    <Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine"/>
     <PropertyRef Id="NETFRAMEWORK45"></PropertyRef>
     <Property Id="RCVROOTDIRVAL" Value="C:\"/>
     <Property Id="WIXUI_INSTALLDIR" Value="INSTALLLOCATION" />
+    <Property Id="RCVQUEUEHOSTNAME" Value="localhost"/>
 
     <MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
     <MediaTemplate />
@@ -26,6 +27,9 @@
       <Component Id="cmp4r" Directory="INSTALLLOCATION" Guid="{417800C8-8673-45BA-B067-0E327F6E1859}">
         <File Id="fil4r" KeyPath="yes" Source="..\receiver\Sciendo.Common.dll" />
       </Component>
+      <Component Id="cmp5r" Directory="INSTALLLOCATION" Guid="{BAA1A8B4-369A-43C7-A079-E10B4DD3030B}">
+        <File Id="fil5r" KeyPath="yes" Source="..\receiver\RabbitMQ.Client.dll" />
+      </Component>
       <Component Id="MySynch.Q.Receiver.exe.config" Directory="INSTALLLOCATION" Guid="{842915BC-03E8-4020-BC0A-FE0FC55208A6}">
         <File Id="MySynch.Q.Receiver.exe.config" KeyPath="yes" Source="..\receiver\MySynch.Q.Receiver.exe.config" />
         <util:XmlFile Id="SetReceiverRootFolder"
@@ -33,6 +37,11 @@
                       ElementPath="//receiver/@localRootFolder"
                       Value="[RCVROOTDIRVAL]"
                       File="[#MySynch.Q.Receiver.exe.config]" />
+        <util:XmlFile Id="SetQueueHostName"
+                        Action="setValue"
+                        ElementPath="//receiver/@hostName"
+                        Value="[RCVQUEUEHOSTNAME]"
+                        File="[#MySynch.Q.Receiver.exe.config]" />
       </Component>
       <Component Id="MySynch.Q.Receiver.Service" Directory="INSTALLLOCATION" Guid="{28739BAE-104D-4A5C-B765-46FCDA963C6C}">
         <File Id="MySynch.Q.Receiver.exe" Name="MySynch.Q.Receiver.exe" Source="..\receiver\MySynch.Q.Receiver.exe" Vital="yes" KeyPath="yes"/>
@@ -42,14 +51,15 @@
           Vital="yes"
           Name="MySynch.Q.Receiver"
           DisplayName="MySynch Queue Receiver"
-          Description="Populates folder [RCVROOTDIRVAL] based on any changes from a queue"
+          Description="Populates folder [RCVROOTDIRVAL] based on any changes from the queue: queue1@[RCVQUEUEHOSTNAME]."
           Start="auto"
           Account="NT Authority\NetworkService"
           ErrorControl="ignore"
           Interactive="no">
         </ServiceInstall>
-        <!--<ServiceControl Id="StartReceiverService" Start="install" Stop="both" Remove="uninstall" Name="MySynch.Q.Receiver" Wait="yes" />-->
+        <ServiceControl Id="StartReceiverService" Start="install" Stop="both" Remove="uninstall" Name="MySynch.Q.Receiver" Wait="yes" />
       </Component>
+    <ComponentRef Id="LOGS"/>
     </Feature>
   </Product>
 
@@ -72,6 +82,21 @@
         </Directory>
       </Directory>
       <Directory Id="DesktopFolder" Name="Desktop" />
+      <Directory Id="LOGS" Name="Logs">
+        <Directory Id="SciendoLogs" Name ="Sciendo">
+          <Directory Id="MySynch.Q.Logs" Name="MySynch.Q">
+            <Directory Id ="Receiver.Logs" Name="Receiver">
+              <Directory Id="Release.Logs" Name="Release">
+          <Component Id="LOGS" Guid="{FE205B80-4330-43F8-A4CD-EBBD324D62F9}"
+          SharedDllRefCount="no" KeyPath="no" NeverOverwrite="no" Permanent="no" Transitive="no"
+          Win64="no" Location="either">
+            <CreateFolder/>
+          </Component>
+              </Directory>
+            </Directory>
+          </Directory>
+        </Directory>
+      </Directory>
     </Directory>
     <UI Id="MyWixUI">
       <TextStyle Id="WixUI_Font_Normal" FaceName="Tahoma" Size="8" />
@@ -104,7 +129,7 @@
         <Control Id="BannerBitmap" Type="Bitmap" X="0" Y="0" Width="370" Height="44" TabSkip="no" Text="!(loc.BrowseDlgBannerBitmap)" />
         <Control Id="BannerLine" Type="Line" X="0" Y="44" Width="370" Height="0" />
         <Control Id="BottomLine" Type="Line" X="0" Y="234" Width="370" Height="0" />
-        <Control Id="Description" Type="Text" X="25" Y="23" Width="280" Height="15" Transparent="yes" NoPrefix="yes" Text="This is going to be used by queue sender" />
+        <Control Id="Description" Type="Text" X="25" Y="23" Width="280" Height="15" Transparent="yes" NoPrefix="yes" Text="This is going to be used by queue receiver" />
         <Control Id="Title" Type="Text" X="15" Y="6" Width="200" Height="15" Transparent="yes" NoPrefix="yes" Text="Select a folder" />
       </Dialog>
 
@@ -112,12 +137,15 @@
                Title="Settings - [ProductName]" NoMinimize="yes">
 
         <!-- Virtual Dir prompt -->
-        <Control Id="RootDirLabel" Type="Text" X="45" Y="73" Width="100" Height="15" TabSkip="no" Text="&amp;Sender Root Directory:"/>
+        <Control Id="RootDirLabel" Type="Text" X="45" Y="73" Width="100" Height="15" TabSkip="no" Text="&amp;Receiver Root Directory:"/>
         <Control Id="RootDirPathValue" Type="PathEdit" X="45" Y="85" Width="215" Height="18" Property="RCVROOTDIRVAL"/>
         <Control Id="RootDirPathButton" Type="PushButton" X="270" Y="85" Width="50" Height="17" Text="Browse">
           <Publish Property="VALTEMP" Value="[RCVROOTDIRVAL]" Order="1">1</Publish>
           <Publish Event="SpawnDialog" Value="SrcDirDlg" Order="2">1</Publish>
         </Control>
+        <!-- Queue Host Name prompt-->
+        <Control Id="QueueHostNameLabel" Type ="Text" X="45" Y="103" Width="100" Height="15" TabSkip="no" Text="&amp;Queue Host Name:"/>
+        <Control Id="QueueHostNameValue" Type ="Edit" X="45" Y="118" Width="215" Height="18" Property="RCVQUEUEHOSTNAME"/>
         <!-- Back button -->
         <Control Id="Back" Type="PushButton" X="180" Y="243"
                 Width="56" Height="17" Text="&amp;Back">

@@ -1,4 +1,5 @@
-﻿using System.ServiceProcess;
+﻿using System.Configuration;
+using System.ServiceProcess;
 namespace MySynch.Q.Receiver
 {
     partial class ReceiverInstaller
@@ -7,8 +8,9 @@ namespace MySynch.Q.Receiver
         /// Required designer variable.
         /// </summary>
         private System.ComponentModel.IContainer components = null;
-        private ServiceProcessInstaller process;
+        ServiceProcessInstaller process;
         private ServiceInstaller service;
+
 
         /// <summary> 
         /// Clean up any resources being used.
@@ -32,18 +34,6 @@ namespace MySynch.Q.Receiver
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
-
-            process = new ServiceProcessInstaller();
-            process.Account = ServiceAccount.LocalSystem;
-            service = new ServiceInstaller();
-#if (DEBUG)
-            service.ServiceName = "MySynch.Q.Receiver.Debug";
-#endif
-#if (!DEBUG)
-            service.ServiceName = "MySynch.Q.Receiver";
-#endif
-            Installers.Add(process);
-            Installers.Add(service);
 
         }
 

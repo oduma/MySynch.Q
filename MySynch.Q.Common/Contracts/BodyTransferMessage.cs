@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MySynch.Q.Common.Contracts
 {
@@ -13,5 +9,7 @@ namespace MySynch.Q.Common.Contracts
         public string Name { get; set; }
 
         public string SourceRootPath { get; set; }
+
+        public Guid MessageId { get; set; }
     }
 }

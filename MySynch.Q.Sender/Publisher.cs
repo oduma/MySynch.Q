@@ -60,6 +60,22 @@ namespace MySynch.Q.Sender
                 _messageFeeder.Initialize(_senderConfig.LocalRootFolder);
             this._messageFeeder.More = true;
             this._messageFeeder.PublishMessage = PublishMessage;
+            this._messageFeeder.ShouldPublishMessage = ShouldPublishMessage;
+        }
+
+        private bool ShouldPublishMessage()
+        {
+            LoggingManager.Debug("Should Publish Message...");
+            foreach (var senderQueue in _senderQueues.Where(q => q.Channel != null && !q.Channel.IsClosed))
+            {
+                if (!senderQueue.ShouldSendMessage(_senderConfig.MinFreeMemory))
+                {
+                    LoggingManager.Debug("Queue " + senderQueue.Name +" on " + senderQueue.HostName +" sais NO!");
+                    return false;
+                }
+            }
+            LoggingManager.Debug("All Queues can accespt messages");
+            return true;
         }
 
         internal void PublishMessage(BodyTransferMessage message)

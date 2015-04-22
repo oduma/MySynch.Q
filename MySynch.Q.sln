@@ -1,18 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.30723.0
+VisualStudioVersion = 12.0.30501.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Lib", "Lib", "{09715792-7A50-4A11-9609-7EB1DAA3D515}"
-	ProjectSection(SolutionItems) = preProject
-		Lib\log4net.dll = Lib\log4net.dll
-		Lib\log4net.xml = Lib\log4net.xml
-		..\..\..\..\Program Files (x86)\RabbitMQ\DotNetClient\bin\RabbitMQ.Client.dll = ..\..\..\..\Program Files (x86)\RabbitMQ\DotNetClient\bin\RabbitMQ.Client.dll
-		..\..\..\..\Program Files (x86)\RabbitMQ\DotNetClient\bin\RabbitMQ.Client.xml = ..\..\..\..\Program Files (x86)\RabbitMQ\DotNetClient\bin\RabbitMQ.Client.xml
-		Lib\Sciendo.Common.dll = Lib\Sciendo.Common.dll
-		Lib\Sciendo.Common.pdb = Lib\Sciendo.Common.pdb
-	EndProjectSection
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MySynch.Q.Sender", "MySynch.Q.Sender\MySynch.Q.Sender.csproj", "{3DA88B89-1B9F-4A96-B67F-316EC723A0D0}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MySynch.Q.Receiver", "MySynch.Q.Receiver\MySynch.Q.Receiver.csproj", "{198409E4-F53B-4B7C-B5E7-70E8AF6223AA}"
@@ -29,6 +19,13 @@ Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "MySynch.Q.Receiver.Installe
 	ProjectSection(ProjectDependencies) = postProject
 		{198409E4-F53B-4B7C-B5E7-70E8AF6223AA} = {198409E4-F53B-4B7C-B5E7-70E8AF6223AA}
 		{696F72F6-22A7-41EF-A57D-0876B593721E} = {696F72F6-22A7-41EF-A57D-0876B593721E}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MySynch.Q.Tests", "MySynch.Q.Tests\MySynch.Q.Tests.csproj", "{6C1C8CAC-EB5D-40CC-A11E-C9053887AD9E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{A2D2B0BD-8D2C-4B7B-BEF4-E571A4D5EE5C}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\packages.config = .nuget\packages.config
 	EndProjectSection
 EndProject
 Global
@@ -89,6 +86,16 @@ Global
 		{46C7F84F-C1C9-401E-9B9C-D28C23D4F7B6}.Release|Mixed Platforms.Build.0 = Release|x86
 		{46C7F84F-C1C9-401E-9B9C-D28C23D4F7B6}.Release|x86.ActiveCfg = Release|x86
 		{46C7F84F-C1C9-401E-9B9C-D28C23D4F7B6}.Release|x86.Build.0 = Release|x86
+		{6C1C8CAC-EB5D-40CC-A11E-C9053887AD9E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6C1C8CAC-EB5D-40CC-A11E-C9053887AD9E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6C1C8CAC-EB5D-40CC-A11E-C9053887AD9E}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{6C1C8CAC-EB5D-40CC-A11E-C9053887AD9E}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{6C1C8CAC-EB5D-40CC-A11E-C9053887AD9E}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{6C1C8CAC-EB5D-40CC-A11E-C9053887AD9E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6C1C8CAC-EB5D-40CC-A11E-C9053887AD9E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6C1C8CAC-EB5D-40CC-A11E-C9053887AD9E}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{6C1C8CAC-EB5D-40CC-A11E-C9053887AD9E}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{6C1C8CAC-EB5D-40CC-A11E-C9053887AD9E}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

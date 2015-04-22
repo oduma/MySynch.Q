@@ -29,6 +29,16 @@ namespace MySynch.Q.Sender
             {
                 Thread.Sleep(500);
             }
+            if (ShouldPublishMessage == null)
+            {
+                LoggingManager.Debug("Queue checker inactive. Will not publish anything.");
+                return;
+            }
+            while (!ShouldPublishMessage())
+            {
+                LoggingManager.Debug("Waiting 5 seconds queue is busy...");
+                Thread.Sleep(5000);
+            }
             PublishMessage(new BodyTransferMessage { Name = oldPath, Body = null,SourceRootPath=_rootPath });
             PublishMessage(new BodyTransferMessage { Name = newPath, Body = GetFileContent(newPath),SourceRootPath=_rootPath });
 
@@ -56,6 +66,16 @@ namespace MySynch.Q.Sender
             LoggingManager.Debug("A file deleted: " + path);
             if (Directory.Exists(path))
                 return;
+            if (ShouldPublishMessage == null)
+            {
+                LoggingManager.Debug("Queue checker inactive. Will not publish anything.");
+                return;
+            }
+            while (!ShouldPublishMessage())
+            {
+                LoggingManager.Debug("Waiting 5 seconds queue is busy...");
+                Thread.Sleep(5000);
+            }
             PublishMessage(new BodyTransferMessage { Name = path, Body = null, SourceRootPath = _rootPath });
         }
 
@@ -89,7 +109,17 @@ namespace MySynch.Q.Sender
             {
                 Thread.Sleep(500);
             }
+            if (ShouldPublishMessage == null)
+            {
+                LoggingManager.Debug("Queue checker inactive. Will not publish anything.");
+                return;
+            }
             //queue an update;
+            while (!ShouldPublishMessage())
+            {
+                LoggingManager.Debug("Waiting 5 seconds queue is busy...");
+                Thread.Sleep(5000);
+            }
             PublishMessage(new BodyTransferMessage { Name = path, Body = GetFileContent(path), SourceRootPath = _rootPath });
         }
 
@@ -156,6 +186,8 @@ namespace MySynch.Q.Sender
         }
 
         public Action<BodyTransferMessage> PublishMessage { get; set; }
+
+        public Func<bool> ShouldPublishMessage { get; set; } 
 
         public bool More { get; set; }
     }
