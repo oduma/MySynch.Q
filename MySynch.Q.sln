@@ -23,6 +23,11 @@ Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "MySynch.Q.Receiver.Installe
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MySynch.Q.Tests", "MySynch.Q.Tests\MySynch.Q.Tests.csproj", "{6C1C8CAC-EB5D-40CC-A11E-C9053887AD9E}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{A2D2B0BD-8D2C-4B7B-BEF4-E571A4D5EE5C}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\packages.config = .nuget\packages.config
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
