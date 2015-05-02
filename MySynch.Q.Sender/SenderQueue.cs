@@ -52,6 +52,7 @@ namespace MySynch.Q.Sender
         public bool ShouldSendMessage(string minMem)
         {
             var url = @"http://" + HostName + ":15672/api/nodes/rabbit@" + HostName;
+            LoggingManager.Debug("Using the api at: " + url);
             var nodeManagamentMessage = TryQuery(url);
             if (nodeManagamentMessage == null)
                 return false;
