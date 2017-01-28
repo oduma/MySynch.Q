@@ -1397,3 +1397,7 @@
 2015-04-20 08:26:09,694 Thread: [3] - [MySynch.Q.Receiver.ReceiverQueue.StopChannels] - queue1 Channel shutted down.
 2015-04-20 08:26:09,699 Thread: [3] - [MySynch.Q.Receiver.Consummer.Stop] - Publisher Stopped.
 2015-04-20 08:26:09,706 Thread: [3] - [MySynch.Q.Receiver.ReceiverService.OnStop] - Receiver stopped.
+2017-01-28 16:11:58,500 Thread: [1] - [MySynch.Q.Receiver.ReceiverService..ctor] - Constructing Receiver...
+2017-01-28 16:11:58,541 Thread: [1] - [MySynch.Q.Receiver.Consummer..ctor] - Constructing Consummer...
+2017-01-28 16:11:58,574 Thread: [1] - [MySynch.Q.Receiver.Consummer..ctor] - Consummer Constructed.
+2017-01-28 16:11:58,578 Thread: [1] - [MySynch.Q.Receiver.ReceiverService..ctor] - Receiver constructed.
