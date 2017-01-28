@@ -4,6 +4,7 @@ using System.Linq;
 using System.ServiceProcess;
 using System.Text;
 using System.Threading.Tasks;
+using Topshelf;
 
 namespace MySynch.Q.Receiver
 {
@@ -14,12 +15,31 @@ namespace MySynch.Q.Receiver
         /// </summary>
         static void Main()
         {
-            ServiceBase[] ServicesToRun;
-            ServicesToRun = new ServiceBase[] 
-            { 
-                new ReceiverService() 
-            };
-            ServiceBase.Run(ServicesToRun);
+            HostFactory.Run(x =>
+            {
+                x.Service<ReceiverService>(
+                    s =>
+                    {
+                        s.ConstructUsing(name => new ReceiverService());
+                        s.WhenStarted(tc => tc.Start());
+                        s.WhenStopped(tc => tc.Stop());
+                        s.WhenShutdown(tc => tc.Shutdown());
+                        s.WhenContinued(tc => tc.Continue());
+                        s.WhenPaused(tc => tc.Pause());
+                    });
+                x.RunAsLocalSystem();
+
+#if DEBUG
+                x.SetServiceName("Sciendo Synch Receiver (Debug)");
+                x.SetDisplayName("Sciendo Synch Receiver (Debug)");
+                x.SetDescription("Receives messages from  a queue and persists files to folder. (Debug)");
+#else
+                x.SetServiceName("Sciendo Synch Receiver");
+                x.SetDisplayName("Sciendo Synch Receiver");
+                x.SetDescription("Receives messages from  a queue and persists files to folder.");
+#endif
+            });
         }
     }
 }
+
