@@ -8,6 +8,7 @@ using Newtonsoft.Json;
 using RabbitMQ.Client;
 using Sciendo.Common.Logging;
 using System;
+using System.Threading;
 
 namespace MySynch.Q.Sender
 {
@@ -25,11 +26,17 @@ namespace MySynch.Q.Sender
             LoggingManager.Debug(Name + " on " + connectionFactory.HostName + " with user: " + connectionFactory.UserName + " Channel starting up...");
             try
             {
-                if(Connection==null  || !Connection.IsOpen)
-                    Connection = connectionFactory.CreateConnection();
-                if(Channel==null || Channel.IsClosed)
-                    Channel = Connection.CreateModel();
-                Channel.QueueDeclare(QueueName, true, false, true, null);
+                lock (_lock)
+                {
+                    LoggingManager.Debug("Entering lock for Thread: " + Thread.CurrentThread.ManagedThreadId);
+                    if (Connection == null || !Connection.IsOpen)
+                        Connection = connectionFactory.CreateConnection();
+                    if (Channel == null || Channel.IsClosed)
+                        Channel = Connection.CreateModel();
+                    Channel.QueueDeclare(QueueName, true, false, true, null);
+                    LoggingManager.Debug("Exiting lock for Thread: " + Thread.CurrentThread.ManagedThreadId);
+                }
+
                 LoggingManager.Debug(Name + " Channel started up.");
             }
             catch (Exception ex)
@@ -42,11 +49,15 @@ namespace MySynch.Q.Sender
         public void StopChannel()
         {
             LoggingManager.Debug(Name + " Channel shutting down...");
-
-            if (Channel != null && !Channel.IsClosed)
-                Channel.Close();
-            if (Connection != null && Connection.IsOpen)
-                Connection.Close();
+            lock (_lock)
+            {
+                LoggingManager.Debug("Entering lock for Thread: " + Thread.CurrentThread.ManagedThreadId);
+                if (Channel != null && !Channel.IsClosed)
+                    Channel.Close();
+                if (Connection != null && Connection.IsOpen)
+                    Connection.Close();
+                LoggingManager.Debug("Exeting lock for Thread: " + Thread.CurrentThread.ManagedThreadId);
+            }
             LoggingManager.Debug(Name + " Channel shutted down.");
 
         }
@@ -88,8 +99,13 @@ namespace MySynch.Q.Sender
         public void SendMessage(byte[] message)
         {
             LoggingManager.Debug("Sending message to " + Name +"...");
-            Channel.QueueDeclare(QueueName, true, false, true, null);
-            Channel.BasicPublish("", QueueName, true, null, message);
+            lock (_lock)
+            {
+                LoggingManager.Debug("Entering lock for Thread: " + Thread.CurrentThread.ManagedThreadId);
+                Channel.QueueDeclare(QueueName, true, false, true, null);
+                Channel.BasicPublish("", QueueName, true, null, message);
+                LoggingManager.Debug("Exiting lock for Thread: " + Thread.CurrentThread.ManagedThreadId);
+            }
             LoggingManager.Debug("Message sent to " + Name + ".");
         }
 
