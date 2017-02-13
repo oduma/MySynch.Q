@@ -1,18 +1,11 @@
 ﻿using Sciendo.Common.Logging;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Diagnostics;
-using System.Linq;
-using System.ServiceProcess;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace MySynch.Q.Receiver
 {
-    public partial class ReceiverService : ServiceBase
+    public partial class ReceiverService
     {
         private Consummer _receiver;
         private CancellationTokenSource _cancellationTokenSource;
@@ -21,7 +14,6 @@ namespace MySynch.Q.Receiver
         {
             LoggingManager.Debug("Constructing Receiver...");
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
-            InitializeComponent();
             _receiver = new Consummer();
             LoggingManager.Debug("Receiver constructed.");
         }
@@ -32,7 +24,7 @@ namespace MySynch.Q.Receiver
             LoggingManager.LogSciendoSystemError(e.ExceptionObject as Exception);
         }
 
-        protected override void OnStart(string[] args)
+        public void Start()
         {
             LoggingManager.Debug("Starting Receiver...");
             _receiver.Initialize();
@@ -44,7 +36,15 @@ namespace MySynch.Q.Receiver
             LoggingManager.Debug("Receiver started.");
         }
 
-        protected override void OnStop()
+        public void Stop()
+        {
+            LoggingManager.Debug("Stoping Receiver...");
+
+            _cancellationTokenSource.Cancel();
+            LoggingManager.Debug("Receiver stopped.");
+
+        }
+        public void Pause()
         {
             LoggingManager.Debug("Stoping Receiver...");
 
@@ -53,20 +53,18 @@ namespace MySynch.Q.Receiver
 
         }
 
-        protected override void OnContinue()
+        public void Continue()
         {
             LoggingManager.Debug("Starting Receiver...");
-            base.OnContinue();
             Task sendTask = new Task(_receiver.TryStart, _cancellationToken);
             sendTask.Start();
             LoggingManager.Debug("Receiver started.");
         }
 
-        protected override void OnShutdown()
+        public void Shutdown()
         {
             LoggingManager.Debug("Stoping Receiver...");
             _cancellationTokenSource.Cancel();
-            base.OnShutdown();
             LoggingManager.Debug("Receiver stopped.");
         }
     }

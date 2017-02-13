@@ -66,6 +66,8 @@ namespace MySynch.Q.Receiver
                 LoggingManager.Debug("Transformed name: " + localDeleteFileName);
                 if (File.Exists(localDeleteFileName))
                     File.Delete(localDeleteFileName);
+                if(Directory.Exists(localDeleteFileName))
+                    Directory.Delete(localDeleteFileName,true);
             }
             catch (Exception ex)
             {

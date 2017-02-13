@@ -222,3 +222,178 @@ File name: 'C:\Code\m\Music\S\Mr. Scruff\Ninja Tuna\Kalimbai.mp3'
    at System.Threading.TimerQueue.FireNextTimers()
    at System.Threading.TimerQueue.AppDomainTimerCallback()
 , 2015-04-17 22:28:12,678
+[(null)] , System.AggregateException: One or more errors occurred. ---> System.Net.Http.HttpRequestException: Response status code does not indicate success: 404 (Object Not Found).
+   --- End of inner exception stack trace ---
+   at System.Threading.Tasks.Task.ThrowIfExceptional(Boolean includeTaskCanceledExceptions)
+   at System.Threading.Tasks.Task`1.GetResultCore(Boolean waitCompletionNotification)
+   at System.Threading.Tasks.Task`1.get_Result()
+   at MySynch.Q.Sender.SenderQueue.TryQuery(String url) in C:\Code\Sciendo\MySynch.Q\MySynch.Q.Sender\SenderQueue.cs:line 77
+   at MySynch.Q.Sender.SenderQueue.ShouldSendMessage(String minMem) in C:\Code\Sciendo\MySynch.Q\MySynch.Q.Sender\SenderQueue.cs:line 56
+   at MySynch.Q.Sender.Publisher.ShouldPublishMessage() in C:\Code\Sciendo\MySynch.Q\MySynch.Q.Sender\Publisher.cs:line 83
+   at MySynch.Q.Sender.MessageFeeder.fsWatcher_Changed(String path) in C:\Code\Sciendo\MySynch.Q\MySynch.Q.Sender\MessageFeeder.cs:line 118
+   at MySynch.Q.Common.DirectoryMonitor.FireEvent(String path, PendingEvent evt) in C:\Code\Sciendo\MySynch.Q\MySynch.Q.Common\DirectoryMonitor.cs:line 193
+   at MySynch.Q.Common.DirectoryMonitor.<>c__DisplayClass22_0.<OnTimeout>b__1(String key) in C:\Code\Sciendo\MySynch.Q\MySynch.Q.Common\DirectoryMonitor.cs:line 162
+   at System.Collections.Generic.List`1.ForEach(Action`1 action)
+   at MySynch.Q.Common.DirectoryMonitor.OnTimeout(Object state) in C:\Code\Sciendo\MySynch.Q\MySynch.Q.Common\DirectoryMonitor.cs:line 159
+   at System.Threading.TimerQueueTimer.CallCallbackInContext(Object state)
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state, Boolean preserveSyncCtx)
+   at System.Threading.ExecutionContext.Run(ExecutionContext executionContext, ContextCallback callback, Object state, Boolean preserveSyncCtx)
+   at System.Threading.TimerQueueTimer.CallCallback()
+   at System.Threading.TimerQueueTimer.Fire()
+   at System.Threading.TimerQueue.FireNextTimers()
+   at System.Threading.TimerQueue.AppDomainTimerCallback()
+---> (Inner Exception #0) System.Net.Http.HttpRequestException: Response status code does not indicate success: 404 (Object Not Found).<---
+
+, 2017-02-11 12:23:51,208
+[(null)] , System.AggregateException: One or more errors occurred. ---> System.Net.Http.HttpRequestException: Response status code does not indicate success: 404 (Object Not Found).
+   --- End of inner exception stack trace ---
+   at System.Threading.Tasks.Task.ThrowIfExceptional(Boolean includeTaskCanceledExceptions)
+   at System.Threading.Tasks.Task`1.GetResultCore(Boolean waitCompletionNotification)
+   at System.Threading.Tasks.Task`1.get_Result()
+   at MySynch.Q.Sender.SenderQueue.TryQuery(String url) in C:\Code\Sciendo\MySynch.Q\MySynch.Q.Sender\SenderQueue.cs:line 77
+   at MySynch.Q.Sender.SenderQueue.ShouldSendMessage(String minMem) in C:\Code\Sciendo\MySynch.Q\MySynch.Q.Sender\SenderQueue.cs:line 56
+   at MySynch.Q.Sender.Publisher.ShouldPublishMessage() in C:\Code\Sciendo\MySynch.Q\MySynch.Q.Sender\Publisher.cs:line 83
+   at MySynch.Q.Sender.MessageFeeder.fsWatcher_Changed(String path) in C:\Code\Sciendo\MySynch.Q\MySynch.Q.Sender\MessageFeeder.cs:line 118
+   at MySynch.Q.Common.DirectoryMonitor.FireEvent(String path, PendingEvent evt) in C:\Code\Sciendo\MySynch.Q\MySynch.Q.Common\DirectoryMonitor.cs:line 193
+   at MySynch.Q.Common.DirectoryMonitor.<>c__DisplayClass22_0.<OnTimeout>b__1(String key) in C:\Code\Sciendo\MySynch.Q\MySynch.Q.Common\DirectoryMonitor.cs:line 162
+   at System.Collections.Generic.List`1.ForEach(Action`1 action)
+   at MySynch.Q.Common.DirectoryMonitor.OnTimeout(Object state) in C:\Code\Sciendo\MySynch.Q\MySynch.Q.Common\DirectoryMonitor.cs:line 159
+   at System.Threading.TimerQueueTimer.CallCallbackInContext(Object state)
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state, Boolean preserveSyncCtx)
+   at System.Threading.ExecutionContext.Run(ExecutionContext executionContext, ContextCallback callback, Object state, Boolean preserveSyncCtx)
+   at System.Threading.TimerQueueTimer.CallCallback()
+   at System.Threading.TimerQueueTimer.Fire()
+   at System.Threading.TimerQueue.FireNextTimers()
+   at System.Threading.TimerQueue.AppDomainTimerCallback()
+---> (Inner Exception #0) System.Net.Http.HttpRequestException: Response status code does not indicate success: 404 (Object Not Found).<---
+
+, 2017-02-11 12:26:05,225
+[(null)] , System.AggregateException: One or more errors occurred. ---> System.Net.Http.HttpRequestException: Response status code does not indicate success: 404 (Object Not Found).
+   --- End of inner exception stack trace ---
+   at System.Threading.Tasks.Task.ThrowIfExceptional(Boolean includeTaskCanceledExceptions)
+   at System.Threading.Tasks.Task`1.GetResultCore(Boolean waitCompletionNotification)
+   at System.Threading.Tasks.Task`1.get_Result()
+   at MySynch.Q.Sender.SenderQueue.TryQuery(String url) in C:\Code\Sciendo\MySynch.Q\MySynch.Q.Sender\SenderQueue.cs:line 77
+   at MySynch.Q.Sender.SenderQueue.ShouldSendMessage(String minMem) in C:\Code\Sciendo\MySynch.Q\MySynch.Q.Sender\SenderQueue.cs:line 56
+   at MySynch.Q.Sender.Publisher.ShouldPublishMessage() in C:\Code\Sciendo\MySynch.Q\MySynch.Q.Sender\Publisher.cs:line 83
+   at MySynch.Q.Sender.MessageFeeder.fsWatcher_Changed(String path) in C:\Code\Sciendo\MySynch.Q\MySynch.Q.Sender\MessageFeeder.cs:line 118
+   at MySynch.Q.Common.DirectoryMonitor.FireEvent(String path, PendingEvent evt) in C:\Code\Sciendo\MySynch.Q\MySynch.Q.Common\DirectoryMonitor.cs:line 193
+   at MySynch.Q.Common.DirectoryMonitor.<>c__DisplayClass22_0.<OnTimeout>b__1(String key) in C:\Code\Sciendo\MySynch.Q\MySynch.Q.Common\DirectoryMonitor.cs:line 162
+   at System.Collections.Generic.List`1.ForEach(Action`1 action)
+   at MySynch.Q.Common.DirectoryMonitor.OnTimeout(Object state) in C:\Code\Sciendo\MySynch.Q\MySynch.Q.Common\DirectoryMonitor.cs:line 159
+   at System.Threading.TimerQueueTimer.CallCallbackInContext(Object state)
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state, Boolean preserveSyncCtx)
+   at System.Threading.ExecutionContext.Run(ExecutionContext executionContext, ContextCallback callback, Object state, Boolean preserveSyncCtx)
+   at System.Threading.TimerQueueTimer.CallCallback()
+   at System.Threading.TimerQueueTimer.Fire()
+   at System.Threading.TimerQueue.FireNextTimers()
+   at System.Threading.TimerQueue.AppDomainTimerCallback()
+---> (Inner Exception #0) System.Net.Http.HttpRequestException: Response status code does not indicate success: 404 (Object Not Found).<---
+
+, 2017-02-13 10:04:06,729
+[(null)] , System.AggregateException: One or more errors occurred. ---> System.Net.Http.HttpRequestException: Response status code does not indicate success: 404 (Object Not Found).
+   --- End of inner exception stack trace ---
+   at System.Threading.Tasks.Task.ThrowIfExceptional(Boolean includeTaskCanceledExceptions)
+   at System.Threading.Tasks.Task`1.GetResultCore(Boolean waitCompletionNotification)
+   at System.Threading.Tasks.Task`1.get_Result()
+   at MySynch.Q.Sender.SenderQueue.TryQuery(String url) in C:\Code\Sciendo\MySynch.Q\MySynch.Q.Sender\SenderQueue.cs:line 77
+   at MySynch.Q.Sender.SenderQueue.ShouldSendMessage(String minMem) in C:\Code\Sciendo\MySynch.Q\MySynch.Q.Sender\SenderQueue.cs:line 56
+   at MySynch.Q.Sender.Publisher.ShouldPublishMessage() in C:\Code\Sciendo\MySynch.Q\MySynch.Q.Sender\Publisher.cs:line 83
+   at MySynch.Q.Sender.MessageFeeder.fsWatcher_Changed(String path) in C:\Code\Sciendo\MySynch.Q\MySynch.Q.Sender\MessageFeeder.cs:line 118
+   at MySynch.Q.Common.DirectoryMonitor.FireEvent(String path, PendingEvent evt) in C:\Code\Sciendo\MySynch.Q\MySynch.Q.Common\DirectoryMonitor.cs:line 193
+   at MySynch.Q.Common.DirectoryMonitor.<>c__DisplayClass22_0.<OnTimeout>b__1(String key) in C:\Code\Sciendo\MySynch.Q\MySynch.Q.Common\DirectoryMonitor.cs:line 162
+   at System.Collections.Generic.List`1.ForEach(Action`1 action)
+   at MySynch.Q.Common.DirectoryMonitor.OnTimeout(Object state) in C:\Code\Sciendo\MySynch.Q\MySynch.Q.Common\DirectoryMonitor.cs:line 159
+   at System.Threading.TimerQueueTimer.CallCallbackInContext(Object state)
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state, Boolean preserveSyncCtx)
+   at System.Threading.ExecutionContext.Run(ExecutionContext executionContext, ContextCallback callback, Object state, Boolean preserveSyncCtx)
+   at System.Threading.TimerQueueTimer.CallCallback()
+   at System.Threading.TimerQueueTimer.Fire()
+   at System.Threading.TimerQueue.FireNextTimers()
+   at System.Threading.TimerQueue.AppDomainTimerCallback()
+---> (Inner Exception #0) System.Net.Http.HttpRequestException: Response status code does not indicate success: 404 (Object Not Found).<---
+
+, 2017-02-13 10:08:18,271
+[(null)] , System.IO.IOException: The process cannot access the file 'C:\Code\work\Sciendo\MySynch.Q\Source-Debug\f2\New folder' because it is being used by another process.
+   at System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
+   at System.IO.FileSystemEnumerableIterator`1.MoveNext()
+   at System.Collections.Generic.List`1..ctor(IEnumerable`1 collection)
+   at System.IO.Directory.GetFiles(String path, String searchPattern, SearchOption searchOption)
+   at MySynch.Q.Common.DirectoryMonitor.OnChange(Object sender, FileSystemEventArgs e) in C:\Code\Sciendo\MySynch.Q\MySynch.Q.Common\DirectoryMonitor.cs:line 70
+   at System.IO.FileSystemWatcher.OnCreated(FileSystemEventArgs e)
+   at System.IO.FileSystemWatcher.NotifyFileSystemEventArgs(Int32 action, String name)
+   at System.IO.FileSystemWatcher.CompletionStatusChanged(UInt32 errorCode, UInt32 numBytes, NativeOverlapped* overlappedPointer)
+   at System.Threading._IOCompletionCallback.IOCompletionCallback_Context(Object state)
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state, Boolean preserveSyncCtx)
+   at System.Threading.ExecutionContext.Run(ExecutionContext executionContext, ContextCallback callback, Object state, Boolean preserveSyncCtx)
+   at System.Threading._IOCompletionCallback.PerformIOCompletionCallback(UInt32 errorCode, UInt32 numBytes, NativeOverlapped* pOVERLAP)
+, 2017-02-13 10:19:27,470
+[(null)] , System.IO.IOException: The process cannot access the file 'C:\Code\work\Sciendo\MySynch.Q\Source-Debug\New folder' because it is being used by another process.
+   at System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
+   at System.IO.FileSystemEnumerableIterator`1.CommonInit()
+   at System.IO.FileSystemEnumerableIterator`1..ctor(String path, String originalUserPath, String searchPattern, SearchOption searchOption, SearchResultHandler`1 resultHandler, Boolean checkHost)
+   at System.IO.Directory.GetFiles(String path, String searchPattern, SearchOption searchOption)
+   at MySynch.Q.Common.DirectoryMonitor.OnChange(Object sender, FileSystemEventArgs e) in C:\Code\Sciendo\MySynch.Q\MySynch.Q.Common\DirectoryMonitor.cs:line 70
+   at System.IO.FileSystemWatcher.OnCreated(FileSystemEventArgs e)
+   at System.IO.FileSystemWatcher.NotifyFileSystemEventArgs(Int32 action, String name)
+   at System.IO.FileSystemWatcher.CompletionStatusChanged(UInt32 errorCode, UInt32 numBytes, NativeOverlapped* overlappedPointer)
+   at System.Threading._IOCompletionCallback.IOCompletionCallback_Context(Object state)
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state, Boolean preserveSyncCtx)
+   at System.Threading.ExecutionContext.Run(ExecutionContext executionContext, ContextCallback callback, Object state, Boolean preserveSyncCtx)
+   at System.Threading._IOCompletionCallback.PerformIOCompletionCallback(UInt32 errorCode, UInt32 numBytes, NativeOverlapped* pOVERLAP)
+, 2017-02-13 10:23:32,414
+[(null)] , System.IO.IOException: The process cannot access the file 'C:\Code\work\Sciendo\MySynch.Q\Source-Debug\New folder' because it is being used by another process.
+   at System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
+   at System.IO.FileSystemEnumerableIterator`1.CommonInit()
+   at System.IO.FileSystemEnumerableIterator`1..ctor(String path, String originalUserPath, String searchPattern, SearchOption searchOption, SearchResultHandler`1 resultHandler, Boolean checkHost)
+   at System.IO.Directory.GetFiles(String path, String searchPattern, SearchOption searchOption)
+   at MySynch.Q.Common.DirectoryMonitor.OnChange(Object sender, FileSystemEventArgs e) in C:\Code\Sciendo\MySynch.Q\MySynch.Q.Common\DirectoryMonitor.cs:line 70
+   at System.IO.FileSystemWatcher.OnCreated(FileSystemEventArgs e)
+   at System.IO.FileSystemWatcher.NotifyFileSystemEventArgs(Int32 action, String name)
+   at System.IO.FileSystemWatcher.CompletionStatusChanged(UInt32 errorCode, UInt32 numBytes, NativeOverlapped* overlappedPointer)
+   at System.Threading._IOCompletionCallback.IOCompletionCallback_Context(Object state)
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state, Boolean preserveSyncCtx)
+   at System.Threading.ExecutionContext.Run(ExecutionContext executionContext, ContextCallback callback, Object state, Boolean preserveSyncCtx)
+   at System.Threading._IOCompletionCallback.PerformIOCompletionCallback(UInt32 errorCode, UInt32 numBytes, NativeOverlapped* pOVERLAP)
+, 2017-02-13 10:25:01,039
+[(null)] Problems reading files from the path C:\Code\work\Sciendo\MySynch.Q\Source-Debug\f3\New folder., System.IO.IOException: The process cannot access the file 'C:\Code\work\Sciendo\MySynch.Q\Source-Debug\f3\New folder' because it is being used by another process.
+   at System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
+   at System.IO.FileSystemEnumerableIterator`1.CommonInit()
+   at System.IO.FileSystemEnumerableIterator`1..ctor(String path, String originalUserPath, String searchPattern, SearchOption searchOption, SearchResultHandler`1 resultHandler, Boolean checkHost)
+   at System.IO.Directory.GetFiles(String path, String searchPattern, SearchOption searchOption)
+   at MySynch.Q.Common.DirectoryMonitor.OnChange(Object sender, FileSystemEventArgs e) in C:\Code\Sciendo\MySynch.Q\MySynch.Q.Common\DirectoryMonitor.cs:line 73
+, 2017-02-13 10:52:25,807
+[(null)] Problems reading files from the path C:\Code\work\Sciendo\MySynch.Q\Source-Debug\f3\New folder (3)., System.IO.IOException: The process cannot access the file 'C:\Code\work\Sciendo\MySynch.Q\Source-Debug\f3\New folder (3)' because it is being used by another process.
+   at System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
+   at System.IO.FileSystemEnumerableIterator`1.AddSearchableDirsToStack(SearchData localSearchData)
+   at System.IO.FileSystemEnumerableIterator`1.MoveNext()
+   at System.Collections.Generic.List`1..ctor(IEnumerable`1 collection)
+   at System.IO.Directory.GetFiles(String path, String searchPattern, SearchOption searchOption)
+   at MySynch.Q.Common.DirectoryMonitor.OnChange(Object sender, FileSystemEventArgs e) in C:\Code\Sciendo\MySynch.Q\MySynch.Q.Common\DirectoryMonitor.cs:line 73
+, 2017-02-13 10:52:43,817
+[(null)] Problems reading files from the path C:\Code\work\Sciendo\MySynch.Q\Source-Debug\f2\f3., System.IO.IOException: The process cannot access the file 'C:\Code\work\Sciendo\MySynch.Q\Source-Debug\f2\f3' because it is being used by another process.
+   at System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
+   at System.IO.FileSystemEnumerableIterator`1.AddSearchableDirsToStack(SearchData localSearchData)
+   at System.IO.FileSystemEnumerableIterator`1.MoveNext()
+   at System.Collections.Generic.List`1..ctor(IEnumerable`1 collection)
+   at System.IO.Directory.GetFiles(String path, String searchPattern, SearchOption searchOption)
+   at MySynch.Q.Common.DirectoryMonitor.OnChange(Object sender, FileSystemEventArgs e) in C:\Code\Sciendo\MySynch.Q\MySynch.Q.Common\DirectoryMonitor.cs:line 73
+, 2017-02-13 15:31:18,363
+[(null)] , System.IO.FileNotFoundException: Could not find file 'C:\Code\work\Sciendo\MySynch.Q\Source-Debug\f2\f3\abc.txt'.
+File name: 'C:\Code\work\Sciendo\MySynch.Q\Source-Debug\f2\f3\abc.txt'
+   at System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
+   at System.IO.FileInfo.get_Length()
+   at MySynch.Q.Sender.MessageFeeder.GetFileContent(String filePath) in C:\Code\Sciendo\MySynch.Q\MySynch.Q.Sender\MessageFeeder.cs:line 51
+   at MySynch.Q.Sender.MessageFeeder.fsWatcher_Changed(String path) in C:\Code\Sciendo\MySynch.Q\MySynch.Q.Sender\MessageFeeder.cs:line 123
+   at MySynch.Q.Common.DirectoryMonitor.FireEvent(String path, PendingEvent evt) in C:\Code\Sciendo\MySynch.Q\MySynch.Q.Common\DirectoryMonitor.cs:line 201
+   at MySynch.Q.Common.DirectoryMonitor.<>c__DisplayClass22_0.<OnTimeout>b__1(String key) in C:\Code\Sciendo\MySynch.Q\MySynch.Q.Common\DirectoryMonitor.cs:line 170
+   at System.Collections.Generic.List`1.ForEach(Action`1 action)
+   at MySynch.Q.Common.DirectoryMonitor.OnTimeout(Object state) in C:\Code\Sciendo\MySynch.Q\MySynch.Q.Common\DirectoryMonitor.cs:line 167
+   at System.Threading.TimerQueueTimer.CallCallbackInContext(Object state)
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state, Boolean preserveSyncCtx)
+   at System.Threading.ExecutionContext.Run(ExecutionContext executionContext, ContextCallback callback, Object state, Boolean preserveSyncCtx)
+   at System.Threading.TimerQueueTimer.CallCallback()
+   at System.Threading.TimerQueueTimer.Fire()
+   at System.Threading.TimerQueue.FireNextTimers()
+   at System.Threading.TimerQueue.AppDomainTimerCallback()
+, 2017-02-13 15:40:26,959

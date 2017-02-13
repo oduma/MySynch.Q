@@ -49,7 +49,7 @@ namespace MySynch.Q.Receiver
 
         internal void Stop()
         {
-            LoggingManager.Debug("Stoping Consumer...");
+            LoggingManager.Debug("Stoping _consumer...");
             More = false;
             Thread.Sleep(2000);
             _receiverQueue.StopChannels();
@@ -63,7 +63,7 @@ namespace MySynch.Q.Receiver
             LoggingManager.Debug("More: " + More);
             while(More)
             {
-                messageApplyer.ApplyMessage(((BasicDeliverEventArgs)_receiverQueue.Consumer.Queue.Dequeue()).Body);
+                messageApplyer.ApplyMessage(_receiverQueue.GetMessage());
             }
         }
 

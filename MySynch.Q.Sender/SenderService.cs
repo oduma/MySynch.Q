@@ -1,18 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Diagnostics;
-using System.Linq;
-using System.ServiceProcess;
-using System.Text;
 using System.Threading.Tasks;
 using Sciendo.Common.Logging;
 using System.Threading;
 
 namespace MySynch.Q.Sender
 {
-    public partial class SenderService : ServiceBase
+    public partial class SenderService
     {
         private Publisher _sender;
         private CancellationTokenSource _cancellationTokenSource;
@@ -21,7 +14,6 @@ namespace MySynch.Q.Sender
         {
             LoggingManager.Debug("Constructing Sender...");
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
-            InitializeComponent();
             _sender = new Publisher();
             LoggingManager.Debug("Sender constructed.");
         }
@@ -32,7 +24,7 @@ namespace MySynch.Q.Sender
             LoggingManager.LogSciendoSystemError(e.ExceptionObject as Exception);
         }
 
-        protected override void OnStart(string[] args)
+        public void Start()
         {
             LoggingManager.Debug("Starting Sender...");
             _sender.Initialize();
@@ -44,7 +36,7 @@ namespace MySynch.Q.Sender
             LoggingManager.Debug("Sender started.");
         }
 
-        protected override void OnStop()
+        public void Stop()
         {
             LoggingManager.Debug("Stoping Sender...");
 
@@ -53,20 +45,25 @@ namespace MySynch.Q.Sender
 
         }
 
-        protected override void OnContinue()
+        public void Continue()
         {
             LoggingManager.Debug("Starting Sender...");
-            base.OnContinue();
             Task sendTask = new Task(_sender.TryStart, _cancellationToken);
             sendTask.Start();
             LoggingManager.Debug("Sender started.");
         }
 
-        protected override void OnShutdown()
+        public void Pause()
         {
             LoggingManager.Debug("Stoping Sender...");
             _cancellationTokenSource.Cancel();
-            base.OnShutdown();
+            LoggingManager.Debug("Sender stoped.");
+        }
+
+        public void Shutdown()
+        {
+            LoggingManager.Debug("Stoping Sender...");
+            _cancellationTokenSource.Cancel();
             LoggingManager.Debug("Sender stopped.");
         }
 
