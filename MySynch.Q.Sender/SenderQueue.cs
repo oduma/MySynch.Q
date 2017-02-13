@@ -25,8 +25,10 @@ namespace MySynch.Q.Sender
             LoggingManager.Debug(Name + " on " + connectionFactory.HostName + " with user: " + connectionFactory.UserName + " Channel starting up...");
             try
             {
-                Connection = connectionFactory.CreateConnection();
-                Channel = Connection.CreateModel();
+                if(Connection==null  || !Connection.IsOpen)
+                    Connection = connectionFactory.CreateConnection();
+                if(Channel==null || Channel.IsClosed)
+                    Channel = Connection.CreateModel();
                 Channel.QueueDeclare(QueueName, true, false, true, null);
                 LoggingManager.Debug(Name + " Channel started up.");
             }
@@ -86,6 +88,7 @@ namespace MySynch.Q.Sender
         public void SendMessage(byte[] message)
         {
             LoggingManager.Debug("Sending message to " + Name +"...");
+            Channel.QueueDeclare(QueueName, true, false, true, null);
             Channel.BasicPublish("", QueueName, true, null, message);
             LoggingManager.Debug("Message sent to " + Name + ".");
         }

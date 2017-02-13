@@ -1,6 +1,7 @@
 ﻿using RabbitMQ.Client;
 using Sciendo.Common.Logging;
 using System;
+using RabbitMQ.Client.Events;
 
 namespace MySynch.Q.Receiver
 {
@@ -13,13 +14,15 @@ namespace MySynch.Q.Receiver
 
             try
             {
-               
+               if(Connection==null || ! Connection.IsOpen)
                 Connection = new ConnectionFactory { HostName = HostName,UserName=UserName,Password=Password}.CreateConnection();
+               if(Channel==null || !Channel.IsOpen)
                 Channel = Connection.CreateModel();
-                Channel.QueueDeclare(QueueName, true, false, true, null);
 
-                Consumer = new QueueingBasicConsumer(Channel);
-                Channel.BasicConsume(QueueName, true, Consumer);
+               Channel.QueueDeclare(QueueName, true, false, true, null);
+
+                _consumer = new QueueingBasicConsumer(Channel);
+                Channel.BasicConsume(QueueName, true, _consumer);
                 LoggingManager.Debug(Name + " Channel started up.");
             }
             catch (Exception ex)
@@ -45,6 +48,12 @@ namespace MySynch.Q.Receiver
             LoggingManager.Debug(Name + " Channel shutted down.");
         }
 
-        public QueueingBasicConsumer Consumer { get; set; }
+        private QueueingBasicConsumer _consumer;
+
+        public byte[] GetMessage()
+        {
+            Channel.QueueDeclare(QueueName, true, false, true, null);
+            return ((BasicDeliverEventArgs)_consumer.Queue.Dequeue()).Body;
+        } 
     }
 }

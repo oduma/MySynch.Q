@@ -19,7 +19,19 @@ namespace MySynch.Q.Sender
         {
             LoggingManager.Debug("Constructing Publisher...");
             _senderConfig = ConfigurationManager.GetSection("sender") as SenderSection;
-            _senderQueues = _senderConfig.Queues.Cast<QueueElement>().Select(q=>new SenderQueue{Name=q.Name,QueueName=q.QueueName,HostName=q.HostName,UserName=q.UserName,Password=q.Password}).ToArray();
+            _senderQueues =
+                _senderConfig.Queues.Cast<QueueElement>()
+                    .Select(
+                        q =>
+                            new SenderQueue
+                            {
+                                Name = q.Name,
+                                QueueName = q.QueueName,
+                                HostName = q.HostName,
+                                UserName = q.UserName,
+                                Password = q.Password
+                            })
+                    .ToArray();
             _connectionFactories = new List<ConnectionFactory>();
             LoggingManager.Debug("Publisher Constructed.");
         }
@@ -83,8 +95,13 @@ namespace MySynch.Q.Sender
             LoggingManager.Debug("Publishing Message...");
             var tempMessage = Serializer.Serialize<BodyTransferMessage>(message);
             byte[] rawMessage = Encoding.UTF8.GetBytes(tempMessage);
-            foreach (var senderQueue in _senderQueues.Where(q => q.Channel != null && !q.Channel.IsClosed))
+            foreach (var senderQueue in _senderQueues.Where(q => q.Channel != null))
             {
+                if (senderQueue.Channel.IsClosed)
+                {
+                    LoggingManager.Debug("Channel closed reopening it...");
+                    senderQueue.StartChannel(_connectionFactories.FirstOrDefault());
+                }
                 senderQueue.SendMessage(rawMessage);
             }
             LoggingManager.Debug("Message Published.");

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Sciendo.Common.Logging;
 
 namespace MySynch.Q.Common
 {
@@ -67,9 +68,16 @@ namespace MySynch.Q.Common
                 if ((string.IsNullOrEmpty(_parentDirectory) || _parentDirectory != e.FullPath))
                 {
                     _parentDirectory = GetParentDirectory(e.FullPath);
-                    foreach (var filePath in Directory.GetFiles(e.FullPath, "*.*", SearchOption.AllDirectories))
+                    try
                     {
-                        QueueEventForFile(filePath, e.ChangeType);
+                        foreach (var filePath in Directory.GetFiles(e.FullPath, "*.*", SearchOption.AllDirectories))
+                        {
+                            QueueEventForFile(filePath, e.ChangeType);
+                        }
+                    }
+                    catch (Exception exception)
+                    {
+                        LoggingManager.LogSciendoSystemError(string.Format("Problems reading files from the path {0}.",e.FullPath),exception);
                     }
                 }
                 else
