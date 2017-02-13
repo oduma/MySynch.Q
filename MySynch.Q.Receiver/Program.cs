@@ -34,8 +34,8 @@ namespace MySynch.Q.Receiver
                 x.SetDisplayName("Sciendo Synch Receiver (Debug)");
                 x.SetDescription("Receives messages from  a queue and persists files to folder. (Debug)");
 #else
-                x.SetServiceName("Sciendo Synch Receiver");
-                x.SetDisplayName("Sciendo Synch Receiver");
+                x.SetServiceName("MySynch.Q.Receiver");
+                x.SetDisplayName("MySynch Queue Receiver");
                 x.SetDescription("Receives messages from  a queue and persists files to folder.");
 #endif
             });

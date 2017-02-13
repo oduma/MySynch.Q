@@ -34,3 +34,6 @@ C:\Code\Sciendo\MySynch.Q\MySynch.Q.Tests\bin\Release\nunit.framework.xml
 C:\Code\Sciendo\MySynch.Q\MySynch.Q.Tests\obj\Release\MySynch.Q.Tests.csprojResolveAssemblyReference.cache
 C:\Code\Sciendo\MySynch.Q\MySynch.Q.Tests\obj\Release\MySynch.Q.Tests.dll
 C:\Code\Sciendo\MySynch.Q\MySynch.Q.Tests\obj\Release\MySynch.Q.Tests.pdb
+C:\Code\Sciendo\MySynch.Q\MySynch.Q.Tests\bin\Release\Sciendo.Common.dll
+C:\Code\Sciendo\MySynch.Q\MySynch.Q.Tests\bin\Release\log4net.dll
+C:\Code\Sciendo\MySynch.Q\MySynch.Q.Tests\bin\Release\log4net.xml

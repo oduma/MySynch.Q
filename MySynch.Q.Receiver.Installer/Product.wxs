@@ -30,6 +30,9 @@
       <Component Id="cmp5r" Directory="INSTALLLOCATION" Guid="{BAA1A8B4-369A-43C7-A079-E10B4DD3030B}">
         <File Id="fil5r" KeyPath="yes" Source="..\receiver\RabbitMQ.Client.dll" />
       </Component>
+      <Component Id="cmp6r" Directory="INSTALLLOCATION" Guid="{941530AD-4F0C-4E53-81C0-885FB93807DC}">
+        <File Id="fil6r" KeyPath="yes" Source="..\receiver\Topshelf.dll" />
+      </Component>
       <Component Id="MySynch.Q.Receiver.exe.config" Directory="INSTALLLOCATION" Guid="{842915BC-03E8-4020-BC0A-FE0FC55208A6}">
         <File Id="MySynch.Q.Receiver.exe.config" KeyPath="yes" Source="..\receiver\MySynch.Q.Receiver.exe.config" />
         <util:XmlFile Id="SetReceiverRootFolder"

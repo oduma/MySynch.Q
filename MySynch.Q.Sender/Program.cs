@@ -34,8 +34,8 @@ namespace MySynch.Q.Sender
                 x.SetDisplayName("Sciendo Synch Sender (Debug)");
                 x.SetDescription("Sends messages when files located at change (Debug)");
 #else
-                x.SetServiceName("Sciendo Synch Sender");
-                x.SetDisplayName("Sciendo Synch Sender");
+                x.SetServiceName("MySynch.Q.Sender");
+                x.SetDisplayName("MySynch Queue Sender");
                 x.SetDescription("Sends messages when files located at change");
 #endif
 

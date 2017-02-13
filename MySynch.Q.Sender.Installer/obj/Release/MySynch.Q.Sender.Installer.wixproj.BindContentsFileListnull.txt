@@ -2,6 +2,7 @@
 ..\sender\System.Net.Http.Formatting.dll
 ..\sender\RabbitMQ.Client.dll
 ..\sender\Sciendo.Common.dll
+..\sender\Topshelf.dll
 ..\sender\log4net.dll
 ..\sender\Newtonsoft.Json.dll
 ..\sender\MySynch.Q.Common.dll

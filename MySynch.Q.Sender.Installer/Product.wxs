@@ -38,6 +38,9 @@
       <Component Id="cmp287848F0AB75467089B91924621826CB" Directory="INSTALLLOCATION" Guid="{287848F0-AB75-4670-89B9-1924621826CB}">
         <File Id="fil287848F0AB75467089B91924621826CB" KeyPath="yes" Source="..\sender\System.Net.Http.Formatting.dll" />
       </Component>
+      <Component Id="cmp6r" Directory="INSTALLLOCATION" Guid="{2F69BB77-CA02-4C0E-A31B-1FD83F43D613}">
+        <File Id="fil6r" KeyPath="yes" Source="..\sender\Topshelf.dll" />
+      </Component>
       <Component Id="MySynch.Q.Sender.exe.config" Directory="INSTALLLOCATION" Guid="{7C74FEB9-2A53-4E73-86A9-C1D001FEAAF5}">
         <File Id="MySynch.Q.Sender.exe.config" KeyPath="yes" Source="..\sender\MySynch.Q.Sender.exe.config" />
         <util:XmlFile Id="SetSenderRootFolder"
