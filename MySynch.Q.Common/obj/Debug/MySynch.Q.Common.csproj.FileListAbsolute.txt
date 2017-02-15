@@ -25,3 +25,4 @@ C:\Code\Sciendo\MySynch.Q\MySynch.Q.Common\bin\Debug\Newtonsoft.Json.xml
 C:\Code\Sciendo\MySynch.Q\MySynch.Q.Common\bin\Debug\RabbitMQ.Client.xml
 C:\Code\Sciendo\MySynch.Q\MySynch.Q.Common\obj\Debug\MySynch.Q.Common.dll
 C:\Code\Sciendo\MySynch.Q\MySynch.Q.Common\obj\Debug\MySynch.Q.Common.pdb
+C:\Code\Sciendo\MySynch.Q\MySynch.Q.Common\obj\Debug\MySynch.Q.Common.csprojResolveAssemblyReference.cache

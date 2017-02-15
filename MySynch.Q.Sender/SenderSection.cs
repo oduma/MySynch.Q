@@ -13,6 +13,13 @@ namespace MySynch.Q.Sender
             set { this["minMem"] = value; }
         }
 
+        [ConfigurationProperty("maxFileSize", DefaultValue = 0, IsRequired = true)]
+        public int MaxFileSize
+        {
+            get { return (int)this["maxFileSize"]; }
+            set { this["maxFileSize"] = value; }
+        }
+
         [ConfigurationProperty("queues")]
         public QueueElementCollection Queues
         {

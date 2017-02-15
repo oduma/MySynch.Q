@@ -67,7 +67,7 @@ namespace MySynch.Q.Sender
         internal void TryStart()
         {
             if (_messageFeeder == null)
-                _messageFeeder = new MessageFeeder();
+                _messageFeeder = new MessageFeeder(_senderConfig.MaxFileSize);
             if (!_messageFeeder.More)
                 _messageFeeder.Initialize(_senderConfig.LocalRootFolder);
             this._messageFeeder.More = true;

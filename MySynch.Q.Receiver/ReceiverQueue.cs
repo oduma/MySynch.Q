@@ -41,10 +41,10 @@ namespace MySynch.Q.Receiver
         {
             LoggingManager.Debug(Name + " Channel shutting down...");
 
-            if (Channel != null && !Channel.IsClosed)
-                Channel.Close();
-            if (Connection != null && Connection.IsOpen)
-                Connection.Close();
+            //if (Channel != null && !Channel.IsClosed)
+            //    Channel.Close();
+            //if (Connection != null && Connection.IsOpen)
+            //    Connection.Close();
             LoggingManager.Debug(Name + " Channel shutted down.");
         }
 

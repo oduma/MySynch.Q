@@ -12,6 +12,8 @@ namespace MySynch.Q.Sender
 {
     public class MessageFeeder
     {
+        private readonly int _maxFileSize;
+
         private void fsWatcher_Renamed(string oldPath, string newPath)
         {
             if (!More)
@@ -40,19 +42,38 @@ namespace MySynch.Q.Sender
                 Thread.Sleep(5000);
             }
             PublishMessage(new BodyTransferMessage { Name = oldPath, Body = null,SourceRootPath=_rootPath });
-            PublishMessage(new BodyTransferMessage { Name = newPath, Body = GetFileContent(newPath),SourceRootPath=_rootPath });
-
+            foreach (var message in BuildMessage(newPath))
+            {
+                PublishMessage(message);
+            }
         }
 
-        private byte[] GetFileContent(string filePath)
+        private IEnumerable<BodyTransferMessage> BuildMessage(string filePath)
         {
+
             FileInfo fInfo = new FileInfo(filePath);
 
-            byte[] buffer = new byte[fInfo.Length];
-            using(var fs = File.OpenRead(filePath))
+            var totalParts= (_maxFileSize == 0 || _maxFileSize >= fInfo.Length) ? 1 : fInfo.Length/_maxFileSize +1;
+            var oneReadLength = (totalParts==1) ? fInfo.Length : _maxFileSize;
+            using (var fs = File.OpenRead(filePath))
             {
-                fs.Read(buffer, 0, (int)fInfo.Length);
-                return buffer;
+                int i = 1;
+                while (fs.Position < fInfo.Length)
+                {
+                    var remainingBytes = fInfo.Length - fs.Position;
+                    if (oneReadLength > remainingBytes)
+                        oneReadLength = remainingBytes;
+                    byte[] buffer = new byte[oneReadLength];
+                    fs.Read(buffer, 0, (int) oneReadLength);
+                    yield return
+                        new BodyTransferMessage
+                        {
+                            Name = filePath,
+                            Body = buffer,
+                            Part = new PartInfo {PartId = i++, FromParts = (int) totalParts},
+                            SourceRootPath = _rootPath
+                        };
+                }
             }
         }
 
@@ -120,7 +141,11 @@ namespace MySynch.Q.Sender
                 LoggingManager.Debug("Waiting 5 seconds queue is busy...");
                 Thread.Sleep(5000);
             }
-            PublishMessage(new BodyTransferMessage { Name = path, Body = GetFileContent(path), SourceRootPath = _rootPath });
+            foreach (var message in BuildMessage(path))
+            {
+                PublishMessage(message);
+            }
+
         }
 
         static bool IsFileLocked(FileInfo file)
@@ -178,9 +203,11 @@ namespace MySynch.Q.Sender
             LoggingManager.Debug(localRootFolder + " Initialized _messageFeeder...");
         }
 
-        public MessageFeeder()
+        public MessageFeeder(int maxFileSize)
         {
-            LoggingManager.Debug("Constructing _messageFeeder...");
+            LoggingManager.Debug(string.Format("Constructing _messageFeeder {0} {1} ...",
+                (maxFileSize == 0) ? "without" : "with", (maxFileSize == 0) ? "any limit" : maxFileSize + " limit"));
+            _maxFileSize = maxFileSize;
             LoggingManager.Debug("_messageFeeder Constructed.");
 
         }

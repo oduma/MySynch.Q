@@ -10,11 +10,11 @@ namespace MySynch.Q.Receiver
         private Consummer _receiver;
         private CancellationTokenSource _cancellationTokenSource;
         private CancellationToken _cancellationToken;
-        public ReceiverService()
+        public ReceiverService(Consummer consummer )
         {
             LoggingManager.Debug("Constructing Receiver...");
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
-            _receiver = new Consummer();
+            _receiver = consummer;
             LoggingManager.Debug("Receiver constructed.");
         }
 
@@ -31,8 +31,8 @@ namespace MySynch.Q.Receiver
             _cancellationTokenSource = new CancellationTokenSource();
             _cancellationToken = _cancellationTokenSource.Token;
             _cancellationToken.Register(_receiver.Stop);
-            Task sendTask = new Task(_receiver.TryStart, _cancellationToken);
-            sendTask.Start();
+            Task receiveTask = new Task(_receiver.TryStart, _cancellationToken);
+            receiveTask.Start();
             LoggingManager.Debug("Receiver started.");
         }
 

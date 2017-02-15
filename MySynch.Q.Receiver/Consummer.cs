@@ -1,33 +1,22 @@
-﻿using MySynch.Q.Common.Contracts;
-using RabbitMQ.Client.Events;
-using Sciendo.Common.Logging;
+﻿using Sciendo.Common.Logging;
 using System;
-using System.Collections.Generic;
 using System.Configuration;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using Sciendo.Common.Serialization;
 
 namespace MySynch.Q.Receiver
 {
-    internal class Consummer
+    public class Consummer
     {
         private ReceiverQueue _receiverQueue;
         private string _rootPath;
+        private MessageApplyer _messageApplyer;
 
-        internal Consummer()
+        internal Consummer(ReceiverQueue receiverQueue, MessageApplyer messageApplyer, string rootPath)
         {
             LoggingManager.Debug("Constructing Consummer...");
-            var receiverConfig = ConfigurationManager.GetSection("receiver") as ReceiverSection;
-            _rootPath = receiverConfig.LocalRootFolder;
-            _receiverQueue = new ReceiverQueue 
-                {   Name = receiverConfig.Name, 
-                    QueueName = receiverConfig.QueueName, 
-                    HostName = receiverConfig.HostName,
-                    UserName=receiverConfig.UserName,
-                    Password=receiverConfig.Password
-                };
+            _rootPath = rootPath;
+            _receiverQueue = receiverQueue;
+            _messageApplyer = messageApplyer;
             LoggingManager.Debug("Consummer Constructed.");
 
         }
@@ -49,21 +38,20 @@ namespace MySynch.Q.Receiver
 
         internal void Stop()
         {
-            LoggingManager.Debug("Stoping _consumer...");
+            LoggingManager.Debug("Stoping Consumer...");
             More = false;
             Thread.Sleep(2000);
             _receiverQueue.StopChannels();
-            LoggingManager.Debug("Publisher Stopped.");
+            LoggingManager.Debug("Consumer Stopped.");
         }
 
         internal void TryStart(object obj)
         {
-            var messageApplyer = new MessageApplyer(_rootPath);
             More = true;
             LoggingManager.Debug("More: " + More);
             while(More)
             {
-                messageApplyer.ApplyMessage(_receiverQueue.GetMessage());
+                _messageApplyer.ApplyMessage(_receiverQueue.GetMessage());
             }
         }
 
