@@ -5,13 +5,13 @@ using System.Threading;
 
 namespace MySynch.Q.Receiver
 {
-    public class Consummer
+    public class Consummer : IConsummer
     {
         private ReceiverQueue _receiverQueue;
         private string _rootPath;
         private MessageApplyer _messageApplyer;
 
-        internal Consummer(ReceiverQueue receiverQueue, MessageApplyer messageApplyer, string rootPath)
+        public Consummer(ReceiverQueue receiverQueue, MessageApplyer messageApplyer, string rootPath)
         {
             LoggingManager.Debug("Constructing Consummer...");
             _rootPath = rootPath;
@@ -21,7 +21,7 @@ namespace MySynch.Q.Receiver
 
         }
 
-        internal void Initialize()
+        public void Initialize()
         {
             try
             {
@@ -36,7 +36,7 @@ namespace MySynch.Q.Receiver
             }
         }
 
-        internal void Stop()
+        public void Stop()
         {
             LoggingManager.Debug("Stoping Consumer...");
             More = false;
@@ -45,7 +45,7 @@ namespace MySynch.Q.Receiver
             LoggingManager.Debug("Consumer Stopped.");
         }
 
-        internal void TryStart(object obj)
+        public void TryStart(object obj)
         {
             More = true;
             LoggingManager.Debug("More: " + More);

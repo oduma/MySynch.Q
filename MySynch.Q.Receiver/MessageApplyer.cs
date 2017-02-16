@@ -18,7 +18,7 @@ namespace MySynch.Q.Receiver
             _rootPath = rootPath;
         }
 
-        internal void ApplyMessage(byte[] message)
+        internal virtual void ApplyMessage(byte[] message)
         {
             LoggingManager.Debug("Applying a message...");
             if (message != null && message.Length > 0)

@@ -37,7 +37,7 @@ namespace MySynch.Q.Receiver
 
         public IModel Channel { get; set; }
 
-        internal void StopChannels()
+        internal virtual void StopChannels()
         {
             LoggingManager.Debug(Name + " Channel shutting down...");
 
@@ -50,7 +50,7 @@ namespace MySynch.Q.Receiver
 
         private QueueingBasicConsumer _consumer;
 
-        public byte[] GetMessage()
+        public virtual byte[] GetMessage()
         {
             Channel.QueueDeclare(QueueName, true, false, true, null);
             return ((BasicDeliverEventArgs)_consumer.Queue.Dequeue()).Body;
