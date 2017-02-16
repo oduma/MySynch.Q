@@ -1,20 +1,22 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Sciendo.Common.Logging;
 using System.Threading;
+using RabbitMQ.Client;
 
 namespace MySynch.Q.Sender
 {
-    public partial class SenderService
+    public class SenderService : ISenderService
     {
-        private Publisher _sender;
+        private IPublisher _publisher;
         private CancellationTokenSource _cancellationTokenSource;
         private CancellationToken _cancellationToken;
-        public SenderService()
+        public SenderService(IPublisher publisher)
         {
             LoggingManager.Debug("Constructing Sender...");
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
-            _sender = new Publisher();
+            _publisher = publisher;
             LoggingManager.Debug("Sender constructed.");
         }
 
@@ -27,11 +29,11 @@ namespace MySynch.Q.Sender
         public void Start()
         {
             LoggingManager.Debug("Starting Sender...");
-            _sender.Initialize();
+            _publisher.Initialize();
             _cancellationTokenSource = new CancellationTokenSource();
             _cancellationToken = _cancellationTokenSource.Token;
-            _cancellationToken.Register(_sender.Stop);
-            Task sendTask = new Task(_sender.TryStart,_cancellationToken);
+            _cancellationToken.Register(_publisher.Stop);
+            Task sendTask = new Task(_publisher.TryStart,_cancellationToken);
             sendTask.Start();
             LoggingManager.Debug("Sender started.");
         }
@@ -48,7 +50,7 @@ namespace MySynch.Q.Sender
         public void Continue()
         {
             LoggingManager.Debug("Starting Sender...");
-            Task sendTask = new Task(_sender.TryStart, _cancellationToken);
+            Task sendTask = new Task(_publisher.TryStart, _cancellationToken);
             sendTask.Start();
             LoggingManager.Debug("Sender started.");
         }

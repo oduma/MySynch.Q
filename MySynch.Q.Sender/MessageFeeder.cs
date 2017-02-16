@@ -10,11 +10,11 @@ using System.Threading;
 
 namespace MySynch.Q.Sender
 {
-    public class MessageFeeder
+    public class MessageFeeder : IMessageFeeder
     {
         private readonly int _maxFileSize;
 
-        private void fsWatcher_Renamed(string oldPath, string newPath)
+        internal virtual void DirectoryMonitorRenamed(string oldPath, string newPath)
         {
             if (!More)
             {
@@ -48,7 +48,7 @@ namespace MySynch.Q.Sender
             }
         }
 
-        private IEnumerable<BodyTransferMessage> BuildMessage(string filePath)
+        internal virtual IEnumerable<BodyTransferMessage> BuildMessage(string filePath)
         {
 
             FileInfo fInfo = new FileInfo(filePath);
@@ -77,7 +77,7 @@ namespace MySynch.Q.Sender
             }
         }
 
-        private void fsWatcher_Deleted(string path)
+        internal virtual void DirectoryMonitorDeleted(string path)
         {
             if (!More)
             {
@@ -102,17 +102,17 @@ namespace MySynch.Q.Sender
 
         private void StopFeeder()
         {
-            if(_fsWatcher!=null)
+            if(_directoryMonitor!=null)
             {
-                _fsWatcher.Change -= fsWatcher_Changed;
-                _fsWatcher.Delete -= fsWatcher_Deleted;
-                _fsWatcher.Rename -= fsWatcher_Renamed;
-                _fsWatcher.Stop();
+                _directoryMonitor.Change -= DirectoryMonitorChanged;
+                _directoryMonitor.Delete -= DirectoryMonitorDeleted;
+                _directoryMonitor.Rename -= DirectoryMonitorRenamed;
+                _directoryMonitor.Stop();
 
             }
         }
 
-        private void fsWatcher_Changed(string path)
+        internal virtual void DirectoryMonitorChanged(string path)
         {
             if (!More)
             {
@@ -148,7 +148,7 @@ namespace MySynch.Q.Sender
 
         }
 
-        static bool IsFileLocked(FileInfo file)
+        private static bool IsFileLocked(FileInfo file)
         {
             FileStream stream = null;
 
@@ -180,33 +180,28 @@ namespace MySynch.Q.Sender
             return false;
         }
 
-        private DirectoryMonitor _fsWatcher;
+        private IDirectoryMonitor _directoryMonitor;
         private string _rootPath;
 
-        public void Initialize(string localRootFolder)
+        public void Initialize()
         {
-            LoggingManager.Debug(localRootFolder + " Initializing _messageFeeder...");
-
-            if (string.IsNullOrEmpty(localRootFolder))
-                throw new ArgumentNullException("localRootFolder");
-            if (!Directory.Exists(localRootFolder))
-                throw new ArgumentException("localRootFolder does not exist");
-
-            _fsWatcher = new DirectoryMonitor(localRootFolder);
-            _rootPath = localRootFolder;
+            LoggingManager.Debug(_rootPath + " Initializing _messageFeeder...");
 
             StopFeeder();
-            _fsWatcher.Change += fsWatcher_Changed;
-            _fsWatcher.Delete += fsWatcher_Deleted;
-            _fsWatcher.Rename += fsWatcher_Renamed;
-            _fsWatcher.Start();
-            LoggingManager.Debug(localRootFolder + " Initialized _messageFeeder...");
+            _directoryMonitor.Change += DirectoryMonitorChanged;
+            _directoryMonitor.Delete += DirectoryMonitorDeleted;
+            _directoryMonitor.Rename += DirectoryMonitorRenamed;
+            _directoryMonitor.Start();
+            LoggingManager.Debug(_rootPath + " Initialized _messageFeeder...");
         }
 
-        public MessageFeeder(int maxFileSize)
+        public MessageFeeder(int maxFileSize, IDirectoryMonitor directoryMonitor, string localRootFolder)
         {
             LoggingManager.Debug(string.Format("Constructing _messageFeeder {0} {1} ...",
                 (maxFileSize == 0) ? "without" : "with", (maxFileSize == 0) ? "any limit" : maxFileSize + " limit"));
+            _directoryMonitor = directoryMonitor;
+            _rootPath = localRootFolder;
+
             _maxFileSize = maxFileSize;
             LoggingManager.Debug("_messageFeeder Constructed.");
 

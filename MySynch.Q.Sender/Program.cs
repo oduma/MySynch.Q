@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.ServiceProcess;
 using System.Text;
 using System.Threading.Tasks;
+using MySynch.Q.Common;
+using RabbitMQ.Client;
 using Topshelf;
 
 namespace MySynch.Q.Sender
@@ -15,12 +18,20 @@ namespace MySynch.Q.Sender
         /// </summary>
         public static void Main()
         {
+            var senderConfig = ConfigurationManager.GetSection("sender") as SenderSection;
             HostFactory.Run(x =>
             {
                 x.Service<SenderService>(
                     s =>
                     {
-                        s.ConstructUsing(name => new SenderService());
+                        s.ConstructUsing(name => new SenderService(new Publisher(senderConfig.Queues.Cast<QueueElement>()
+                                .Select(
+                                    q =>
+                                        new SenderQueue
+                                        (q)), new List<ConnectionFactory>(),
+                            new MessageFeeder(senderConfig.MaxFileSize,
+                                new DirectoryMonitor(senderConfig.LocalRootFolder), senderConfig.LocalRootFolder),
+                            senderConfig.MinFreeMemory)));  
                         s.WhenStarted(tc => tc.Start());
                         s.WhenStopped(tc => tc.Stop());
                         s.WhenShutdown(tc => tc.Shutdown());

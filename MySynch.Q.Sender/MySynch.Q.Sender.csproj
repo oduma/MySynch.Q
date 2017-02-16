@@ -77,6 +77,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IMessageFeeder.cs" />
+    <Compile Include="IPublisher.cs" />
+    <Compile Include="ISenderQueue.cs" />
+    <Compile Include="ISenderService.cs" />
     <Compile Include="MessageFeeder.cs" />
     <Compile Include="Publisher.cs" />
     <Compile Include="SenderQueue.cs" />

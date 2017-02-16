@@ -63,6 +63,7 @@
     <Compile Include="Contracts\Management\Rate.cs" />
     <Compile Include="Contracts\Management\VersionMessage.cs" />
     <Compile Include="DirectoryMonitor.cs" />
+    <Compile Include="IDirectoryMonitor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -2,9 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using Sciendo.Common.Logging;
 
 namespace MySynch.Q.Common
@@ -13,7 +11,7 @@ namespace MySynch.Q.Common
     
     public delegate void FileRenamedEvent(string fromPath, string toPath);
 
-  public class DirectoryMonitor
+  public class DirectoryMonitor : IDirectoryMonitor
   {
         class PendingEvent
         {
@@ -33,6 +31,12 @@ namespace MySynch.Q.Common
 
         public DirectoryMonitor(string dirPath)
         {
+            if (string.IsNullOrEmpty(dirPath))
+                throw new ArgumentNullException("dirPath");
+            if (!Directory.Exists(dirPath))
+                throw new ArgumentException("dirPath does not exist: " +dirPath);
+
+
             _fileSystemWatcher.Path = dirPath;
             _fileSystemWatcher.IncludeSubdirectories = true;
             _fileSystemWatcher.Created += new FileSystemEventHandler(OnChange);

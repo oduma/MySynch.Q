@@ -8,7 +8,7 @@ namespace MySynch.Q.Receiver
     public class ReceiverQueue:ReceiverSection
     {
 
-        public void StartChannels()
+        public virtual void StartChannels()
         {
             LoggingManager.Debug(Name + " Channel starting up...");
 
