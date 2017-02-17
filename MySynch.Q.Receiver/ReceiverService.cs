@@ -14,6 +14,8 @@ namespace MySynch.Q.Receiver
         {
             LoggingManager.Debug("Constructing Receiver...");
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
+            if (consummer==null)
+                throw new ArgumentNullException("consummer");
             _consummer = consummer;
             LoggingManager.Debug("Receiver constructed.");
         }

@@ -1,0 +1,4 @@
+[(null)] , System.ArgumentException: Path cannot be the empty string or all whitespace.
+   at System.IO.Directory.CreateDirectory(String path)
+   at MySynch.Q.Receiver.MessageApplyer.ApplyUpSert(String sourceRootPath, String name, Byte[] body) in C:\Code\Sciendo\MySynch.Q\MySynch.Q.Receiver\MessageApplyer.cs:line 102
+, 2017-02-17 08:06:13,494
