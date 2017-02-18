@@ -8,7 +8,7 @@ namespace MySynch.Q.Sender
         IModel Channel { get; set; }
         void StartChannel(ConnectionFactory connectionFactory);
         void StopChannel();
-        bool ShouldSendMessage(string minMem);
+        bool ShouldSendMessage(long minMem);
         void SendMessage(byte[] message);
 
         QueueElement QueueElement { get; set; }

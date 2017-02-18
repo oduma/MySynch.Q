@@ -13,11 +13,15 @@ namespace MySynch.Q.Sender
 {
     public  class Publisher : IPublisher
     {
-        public Publisher(IEnumerable<ISenderQueue> senderQueues, List<ConnectionFactory> connectionFactories, IMessageFeeder messageFeeder, string minFreeMemory)
+        public Publisher(IEnumerable<ISenderQueue> senderQueues, List<ConnectionFactory> connectionFactories, IMessageFeeder messageFeeder, long minFreeMemory)
         {
             LoggingManager.Debug("Constructing Publisher...");
+            if(senderQueues==null || !senderQueues.Any())
+                throw new ArgumentNullException(nameof(senderQueues));
+            if(messageFeeder==null)
+                throw new ArgumentNullException(nameof(messageFeeder));
             _senderQueues = senderQueues;
-            _connectionFactories = connectionFactories;
+            _connectionFactories = (connectionFactories)?? new List<ConnectionFactory>();
             _messageFeeder = messageFeeder;
             _minFreeMemory = minFreeMemory;
             LoggingManager.Debug("Publisher Constructed.");
@@ -26,7 +30,7 @@ namespace MySynch.Q.Sender
         IEnumerable<ISenderQueue> _senderQueues;
         List<ConnectionFactory> _connectionFactories;
 
-        public void Initialize()
+        public virtual void Initialize()
         {
             try
             {
@@ -110,6 +114,6 @@ namespace MySynch.Q.Sender
         }
 
         private IMessageFeeder _messageFeeder;
-        private string _minFreeMemory;
+        private long _minFreeMemory;
     }
 }

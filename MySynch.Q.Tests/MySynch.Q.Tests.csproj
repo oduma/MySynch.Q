@@ -39,6 +39,10 @@
       <HintPath>..\packages\NUnit.3.6.0\lib\net45\nunit.framework.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="RabbitMQ.Client, Version=4.0.0.0, Culture=neutral, PublicKeyToken=89e7d7c5feba84ce, processorArchitecture=MSIL">
+      <HintPath>..\packages\RabbitMQ.Client.4.1.1\lib\net451\RabbitMQ.Client.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Rhino.Mocks, Version=3.6.0.0, Culture=neutral, PublicKeyToken=0b3305902db7183f, processorArchitecture=MSIL">
       <HintPath>..\packages\RhinoMocks.3.6.1\lib\net\Rhino.Mocks.dll</HintPath>
       <Private>True</Private>
@@ -56,9 +60,13 @@
     <Compile Include="Receiver\ConsummerTests.cs" />
     <Compile Include="Receiver\MessageApplyerTests.cs" />
     <Compile Include="Receiver\ReceiverServiceTests.cs" />
+    <Compile Include="Sender\MessageFeederTests.cs" />
+    <Compile Include="Sender\PublisherTests.cs" />
+    <Compile Include="Sender\SenderServiceTests.cs" />
     <Compile Include="SerializationContractsTests.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="example.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -73,10 +81,12 @@
       <Project>{198409E4-F53B-4B7C-B5E7-70E8AF6223AA}</Project>
       <Name>MySynch.Q.Receiver</Name>
     </ProjectReference>
+    <ProjectReference Include="..\MySynch.Q.Sender\MySynch.Q.Sender.csproj">
+      <Project>{3DA88B89-1B9F-4A96-B67F-316EC723A0D0}</Project>
+      <Name>MySynch.Q.Sender</Name>
+    </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Sender\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

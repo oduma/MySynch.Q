@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Sciendo.Common.Logging;
 using System.Threading;
-using RabbitMQ.Client;
 
 namespace MySynch.Q.Sender
 {
@@ -14,6 +12,8 @@ namespace MySynch.Q.Sender
         private CancellationToken _cancellationToken;
         public SenderService(IPublisher publisher)
         {
+            if(publisher==null)
+                throw new ArgumentNullException(nameof(publisher));
             LoggingManager.Debug("Constructing Sender...");
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
             _publisher = publisher;

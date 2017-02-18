@@ -30,8 +30,8 @@ namespace MySynch.Q.Sender
                                         new SenderQueue
                                         (q)), new List<ConnectionFactory>(),
                             new MessageFeeder(senderConfig.MaxFileSize,
-                                new DirectoryMonitor(senderConfig.LocalRootFolder), senderConfig.LocalRootFolder),
-                            senderConfig.MinFreeMemory)));  
+                                new DirectoryMonitor(senderConfig.LocalRootFolder), senderConfig.LocalRootFolder,new IOOperations()),
+                            Convert.ToInt64(senderConfig.MinFreeMemory))));  
                         s.WhenStarted(tc => tc.Start());
                         s.WhenStopped(tc => tc.Stop());
                         s.WhenShutdown(tc => tc.Shutdown());

@@ -34,3 +34,6 @@ C:\Code\Sciendo\MySynch.Q\MySynch.Q.Tests\bin\Debug\Topshelf.xml
 C:\Code\Sciendo\MySynch.Q\MySynch.Q.Tests\bin\Debug\log4net.xml
 C:\Code\Sciendo\MySynch.Q\MySynch.Q.Tests\bin\Debug\Rhino.Mocks.dll
 C:\Code\Sciendo\MySynch.Q\MySynch.Q.Tests\bin\Debug\Rhino.Mocks.xml
+C:\Code\Sciendo\MySynch.Q\MySynch.Q.Tests\bin\Debug\MySynch.Q.Sender.exe
+C:\Code\Sciendo\MySynch.Q\MySynch.Q.Tests\bin\Debug\MySynch.Q.Sender.pdb
+C:\Code\Sciendo\MySynch.Q\MySynch.Q.Tests\bin\Debug\MySynch.Q.Tests.dll.config

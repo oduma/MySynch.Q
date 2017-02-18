@@ -68,7 +68,7 @@ namespace MySynch.Q.Sender
 
         }
 
-        public bool ShouldSendMessage(string minMem)
+        public bool ShouldSendMessage(long minMem)
         {
             var url = @"http://" + QueueElement.HostName + ":15672/api/nodes/rabbit@" + QueueElement.HostName;
             LoggingManager.Debug("Using the api at: " + url);
@@ -77,7 +77,7 @@ namespace MySynch.Q.Sender
                 return false;
             if (nodeManagamentMessage.disk_free_alarm || nodeManagamentMessage.mem_alarm)
                 return false;
-            if (nodeManagamentMessage.mem_limit - nodeManagamentMessage.mem_used <= Convert.ToInt64(minMem))
+            if (nodeManagamentMessage.mem_limit - nodeManagamentMessage.mem_used <= minMem)
                 return false;
             return true;
         }

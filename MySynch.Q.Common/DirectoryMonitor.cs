@@ -32,7 +32,7 @@ namespace MySynch.Q.Common
         public DirectoryMonitor(string dirPath)
         {
             if (string.IsNullOrEmpty(dirPath))
-                throw new ArgumentNullException("dirPath");
+                throw new ArgumentNullException(nameof(dirPath));
             if (!Directory.Exists(dirPath))
                 throw new ArgumentException("dirPath does not exist: " +dirPath);
 
