@@ -1,5 +1,7 @@
-﻿using MySynch.Q.Common.Configuration;
+﻿using System;
+using MySynch.Q.Common.Configuration;
 using System.Configuration;
+using System.Linq;
 
 namespace MySynch.Q.Sender
 {
@@ -26,6 +28,10 @@ namespace MySynch.Q.Sender
             get { return (QueueElementCollection)this["queues"]; }
         }
 
+        public override string ToString()
+        {
+            return $"{nameof(MinFreeMemory)}:{MinFreeMemory}\t{nameof(MaxFileSize)}:{MaxFileSize}\t{nameof(Queues)}:{Queues}";
+        }
     }
 
     [ConfigurationCollection(typeof(QueueElement))]

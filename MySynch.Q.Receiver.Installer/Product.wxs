@@ -56,7 +56,8 @@
           DisplayName="MySynch Queue Receiver"
           Description="Populates folder [RCVROOTDIRVAL] based on any changes from the queue: queue1@[RCVQUEUEHOSTNAME]."
           Start="auto"
-          Account="NT Authority\NetworkService"
+          Account="[SERVICEACCOUNT]"
+          Password="[SERVICEPASSWORD]"
           ErrorControl="ignore"
           Interactive="no">
         </ServiceInstall>

@@ -13,7 +13,7 @@ namespace MySynch.Q.Sender
 {
     public  class Publisher : IPublisher
     {
-        public Publisher(IEnumerable<ISenderQueue> senderQueues, List<ConnectionFactory> connectionFactories, IMessageFeeder messageFeeder, long minFreeMemory)
+        public Publisher(ISenderQueue[] senderQueues, List<ConnectionFactory> connectionFactories, IMessageFeeder messageFeeder, long minFreeMemory)
         {
             LoggingManager.Debug("Constructing Publisher...");
             if(senderQueues==null || !senderQueues.Any())
@@ -27,7 +27,7 @@ namespace MySynch.Q.Sender
             LoggingManager.Debug("Publisher Constructed.");
         }
 
-        IEnumerable<ISenderQueue> _senderQueues;
+        ISenderQueue[] _senderQueues;
         List<ConnectionFactory> _connectionFactories;
 
         public virtual void Initialize()
@@ -94,7 +94,7 @@ namespace MySynch.Q.Sender
                 if (senderQueue.Channel.IsClosed)
                 {
                     LoggingManager.Debug("Channel closed reopening it...");
-                    senderQueue.StartChannel(_connectionFactories.FirstOrDefault());
+                    senderQueue.StartChannel(_connectionFactories.FirstOrDefault(f => f.HostName == senderQueue.QueueElement.HostName));
                 }
                 senderQueue.SendMessage(rawMessage);
             }

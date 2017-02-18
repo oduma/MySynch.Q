@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using MySynch.Q.Common;
 using RabbitMQ.Client;
+using Sciendo.Common.Logging;
 using Topshelf;
 
 namespace MySynch.Q.Sender
@@ -19,16 +20,16 @@ namespace MySynch.Q.Sender
         public static void Main()
         {
             var senderConfig = ConfigurationManager.GetSection("sender") as SenderSection;
+            LoggingManager.Debug(senderConfig.ToString());
+
+            var senderQueues = senderConfig.Queues.Cast<QueueElement>().Select(q => new SenderQueue(q)).ToArray();
+            LoggingManager.Debug("Publishing to " + senderQueues.Length + " queues.");
             HostFactory.Run(x =>
             {
                 x.Service<SenderService>(
                     s =>
                     {
-                        s.ConstructUsing(name => new SenderService(new Publisher(senderConfig.Queues.Cast<QueueElement>()
-                                .Select(
-                                    q =>
-                                        new SenderQueue
-                                        (q)), new List<ConnectionFactory>(),
+                        s.ConstructUsing(X => new SenderService(new Publisher(senderQueues, new List<ConnectionFactory>(),
                             new MessageFeeder(senderConfig.MaxFileSize,
                                 new DirectoryMonitor(senderConfig.LocalRootFolder), senderConfig.LocalRootFolder,new IOOperations()),
                             Convert.ToInt64(senderConfig.MinFreeMemory))));  

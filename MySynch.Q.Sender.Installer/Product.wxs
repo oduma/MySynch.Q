@@ -70,7 +70,8 @@
           DisplayName="MySynch Queue Sender"
           Description="Monitores folder [SRCROOTDIRVAL] and publishes any changes to all the queues at the *@[SRCQUEUEHOSTNAME]."
           Start="auto"
-          Account="NT Authority\NetworkService"
+          Account="[SERVICEACCOUNT]"
+          Password="[SERVICEPASSWORD]"
           ErrorControl="ignore"
           Interactive="no">
         </ServiceInstall>
