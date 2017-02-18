@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Linq;
 using MySynch.Q.Common.Contracts.Management;
 using Newtonsoft.Json;
@@ -12,7 +13,8 @@ namespace MySynch.Q.Tests
         [Test]
         public void DeserializeOk()
         {
-            var message = File.ReadAllText("example.json");
+            
+            var message = File.ReadAllText(Path.Combine(AppDomain.CurrentDomain.BaseDirectory,"example.json"));
             var messageObject = JsonConvert.DeserializeObject<NodeManagementMessage>(message);
             Assert.IsNotNull(messageObject);
             Assert.IsEmpty(messageObject.cluster_links);

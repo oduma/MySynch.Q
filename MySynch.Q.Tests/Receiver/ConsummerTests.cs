@@ -17,7 +17,7 @@ namespace MySynch.Q.Tests.Receiver
         {
             try
             {
-                var consummer = new Consummer(null, new MessageApplyer("abc"),"abc" );
+                var consummer = new Consummer(null, new MessageApplyer(".."),"abc" );
             }
             catch (ArgumentNullException argumentNullException)
             {
@@ -58,7 +58,7 @@ namespace MySynch.Q.Tests.Receiver
         {
             try
             {
-                var consummer = new Consummer(new ReceiverQueue(), new MessageApplyer("abc"), null);
+                var consummer = new Consummer(new ReceiverQueue(), new MessageApplyer(".."), null);
             }
             catch (ArgumentNullException argumentNullException)
             {
