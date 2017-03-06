@@ -76,7 +76,7 @@ namespace MySynch.Q.Sender
             {
                 if (!senderQueue.ShouldSendMessage(_minFreeMemory))
                 {
-                    LoggingManager.Debug("Queue " + senderQueue.QueueElement.Name +" on " + senderQueue.QueueElement.HostName +" sais NO!");
+                    LoggingManager.Debug("Queue " + senderQueue.QueueElement.QueueName +" on " + senderQueue.QueueElement.HostName +" sais NO!");
                     return false;
                 }
             }

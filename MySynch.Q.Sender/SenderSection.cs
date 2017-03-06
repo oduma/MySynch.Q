@@ -55,7 +55,7 @@ namespace MySynch.Q.Sender
 
         protected override object GetElementKey(ConfigurationElement element)
         {
-            return ((QueueElement)element).Name;
+            return ((QueueElement)element).QueueName;
         }
     }
 
@@ -63,14 +63,14 @@ namespace MySynch.Q.Sender
     {
         public QueueElement() { }
 
-        [ConfigurationProperty("name", DefaultValue = "", IsKey = true, IsRequired = true)]
+        [ConfigurationProperty("name", DefaultValue = "", IsRequired = true)]
         public string Name
         {
             get { return (string)this["name"]; }
             set { this["name"] = value; }
         }
 
-        [ConfigurationProperty("queueName", DefaultValue = "", IsRequired = true)]
+        [ConfigurationProperty("queueName", DefaultValue = "", IsKey = true, IsRequired = true)]
         public string QueueName
         {
             get { return (string)this["queueName"]; }

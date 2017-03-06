@@ -17,7 +17,7 @@ namespace MySynch.Q.Sender
 
         public SenderQueue(QueueElement queueElement)
         {
-            LoggingManager.Debug($"Constructing queue {queueElement.Name}...");
+            LoggingManager.Debug($"Constructing queue {queueElement.QueueName}...");
             QueueElement = queueElement;
         }
         public IConnection Connection { get; set; }
@@ -29,7 +29,7 @@ namespace MySynch.Q.Sender
 
         public void StartChannel(ConnectionFactory connectionFactory)
         {
-            LoggingManager.Debug(QueueElement.Name + " on " + connectionFactory.HostName + " with user: " + connectionFactory.UserName + " Channel starting up...");
+            LoggingManager.Debug(QueueElement.QueueName + " on " + connectionFactory.HostName + " with user: " + connectionFactory.UserName + " Channel starting up...");
             try
             {
                 lock (_lock)
@@ -43,18 +43,18 @@ namespace MySynch.Q.Sender
                     LoggingManager.Debug("Exiting lock for Thread: " + Thread.CurrentThread.ManagedThreadId);
                 }
 
-                LoggingManager.Debug(QueueElement.Name + " Channel started up.");
+                LoggingManager.Debug(QueueElement.QueueName + " Channel started up.");
             }
             catch (Exception ex)
             {
                 LoggingManager.LogSciendoSystemError(ex);
-                LoggingManager.Debug(QueueElement.Name + " Channel NOT started up.");
+                LoggingManager.Debug(QueueElement.QueueName + " Channel NOT started up.");
             }
         }
 
         public void StopChannel()
         {
-            LoggingManager.Debug(QueueElement.Name + " Channel shutting down...");
+            LoggingManager.Debug(QueueElement.QueueName + " Channel shutting down...");
             lock (_lock)
             {
                 LoggingManager.Debug("Entering lock for Thread: " + Thread.CurrentThread.ManagedThreadId);
@@ -64,7 +64,7 @@ namespace MySynch.Q.Sender
                     Connection.Close();
                 LoggingManager.Debug("Exeting lock for Thread: " + Thread.CurrentThread.ManagedThreadId);
             }
-            LoggingManager.Debug(QueueElement.Name + " Channel shutted down.");
+            LoggingManager.Debug(QueueElement.QueueName + " Channel shutted down.");
 
         }
 
@@ -104,7 +104,7 @@ namespace MySynch.Q.Sender
 
         public void SendMessage(byte[] message)
         {
-            LoggingManager.Debug("Sending message to " + QueueElement.Name +"...");
+            LoggingManager.Debug("Sending message to " + QueueElement.QueueName +"...");
             lock (_lock)
             {
                 LoggingManager.Debug("Entering lock for Thread: " + Thread.CurrentThread.ManagedThreadId);
@@ -112,7 +112,7 @@ namespace MySynch.Q.Sender
                 Channel.BasicPublish("", QueueElement.QueueName, true, null, message);
                 LoggingManager.Debug("Exiting lock for Thread: " + Thread.CurrentThread.ManagedThreadId);
             }
-            LoggingManager.Debug("Message sent to " + QueueElement.Name + ".");
+            LoggingManager.Debug("Message sent to " + QueueElement.QueueName + ".");
         }
 
     }
