@@ -8,7 +8,7 @@ namespace MySynch.Q.Receiver
     public class ReceiverQueue:ReceiverSection
     {
 
-        public void StartChannels()
+        public virtual void StartChannels()
         {
             LoggingManager.Debug(Name + " Channel starting up...");
 
@@ -37,20 +37,20 @@ namespace MySynch.Q.Receiver
 
         public IModel Channel { get; set; }
 
-        internal void StopChannels()
+        internal virtual void StopChannels()
         {
             LoggingManager.Debug(Name + " Channel shutting down...");
 
-            if (Channel != null && !Channel.IsClosed)
-                Channel.Close();
-            if (Connection != null && Connection.IsOpen)
-                Connection.Close();
+            //if (Channel != null && !Channel.IsClosed)
+            //    Channel.Close();
+            //if (Connection != null && Connection.IsOpen)
+            //    Connection.Close();
             LoggingManager.Debug(Name + " Channel shutted down.");
         }
 
         private QueueingBasicConsumer _consumer;
 
-        public byte[] GetMessage()
+        public virtual byte[] GetMessage()
         {
             Channel.QueueDeclare(QueueName, true, false, true, null);
             return ((BasicDeliverEventArgs)_consumer.Queue.Dequeue()).Body;

@@ -1,5 +1,7 @@
-﻿using MySynch.Q.Common.Configuration;
+﻿using System;
+using MySynch.Q.Common.Configuration;
 using System.Configuration;
+using System.Linq;
 
 namespace MySynch.Q.Sender
 {
@@ -13,12 +15,23 @@ namespace MySynch.Q.Sender
             set { this["minMem"] = value; }
         }
 
+        [ConfigurationProperty("maxFileSize", DefaultValue = 0, IsRequired = true)]
+        public int MaxFileSize
+        {
+            get { return (int)this["maxFileSize"]; }
+            set { this["maxFileSize"] = value; }
+        }
+
         [ConfigurationProperty("queues")]
         public QueueElementCollection Queues
         {
             get { return (QueueElementCollection)this["queues"]; }
         }
 
+        public override string ToString()
+        {
+            return $"{nameof(MinFreeMemory)}:{MinFreeMemory}\t{nameof(MaxFileSize)}:{MaxFileSize}\t{nameof(Queues)}:{Queues}";
+        }
     }
 
     [ConfigurationCollection(typeof(QueueElement))]
@@ -42,7 +55,7 @@ namespace MySynch.Q.Sender
 
         protected override object GetElementKey(ConfigurationElement element)
         {
-            return ((QueueElement)element).Name;
+            return ((QueueElement)element).QueueName;
         }
     }
 
@@ -50,14 +63,14 @@ namespace MySynch.Q.Sender
     {
         public QueueElement() { }
 
-        [ConfigurationProperty("name", DefaultValue = "", IsKey = true, IsRequired = true)]
+        [ConfigurationProperty("name", DefaultValue = "", IsRequired = true)]
         public string Name
         {
             get { return (string)this["name"]; }
             set { this["name"] = value; }
         }
 
-        [ConfigurationProperty("queueName", DefaultValue = "", IsRequired = true)]
+        [ConfigurationProperty("queueName", DefaultValue = "", IsKey = true, IsRequired = true)]
         public string QueueName
         {
             get { return (string)this["queueName"]; }

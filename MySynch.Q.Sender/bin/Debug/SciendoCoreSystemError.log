@@ -397,3 +397,103 @@ File name: 'C:\Code\work\Sciendo\MySynch.Q\Source-Debug\f2\f3\abc.txt'
    at System.Threading.TimerQueue.FireNextTimers()
    at System.Threading.TimerQueue.AppDomainTimerCallback()
 , 2017-02-13 15:40:26,959
+[(null)] , System.InvalidOperationException: There was an error generating the XML document. ---> System.OutOfMemoryException: Exception of type 'System.OutOfMemoryException' was thrown.
+   at System.IO.MemoryStream.set_Capacity(Int32 value)
+   at System.IO.MemoryStream.EnsureCapacity(Int32 value)
+   at System.IO.MemoryStream.Write(Byte[] buffer, Int32 offset, Int32 count)
+   at System.IO.StreamWriter.Flush(Boolean flushStream, Boolean flushEncoder)
+   at System.IO.StreamWriter.Write(Char[] buffer, Int32 index, Int32 count)
+   at System.Xml.XmlTextEncoder.WriteRaw(Char[] array, Int32 offset, Int32 count)
+   at System.Xml.XmlTextWriterBase64Encoder.WriteChars(Char[] chars, Int32 index, Int32 count)
+   at System.Xml.Base64Encoder.Encode(Byte[] buffer, Int32 index, Int32 count)
+   at System.Xml.XmlTextWriter.WriteBase64(Byte[] buffer, Int32 index, Int32 count)
+   at System.Xml.Serialization.XmlSerializationWriter.WriteElementStringRaw(String localName, String ns, Byte[] value, XmlQualifiedName xsiType)
+   at Microsoft.Xml.Serialization.GeneratedAssembly.XmlSerializationWriterBodyTransferMessage.Write2_BodyTransferMessage(String n, String ns, BodyTransferMessage o, Boolean isNullable, Boolean needType)
+   at Microsoft.Xml.Serialization.GeneratedAssembly.XmlSerializationWriterBodyTransferMessage.Write3_BodyTransferMessage(Object o)
+   --- End of inner exception stack trace ---
+   at System.Xml.Serialization.XmlSerializer.Serialize(XmlWriter xmlWriter, Object o, XmlSerializerNamespaces namespaces, String encodingStyle, String id)
+   at System.Xml.Serialization.XmlSerializer.Serialize(Stream stream, Object o, XmlSerializerNamespaces namespaces)
+   at Sciendo.Common.Serialization.Serializer.Serialize[T](T data)
+   at MySynch.Q.Sender.Publisher.PublishMessage(BodyTransferMessage message) in C:\Code\Sciendo\MySynch.Q\MySynch.Q.Sender\Publisher.cs:line 96
+   at MySynch.Q.Sender.MessageFeeder.fsWatcher_Changed(String path) in C:\Code\Sciendo\MySynch.Q\MySynch.Q.Sender\MessageFeeder.cs:line 123
+   at MySynch.Q.Common.DirectoryMonitor.FireEvent(String path, PendingEvent evt) in C:\Code\Sciendo\MySynch.Q\MySynch.Q.Common\DirectoryMonitor.cs:line 201
+   at MySynch.Q.Common.DirectoryMonitor.<>c__DisplayClass22_0.<OnTimeout>b__1(String key) in C:\Code\Sciendo\MySynch.Q\MySynch.Q.Common\DirectoryMonitor.cs:line 170
+   at System.Collections.Generic.List`1.ForEach(Action`1 action)
+   at MySynch.Q.Common.DirectoryMonitor.OnTimeout(Object state) in C:\Code\Sciendo\MySynch.Q\MySynch.Q.Common\DirectoryMonitor.cs:line 167
+   at System.Threading.TimerQueueTimer.CallCallbackInContext(Object state)
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state, Boolean preserveSyncCtx)
+   at System.Threading.ExecutionContext.Run(ExecutionContext executionContext, ContextCallback callback, Object state, Boolean preserveSyncCtx)
+   at System.Threading.TimerQueueTimer.CallCallback()
+   at System.Threading.TimerQueueTimer.Fire()
+   at System.Threading.TimerQueue.FireNextTimers()
+   at System.Threading.TimerQueue.AppDomainTimerCallback()
+, 2017-02-14 10:40:48,382
+[(null)] , System.OutOfMemoryException: Exception of type 'System.OutOfMemoryException' was thrown.
+   at System.String.CreateStringFromEncoding(Byte* bytes, Int32 byteLength, Encoding encoding)
+   at System.Text.UTF8Encoding.GetString(Byte[] bytes, Int32 index, Int32 count)
+   at System.Text.Encoding.GetString(Byte[] bytes)
+   at Sciendo.Common.Serialization.Serializer.Serialize[T](T data)
+   at MySynch.Q.Sender.Publisher.PublishMessage(BodyTransferMessage message) in C:\Code\Sciendo\MySynch.Q\MySynch.Q.Sender\Publisher.cs:line 96
+   at MySynch.Q.Sender.MessageFeeder.fsWatcher_Changed(String path) in C:\Code\Sciendo\MySynch.Q\MySynch.Q.Sender\MessageFeeder.cs:line 123
+   at MySynch.Q.Common.DirectoryMonitor.FireEvent(String path, PendingEvent evt) in C:\Code\Sciendo\MySynch.Q\MySynch.Q.Common\DirectoryMonitor.cs:line 201
+   at MySynch.Q.Common.DirectoryMonitor.<>c__DisplayClass22_0.<OnTimeout>b__1(String key) in C:\Code\Sciendo\MySynch.Q\MySynch.Q.Common\DirectoryMonitor.cs:line 170
+   at System.Collections.Generic.List`1.ForEach(Action`1 action)
+   at MySynch.Q.Common.DirectoryMonitor.OnTimeout(Object state) in C:\Code\Sciendo\MySynch.Q\MySynch.Q.Common\DirectoryMonitor.cs:line 167
+   at System.Threading.TimerQueueTimer.CallCallbackInContext(Object state)
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state, Boolean preserveSyncCtx)
+   at System.Threading.ExecutionContext.Run(ExecutionContext executionContext, ContextCallback callback, Object state, Boolean preserveSyncCtx)
+   at System.Threading.TimerQueueTimer.CallCallback()
+   at System.Threading.TimerQueueTimer.Fire()
+   at System.Threading.TimerQueue.FireNextTimers()
+   at System.Threading.TimerQueue.AppDomainTimerCallback()
+, 2017-02-14 10:40:48,588
+[(null)] , System.InvalidOperationException: There was an error generating the XML document. ---> System.OutOfMemoryException: Exception of type 'System.OutOfMemoryException' was thrown.
+   at System.IO.MemoryStream.set_Capacity(Int32 value)
+   at System.IO.MemoryStream.EnsureCapacity(Int32 value)
+   at System.IO.MemoryStream.Write(Byte[] buffer, Int32 offset, Int32 count)
+   at System.IO.StreamWriter.Flush(Boolean flushStream, Boolean flushEncoder)
+   at System.IO.StreamWriter.Write(Char[] buffer, Int32 index, Int32 count)
+   at System.Xml.XmlTextEncoder.WriteRaw(Char[] array, Int32 offset, Int32 count)
+   at System.Xml.XmlTextWriterBase64Encoder.WriteChars(Char[] chars, Int32 index, Int32 count)
+   at System.Xml.Base64Encoder.Encode(Byte[] buffer, Int32 index, Int32 count)
+   at System.Xml.XmlTextWriter.WriteBase64(Byte[] buffer, Int32 index, Int32 count)
+   at System.Xml.Serialization.XmlSerializationWriter.WriteElementStringRaw(String localName, String ns, Byte[] value, XmlQualifiedName xsiType)
+   at Microsoft.Xml.Serialization.GeneratedAssembly.XmlSerializationWriterBodyTransferMessage.Write2_BodyTransferMessage(String n, String ns, BodyTransferMessage o, Boolean isNullable, Boolean needType)
+   at Microsoft.Xml.Serialization.GeneratedAssembly.XmlSerializationWriterBodyTransferMessage.Write3_BodyTransferMessage(Object o)
+   --- End of inner exception stack trace ---
+   at System.Xml.Serialization.XmlSerializer.Serialize(XmlWriter xmlWriter, Object o, XmlSerializerNamespaces namespaces, String encodingStyle, String id)
+   at System.Xml.Serialization.XmlSerializer.Serialize(Stream stream, Object o, XmlSerializerNamespaces namespaces)
+   at Sciendo.Common.Serialization.Serializer.Serialize[T](T data)
+   at MySynch.Q.Sender.Publisher.PublishMessage(BodyTransferMessage message) in C:\Code\Sciendo\MySynch.Q\MySynch.Q.Sender\Publisher.cs:line 96
+   at MySynch.Q.Sender.MessageFeeder.fsWatcher_Changed(String path) in C:\Code\Sciendo\MySynch.Q\MySynch.Q.Sender\MessageFeeder.cs:line 123
+   at MySynch.Q.Common.DirectoryMonitor.FireEvent(String path, PendingEvent evt) in C:\Code\Sciendo\MySynch.Q\MySynch.Q.Common\DirectoryMonitor.cs:line 201
+   at MySynch.Q.Common.DirectoryMonitor.<>c__DisplayClass22_0.<OnTimeout>b__1(String key) in C:\Code\Sciendo\MySynch.Q\MySynch.Q.Common\DirectoryMonitor.cs:line 170
+   at System.Collections.Generic.List`1.ForEach(Action`1 action)
+   at MySynch.Q.Common.DirectoryMonitor.OnTimeout(Object state) in C:\Code\Sciendo\MySynch.Q\MySynch.Q.Common\DirectoryMonitor.cs:line 167
+   at System.Threading.TimerQueueTimer.CallCallbackInContext(Object state)
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state, Boolean preserveSyncCtx)
+   at System.Threading.ExecutionContext.Run(ExecutionContext executionContext, ContextCallback callback, Object state, Boolean preserveSyncCtx)
+   at System.Threading.TimerQueueTimer.CallCallback()
+   at System.Threading.TimerQueueTimer.Fire()
+   at System.Threading.TimerQueue.FireNextTimers()
+   at System.Threading.TimerQueue.AppDomainTimerCallback()
+, 2017-02-14 10:47:35,227
+[(null)] , System.OutOfMemoryException: Exception of type 'System.OutOfMemoryException' was thrown.
+   at System.String.CreateStringFromEncoding(Byte* bytes, Int32 byteLength, Encoding encoding)
+   at System.Text.UTF8Encoding.GetString(Byte[] bytes, Int32 index, Int32 count)
+   at System.Text.Encoding.GetString(Byte[] bytes)
+   at Sciendo.Common.Serialization.Serializer.Serialize[T](T data)
+   at MySynch.Q.Sender.Publisher.PublishMessage(BodyTransferMessage message) in C:\Code\Sciendo\MySynch.Q\MySynch.Q.Sender\Publisher.cs:line 96
+   at MySynch.Q.Sender.MessageFeeder.fsWatcher_Changed(String path) in C:\Code\Sciendo\MySynch.Q\MySynch.Q.Sender\MessageFeeder.cs:line 123
+   at MySynch.Q.Common.DirectoryMonitor.FireEvent(String path, PendingEvent evt) in C:\Code\Sciendo\MySynch.Q\MySynch.Q.Common\DirectoryMonitor.cs:line 201
+   at MySynch.Q.Common.DirectoryMonitor.<>c__DisplayClass22_0.<OnTimeout>b__1(String key) in C:\Code\Sciendo\MySynch.Q\MySynch.Q.Common\DirectoryMonitor.cs:line 170
+   at System.Collections.Generic.List`1.ForEach(Action`1 action)
+   at MySynch.Q.Common.DirectoryMonitor.OnTimeout(Object state) in C:\Code\Sciendo\MySynch.Q\MySynch.Q.Common\DirectoryMonitor.cs:line 167
+   at System.Threading.TimerQueueTimer.CallCallbackInContext(Object state)
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state, Boolean preserveSyncCtx)
+   at System.Threading.ExecutionContext.Run(ExecutionContext executionContext, ContextCallback callback, Object state, Boolean preserveSyncCtx)
+   at System.Threading.TimerQueueTimer.CallCallback()
+   at System.Threading.TimerQueueTimer.Fire()
+   at System.Threading.TimerQueue.FireNextTimers()
+   at System.Threading.TimerQueue.AppDomainTimerCallback()
+, 2017-02-14 10:47:35,432

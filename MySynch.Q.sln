@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.30501.0
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MySynch.Q.Sender", "MySynch.Q.Sender\MySynch.Q.Sender.csproj", "{3DA88B89-1B9F-4A96-B67F-316EC723A0D0}"
 EndProject
@@ -26,6 +26,11 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{A2D2B0BD-8D2C-4B7B-BEF4-E571A4D5EE5C}"
 	ProjectSection(SolutionItems) = preProject
 		.nuget\packages.config = .nuget\packages.config
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8A7D3EAF-90A1-4B11-A74D-2E25EC4C27FD}"
+	ProjectSection(SolutionItems) = preProject
+		.travis.yml = .travis.yml
 	EndProjectSection
 EndProject
 Global

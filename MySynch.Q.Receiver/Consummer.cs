@@ -1,38 +1,40 @@
-﻿using MySynch.Q.Common.Contracts;
-using RabbitMQ.Client.Events;
-using Sciendo.Common.Logging;
+﻿using Sciendo.Common.Logging;
 using System;
-using System.Collections.Generic;
+using System.CodeDom;
 using System.Configuration;
-using System.Linq;
+using System.IO;
 using System.Text;
 using System.Threading;
+using MySynch.Q.Common.Contracts;
 using Sciendo.Common.Serialization;
 
 namespace MySynch.Q.Receiver
 {
-    internal class Consummer
+    public class Consummer : IConsummer
     {
         private ReceiverQueue _receiverQueue;
         private string _rootPath;
+        private MessageApplyer _messageApplyer;
 
-        internal Consummer()
+        public Consummer(ReceiverQueue receiverQueue, MessageApplyer messageApplyer, string rootPath)
         {
             LoggingManager.Debug("Constructing Consummer...");
-            var receiverConfig = ConfigurationManager.GetSection("receiver") as ReceiverSection;
-            _rootPath = receiverConfig.LocalRootFolder;
-            _receiverQueue = new ReceiverQueue 
-                {   Name = receiverConfig.Name, 
-                    QueueName = receiverConfig.QueueName, 
-                    HostName = receiverConfig.HostName,
-                    UserName=receiverConfig.UserName,
-                    Password=receiverConfig.Password
-                };
+            if(string.IsNullOrEmpty(rootPath))
+                throw new ArgumentNullException(nameof(rootPath));
+            if(receiverQueue==null)
+                throw new ArgumentNullException(nameof(receiverQueue));
+            if(messageApplyer==null)
+                throw new ArgumentNullException(nameof(messageApplyer));
+            if (!Directory.Exists(rootPath))
+                throw new ArgumentException("Root Path not found.", nameof(rootPath));
+            _rootPath = rootPath;
+            _receiverQueue = receiverQueue;
+            _messageApplyer = messageApplyer;
             LoggingManager.Debug("Consummer Constructed.");
 
         }
 
-        internal void Initialize()
+        public void Initialize()
         {
             try
             {
@@ -47,23 +49,38 @@ namespace MySynch.Q.Receiver
             }
         }
 
-        internal void Stop()
+        public void Stop()
         {
-            LoggingManager.Debug("Stoping _consumer...");
+            LoggingManager.Debug("Stoping Consumer...");
             More = false;
             Thread.Sleep(2000);
             _receiverQueue.StopChannels();
-            LoggingManager.Debug("Publisher Stopped.");
+            LoggingManager.Debug("Consumer Stopped.");
         }
 
-        internal void TryStart(object obj)
+        public void TryStart(object obj)
         {
-            var messageApplyer = new MessageApplyer(_rootPath);
             More = true;
             LoggingManager.Debug("More: " + More);
             while(More)
             {
-                messageApplyer.ApplyMessage(_receiverQueue.GetMessage());
+                var messageBytes = _receiverQueue.GetMessage();
+                if(messageBytes==null || messageBytes.Length<=0)
+                    LoggingManager.Debug("Empty message taken from the queue.");
+                else
+                {
+                    var message = Serializer.Deserialize<BodyTransferMessage>(Encoding.UTF8.GetString(messageBytes));
+                    if (message == null)
+                        LoggingManager.Debug("Empty message after the deserialization.");
+                    try
+                    {
+                        _messageApplyer.ApplyMessage(message);
+                    }
+                    catch (Exception e)
+                    {
+                        LoggingManager.LogSciendoSystemError("Message not applied.",e);
+                    }
+                }
             }
         }
 
