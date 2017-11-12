@@ -1,21 +1,47 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Configuration;
+using System.Linq;
 using System.Threading.Tasks;
 using Sciendo.Common.Logging;
 using System.Threading;
+using MySynch.Q.Sender.Configuration;
 
 namespace MySynch.Q.Sender
 {
     public partial class SenderService
     {
-        private Publisher _sender;
-        private CancellationTokenSource _cancellationTokenSource;
-        private CancellationToken _cancellationToken;
+        private List<Publisher> _publishers;
         public SenderService()
         {
             LoggingManager.Debug("Constructing Sender...");
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
-            _sender = new Publisher();
+            _publishers = LoadAllPublishers();
             LoggingManager.Debug("Sender constructed.");
+        }
+
+        private List<Publisher> LoadAllPublishers()
+        {
+            var publishers = new List<Publisher>();
+            foreach (
+                var senderConfig in
+                ((SendersSection)ConfigurationManager.GetSection("sendersSection")).Senders.Cast<SenderElement>())
+            {
+                publishers.Add(
+                    new Publisher(
+                        senderConfig.Queues.Cast<QueueElement>()
+                            .Select(
+                                q =>
+                                    new SenderQueue
+                                    {
+                                        Name = q.Name,
+                                        HostName = q.HostName,
+                                        UserName = q.UserName,
+                                        Password = q.Password
+                                    })
+                            .ToArray(), senderConfig.MinFreeMemory, new MessageFeeder(senderConfig.LocalRootFolder)));
+            }
+            return publishers;
         }
 
         void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
@@ -26,45 +52,49 @@ namespace MySynch.Q.Sender
 
         public void Start()
         {
-            LoggingManager.Debug("Starting Sender...");
-            _sender.Initialize();
-            _cancellationTokenSource = new CancellationTokenSource();
-            _cancellationToken = _cancellationTokenSource.Token;
-            _cancellationToken.Register(_sender.Stop);
-            Task sendTask = new Task(_sender.TryStart,_cancellationToken);
-            sendTask.Start();
-            LoggingManager.Debug("Sender started.");
+            LoggingManager.Debug("Starting Senders...");
+            foreach (var publisher in _publishers)
+            {
+                publisher.Initialize();
+                publisher.CancellationTokenSource=new CancellationTokenSource();
+                publisher.CancellationToken = publisher.CancellationTokenSource.Token;
+                publisher.CancellationToken.Register(publisher.Stop);
+                Task currentSendTask= new Task(publisher.TryStart,publisher.CancellationToken);
+                currentSendTask.Start();
+            }
+            LoggingManager.Debug("Senders started.");
         }
 
         public void Stop()
         {
-            LoggingManager.Debug("Stoping Sender...");
+            LoggingManager.Debug("Stoping Senders...");
 
-            _cancellationTokenSource.Cancel();
-            LoggingManager.Debug("Sender stopped.");
-
+            foreach (var publisher in _publishers)
+            {
+                publisher.CancellationTokenSource.Cancel();
+            }
+            LoggingManager.Debug("Senders stopped.");
         }
 
         public void Continue()
         {
-            LoggingManager.Debug("Starting Sender...");
-            Task sendTask = new Task(_sender.TryStart, _cancellationToken);
-            sendTask.Start();
-            LoggingManager.Debug("Sender started.");
+            LoggingManager.Debug("Starting Senders...");
+            Start();
+            LoggingManager.Debug("Senders started.");
         }
 
         public void Pause()
         {
-            LoggingManager.Debug("Stoping Sender...");
-            _cancellationTokenSource.Cancel();
-            LoggingManager.Debug("Sender stoped.");
+            LoggingManager.Debug("Stoping Senders...");
+            Stop();
+            LoggingManager.Debug("Senders stoped.");
         }
 
         public void Shutdown()
         {
-            LoggingManager.Debug("Stoping Sender...");
-            _cancellationTokenSource.Cancel();
-            LoggingManager.Debug("Sender stopped.");
+            LoggingManager.Debug("Stoping Senders...");
+            Stop();
+            LoggingManager.Debug("Senders stopped.");
         }
 
     }

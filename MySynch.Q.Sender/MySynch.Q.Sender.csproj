@@ -77,16 +77,24 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Configuration\ExtensionElement.cs" />
+    <Compile Include="Configuration\ExtensionElementCollection.cs" />
     <Compile Include="MessageFeeder.cs" />
     <Compile Include="Publisher.cs" />
+    <Compile Include="Configuration\QueueElement.cs" />
+    <Compile Include="Configuration\QueueElementCollection.cs" />
+    <Compile Include="Configuration\SenderElement.cs" />
+    <Compile Include="Configuration\SenderElementCollection.cs" />
     <Compile Include="SenderQueue.cs" />
-    <Compile Include="SenderSection.cs" />
+    <Compile Include="Configuration\SendersSection.cs" />
     <Compile Include="SenderService.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="log4net.Debug.config">
       <DependentUpon>log4net.config</DependentUpon>
       <IsTransformFile>True</IsTransformFile>

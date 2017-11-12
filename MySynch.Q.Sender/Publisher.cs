@@ -1,10 +1,7 @@
 ﻿using MySynch.Q.Common.Contracts;
-using RabbitMQ.Client;
 using Sciendo.Common.Logging;
 using Sciendo.Common.Serialization;
 using System;
-using System.Collections.Generic;
-using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -13,31 +10,23 @@ namespace MySynch.Q.Sender
 {
     internal class Publisher
     {
-        private SenderSection _senderConfig;
 
-        internal Publisher()
+        private readonly string _minFreeMemory;
+
+        public CancellationTokenSource CancellationTokenSource { get; set; }
+
+        public CancellationToken CancellationToken { get; set; }
+
+        internal Publisher(SenderQueue[] senderQueues, string minFreeMemory, MessageFeeder messageFeeder)
         {
             LoggingManager.Debug("Constructing Publisher...");
-            _senderConfig = ConfigurationManager.GetSection("sender") as SenderSection;
-            _senderQueues =
-                _senderConfig.Queues.Cast<QueueElement>()
-                    .Select(
-                        q =>
-                            new SenderQueue
-                            {
-                                Name = q.Name,
-                                QueueName = q.QueueName,
-                                HostName = q.HostName,
-                                UserName = q.UserName,
-                                Password = q.Password
-                            })
-                    .ToArray();
-            _connectionFactories = new List<ConnectionFactory>();
+            _senderQueues = senderQueues;
+            _minFreeMemory = minFreeMemory;
+            _messageFeeder = messageFeeder;
             LoggingManager.Debug("Publisher Constructed.");
         }
 
-        SenderQueue[] _senderQueues;
-        List<ConnectionFactory> _connectionFactories;
+        private readonly SenderQueue[] _senderQueues;
 
         internal void Initialize()
         {
@@ -47,13 +36,7 @@ namespace MySynch.Q.Sender
                 
                 foreach (var senderQueue in _senderQueues)
                 {
-                    var connectionFactory = _connectionFactories.FirstOrDefault(f => f.HostName == senderQueue.HostName);
-                    if (connectionFactory == null)
-                    {
-                        connectionFactory = new ConnectionFactory { HostName = senderQueue.HostName, UserName = senderQueue.UserName, Password = senderQueue.Password };
-                        _connectionFactories.Add(connectionFactory);
-                    }
-                    senderQueue.StartChannel(connectionFactory);
+                    senderQueue.StartChannel();
                 }
                 LoggingManager.Debug("Publisher Initialized.");
             }
@@ -66,13 +49,7 @@ namespace MySynch.Q.Sender
 
         internal void TryStart()
         {
-            if (_messageFeeder == null)
-                _messageFeeder = new MessageFeeder();
-            if (!_messageFeeder.More)
-                _messageFeeder.Initialize(_senderConfig.LocalRootFolder);
-            this._messageFeeder.More = true;
-            this._messageFeeder.PublishMessage = PublishMessage;
-            this._messageFeeder.ShouldPublishMessage = ShouldPublishMessage;
+            _messageFeeder.Initialize(true, PublishMessage, ShouldPublishMessage);
         }
 
         private bool ShouldPublishMessage()
@@ -80,9 +57,9 @@ namespace MySynch.Q.Sender
             LoggingManager.Debug("Should Publish Message...");
             foreach (var senderQueue in _senderQueues.Where(q => q.Channel != null && !q.Channel.IsClosed))
             {
-                if (!senderQueue.ShouldSendMessage(_senderConfig.MinFreeMemory))
+                if (!senderQueue.ShouldSendMessage(_minFreeMemory))
                 {
-                    LoggingManager.Debug("Queue " + senderQueue.Name +" on " + senderQueue.HostName +" sais NO!");
+                    LoggingManager.Debug("Queue " + senderQueue.Name + " on " + senderQueue.HostName + " sais NO!");
                     return false;
                 }
             }
@@ -95,13 +72,8 @@ namespace MySynch.Q.Sender
             LoggingManager.Debug("Publishing Message...");
             var tempMessage = Serializer.Serialize<BodyTransferMessage>(message);
             byte[] rawMessage = Encoding.UTF8.GetBytes(tempMessage);
-            foreach (var senderQueue in _senderQueues.Where(q => q.Channel != null))
+            foreach (var senderQueue in _senderQueues)
             {
-                if (senderQueue.Channel.IsClosed)
-                {
-                    LoggingManager.Debug("Channel closed reopening it...");
-                    senderQueue.StartChannel(_connectionFactories.FirstOrDefault());
-                }
                 senderQueue.SendMessage(rawMessage);
             }
             LoggingManager.Debug("Message Published.");
@@ -119,6 +91,6 @@ namespace MySynch.Q.Sender
             LoggingManager.Debug("Publisher Stopped.");
         }
 
-        private MessageFeeder _messageFeeder;
+        private readonly MessageFeeder _messageFeeder;
     }
 }

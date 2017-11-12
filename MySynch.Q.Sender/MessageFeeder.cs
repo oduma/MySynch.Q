@@ -2,10 +2,7 @@
 using MySynch.Q.Common.Contracts;
 using Sciendo.Common.Logging;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading;
 
 namespace MySynch.Q.Sender
@@ -158,10 +155,10 @@ namespace MySynch.Q.Sender
         private DirectoryMonitor _fsWatcher;
         private string _rootPath;
 
-        public void Initialize(string localRootFolder)
-        {
-            LoggingManager.Debug(localRootFolder + " Initializing _messageFeeder...");
 
+        public MessageFeeder(string localRootFolder)
+        {
+            LoggingManager.Debug("Constructing _messageFeeder...");
             if (string.IsNullOrEmpty(localRootFolder))
                 throw new ArgumentNullException("localRootFolder");
             if (!Directory.Exists(localRootFolder))
@@ -175,12 +172,6 @@ namespace MySynch.Q.Sender
             _fsWatcher.Delete += fsWatcher_Deleted;
             _fsWatcher.Rename += fsWatcher_Renamed;
             _fsWatcher.Start();
-            LoggingManager.Debug(localRootFolder + " Initialized _messageFeeder...");
-        }
-
-        public MessageFeeder()
-        {
-            LoggingManager.Debug("Constructing _messageFeeder...");
             LoggingManager.Debug("_messageFeeder Constructed.");
 
         }
@@ -190,5 +181,12 @@ namespace MySynch.Q.Sender
         public Func<bool> ShouldPublishMessage { get; set; } 
 
         public bool More { get; set; }
+
+        public void Initialize(bool acceptMessages, Action<BodyTransferMessage> publishMessage, Func<bool> shouldPublishMessage)
+        {
+            More = acceptMessages;
+            PublishMessage = publishMessage;
+            ShouldPublishMessage = shouldPublishMessage;
+        }
     }
 }

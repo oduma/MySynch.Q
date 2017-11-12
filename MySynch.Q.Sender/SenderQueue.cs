@@ -8,6 +8,7 @@ using Newtonsoft.Json;
 using RabbitMQ.Client;
 using Sciendo.Common.Logging;
 using System;
+using MySynch.Q.Sender.Configuration;
 
 namespace MySynch.Q.Sender
 {
@@ -20,21 +21,27 @@ namespace MySynch.Q.Sender
 
         private static object _lock = new object();
 
-        public void StartChannel(ConnectionFactory connectionFactory)
+        private ConnectionFactory _connectionFactory;
+
+        public void StartChannel()
         {
-            LoggingManager.Debug(Name + " on " + connectionFactory.HostName + " with user: " + connectionFactory.UserName + " Channel starting up...");
             try
             {
-                if(Connection==null  || !Connection.IsOpen)
-                    Connection = connectionFactory.CreateConnection();
-                if(Channel==null || Channel.IsClosed)
+                LoggingManager.Debug(Name + " on " + _connectionFactory.HostName + " with user: " + _connectionFactory.UserName + " Channel starting up...");
+                if (_connectionFactory == null)
+                {
+                    _connectionFactory = new ConnectionFactory { HostName = HostName, UserName = UserName, Password = Password };
+                }
+                if (Connection == null || !Connection.IsOpen)
+                    Connection = _connectionFactory.CreateConnection();
+                if (Channel == null || Channel.IsClosed)
                     Channel = Connection.CreateModel();
                 Channel.QueueDeclare(QueueName, true, false, true, null);
                 LoggingManager.Debug(Name + " Channel started up.");
             }
-            catch (Exception ex)
+            catch (Exception exception)
             {
-                LoggingManager.LogSciendoSystemError(ex);
+                LoggingManager.LogSciendoSystemError(exception);
                 LoggingManager.Debug(Name + " Channel NOT started up.");
             }
         }
@@ -88,7 +95,7 @@ namespace MySynch.Q.Sender
         public void SendMessage(byte[] message)
         {
             LoggingManager.Debug("Sending message to " + Name +"...");
-            Channel.QueueDeclare(QueueName, true, false, true, null);
+            StartChannel();
             Channel.BasicPublish("", QueueName, true, null, message);
             LoggingManager.Debug("Message sent to " + Name + ".");
         }
