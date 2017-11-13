@@ -10,26 +10,26 @@ namespace MySynch.Q.Receiver
 
         public void StartChannels()
         {
-            LoggingManager.Debug(Name + " Channel starting up...");
+            //LoggingManager.Debug(Name + " Channel starting up...");
 
-            try
-            {
-               if(Connection==null || ! Connection.IsOpen)
-                Connection = new ConnectionFactory { HostName = HostName,UserName=UserName,Password=Password}.CreateConnection();
-               if(Channel==null || !Channel.IsOpen)
-                Channel = Connection.CreateModel();
+            //try
+            //{
+            //   if(Connection==null || ! Connection.IsOpen)
+            //    Connection = new ConnectionFactory { HostName = HostName,UserName=UserName,Password=Password}.CreateConnection();
+            //   if(Channel==null || !Channel.IsOpen)
+            //    Channel = Connection.CreateModel();
 
-               Channel.QueueDeclare(QueueName, true, false, true, null);
+            //   Channel.QueueDeclare(QueueName, true, false, true, null);
 
-                _consumer = new QueueingBasicConsumer(Channel);
-                Channel.BasicConsume(QueueName, true, _consumer);
-                LoggingManager.Debug(Name + " Channel started up.");
-            }
-            catch (Exception ex)
-            {
-                LoggingManager.LogSciendoSystemError(ex);
-                LoggingManager.Debug(Name + " Channel NOT started up.");
-            }
+            //    _consumer = new QueueingBasicConsumer(Channel);
+            //    Channel.BasicConsume(QueueName, true, _consumer);
+            //    LoggingManager.Debug(Name + " Channel started up.");
+            //}
+            //catch (Exception ex)
+            //{
+            //    LoggingManager.LogSciendoSystemError(ex);
+            //    LoggingManager.Debug(Name + " Channel NOT started up.");
+            //}
 
         }
 
@@ -39,21 +39,22 @@ namespace MySynch.Q.Receiver
 
         internal void StopChannels()
         {
-            LoggingManager.Debug(Name + " Channel shutting down...");
+            //LoggingManager.Debug(Name + " Channel shutting down...");
 
             if (Channel != null && !Channel.IsClosed)
                 Channel.Close();
             if (Connection != null && Connection.IsOpen)
                 Connection.Close();
-            LoggingManager.Debug(Name + " Channel shutted down.");
+            //LoggingManager.Debug(Name + " Channel shutted down.");
         }
 
         private QueueingBasicConsumer _consumer;
 
         public byte[] GetMessage()
         {
-            Channel.QueueDeclare(QueueName, true, false, true, null);
-            return ((BasicDeliverEventArgs)_consumer.Queue.Dequeue()).Body;
+            //Channel.QueueDeclare(QueueName, true, false, true, null);
+            //return ((BasicDeliverEventArgs)_consumer.Queue.Dequeue()).Body;
+            return null;
         } 
     }
 }

@@ -19,15 +19,15 @@ namespace MySynch.Q.Receiver
         internal Consummer()
         {
             LoggingManager.Debug("Constructing Consummer...");
-            var receiverConfig = ConfigurationManager.GetSection("receiver") as ReceiverSection;
-            _rootPath = receiverConfig.LocalRootFolder;
-            _receiverQueue = new ReceiverQueue 
-                {   Name = receiverConfig.Name, 
-                    QueueName = receiverConfig.QueueName, 
-                    HostName = receiverConfig.HostName,
-                    UserName=receiverConfig.UserName,
-                    Password=receiverConfig.Password
-                };
+            var receiverConfig = ConfigurationManager.GetSection("receiversSection") as ReceiverSection;
+            //_rootPath = receiverConfig.LocalRootFolder;
+            //_receiverQueue = new ReceiverQueue 
+            //    {   Name = receiverConfig.Name, 
+            //        QueueName = receiverConfig.QueueName, 
+            //        HostName = receiverConfig.HostName,
+            //        UserName=receiverConfig.UserName,
+            //        Password=receiverConfig.Password
+            //    };
             LoggingManager.Debug("Consummer Constructed.");
 
         }

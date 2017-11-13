@@ -72,6 +72,8 @@
   <ItemGroup>
     <Compile Include="Consummer.cs" />
     <Compile Include="MessageApplyer.cs" />
+    <Compile Include="ReceiverElement.cs" />
+    <Compile Include="ReceiverElementCollection.cs" />
     <Compile Include="ReceiverQueue.cs" />
     <Compile Include="ReceiverService.cs" />
     <Compile Include="Program.cs" />
