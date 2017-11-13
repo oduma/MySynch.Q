@@ -1,6 +1,6 @@
 ﻿using System.Configuration;
 
-namespace MySynch.Q.Receiver
+namespace MySynch.Q.Receiver.Configuration
 {
     public class ReceiverElementCollection:ConfigurationElementCollection
     {

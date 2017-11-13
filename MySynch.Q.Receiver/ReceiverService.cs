@@ -1,21 +1,44 @@
 ﻿using Sciendo.Common.Logging;
 using System;
+using System.Collections.Generic;
+using System.Configuration;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using MySynch.Q.Receiver.Configuration;
 
 namespace MySynch.Q.Receiver
 {
     public partial class ReceiverService
     {
-        private Consummer _receiver;
-        private CancellationTokenSource _cancellationTokenSource;
-        private CancellationToken _cancellationToken;
+        private List<Consummer> _consummers;
         public ReceiverService()
         {
-            LoggingManager.Debug("Constructing Receiver...");
+            LoggingManager.Debug("Constructing Receivers...");
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
-            _receiver = new Consummer();
-            LoggingManager.Debug("Receiver constructed.");
+            _consummers = LoadAllConsummers();
+
+            LoggingManager.Debug("Receivers constructed.");
+        }
+
+        private List<Consummer> LoadAllConsummers()
+        {
+            var consummers = new List<Consummer>();
+            
+
+            foreach (var receiver in ((ReceiversSection)ConfigurationManager.GetSection("receiversSection")).Receivers.Cast<ReceiverElement>())
+            {
+                consummers.Add(new Consummer(new MessageApplyer(receiver.LocalRootFolder), new ReceiverQueue
+                {
+                    Name = receiver.Name,
+                    QueueName = receiver.QueueName,
+                    HostName = receiver.HostName,
+                    UserName = receiver.UserName,
+                    Password = receiver.Password
+                }));
+            }
+
+            return consummers;
         }
 
         void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
@@ -26,46 +49,46 @@ namespace MySynch.Q.Receiver
 
         public void Start()
         {
-            LoggingManager.Debug("Starting Receiver...");
-            _receiver.Initialize();
-            _cancellationTokenSource = new CancellationTokenSource();
-            _cancellationToken = _cancellationTokenSource.Token;
-            _cancellationToken.Register(_receiver.Stop);
-            Task sendTask = new Task(_receiver.TryStart, _cancellationToken);
-            sendTask.Start();
-            LoggingManager.Debug("Receiver started.");
+            LoggingManager.Debug("Starting Receivers...");
+            foreach (var consummer in _consummers)
+            {
+                consummer.Initialize(new CancellationTokenSource());
+                Task currentReceiveTask = new Task(consummer.TryStart, consummer.CancellationToken);
+                currentReceiveTask.Start();
+            }
+            LoggingManager.Debug("Receivers started.");
         }
 
         public void Stop()
         {
-            LoggingManager.Debug("Stoping Receiver...");
-
-            _cancellationTokenSource.Cancel();
-            LoggingManager.Debug("Receiver stopped.");
-
+            LoggingManager.Debug("Stoping Receivers...");
+            foreach (var consummer in _consummers)
+            {
+                consummer.CancellationTokenSource.Cancel();
+            }
+            LoggingManager.Debug("Receivers stopped.");
         }
         public void Pause()
         {
-            LoggingManager.Debug("Stoping Receiver...");
+            LoggingManager.Debug("Stoping Receivers...");
 
-            _cancellationTokenSource.Cancel();
-            LoggingManager.Debug("Receiver stopped.");
+            Stop();
+            LoggingManager.Debug("Receivers stopped.");
 
         }
 
         public void Continue()
         {
-            LoggingManager.Debug("Starting Receiver...");
-            Task sendTask = new Task(_receiver.TryStart, _cancellationToken);
-            sendTask.Start();
-            LoggingManager.Debug("Receiver started.");
+            LoggingManager.Debug("Starting Receivers...");
+            Start();
+            LoggingManager.Debug("Receivers started.");
         }
 
         public void Shutdown()
         {
-            LoggingManager.Debug("Stoping Receiver...");
-            _cancellationTokenSource.Cancel();
-            LoggingManager.Debug("Receiver stopped.");
+            LoggingManager.Debug("Stoping Receivers...");
+            Stop();
+            LoggingManager.Debug("Receivers stopped.");
         }
     }
 }

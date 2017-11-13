@@ -72,13 +72,13 @@
   <ItemGroup>
     <Compile Include="Consummer.cs" />
     <Compile Include="MessageApplyer.cs" />
-    <Compile Include="ReceiverElement.cs" />
-    <Compile Include="ReceiverElementCollection.cs" />
+    <Compile Include="Configuration\ReceiverElement.cs" />
+    <Compile Include="Configuration\ReceiverElementCollection.cs" />
     <Compile Include="ReceiverQueue.cs" />
     <Compile Include="ReceiverService.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ReceiverSection.cs" />
+    <Compile Include="Configuration\ReceiversSection.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">

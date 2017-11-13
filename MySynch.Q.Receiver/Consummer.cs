@@ -1,42 +1,33 @@
-﻿using MySynch.Q.Common.Contracts;
-using RabbitMQ.Client.Events;
-using Sciendo.Common.Logging;
+﻿using Sciendo.Common.Logging;
 using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using Sciendo.Common.Serialization;
 
 namespace MySynch.Q.Receiver
 {
     internal class Consummer
     {
-        private ReceiverQueue _receiverQueue;
-        private string _rootPath;
+        private readonly ReceiverQueue _receiverQueue;
+        private readonly MessageApplyer _messageApplyer;
+        public CancellationTokenSource CancellationTokenSource { get; set; }
+        public CancellationToken CancellationToken { get; set; }
 
-        internal Consummer()
+        internal Consummer(MessageApplyer messageApplyer, ReceiverQueue receiverQueue)
         {
             LoggingManager.Debug("Constructing Consummer...");
-            var receiverConfig = ConfigurationManager.GetSection("receiversSection") as ReceiverSection;
-            //_rootPath = receiverConfig.LocalRootFolder;
-            //_receiverQueue = new ReceiverQueue 
-            //    {   Name = receiverConfig.Name, 
-            //        QueueName = receiverConfig.QueueName, 
-            //        HostName = receiverConfig.HostName,
-            //        UserName=receiverConfig.UserName,
-            //        Password=receiverConfig.Password
-            //    };
+            _messageApplyer = messageApplyer;
+            _receiverQueue = receiverQueue;
             LoggingManager.Debug("Consummer Constructed.");
 
         }
 
-        internal void Initialize()
+        internal void Initialize(CancellationTokenSource cancellationTokenSource)
         {
             try
             {
                 LoggingManager.Debug("Initializing Consummer ...");
+                CancellationTokenSource = cancellationTokenSource;
+                CancellationToken = CancellationTokenSource.Token;
+                CancellationToken.Register(Stop);
                 _receiverQueue.StartChannels();
                 LoggingManager.Debug("Consummer Initialized.");
             }
@@ -58,12 +49,11 @@ namespace MySynch.Q.Receiver
 
         internal void TryStart(object obj)
         {
-            var messageApplyer = new MessageApplyer(_rootPath);
             More = true;
             LoggingManager.Debug("More: " + More);
             while(More)
             {
-                messageApplyer.ApplyMessage(_receiverQueue.GetMessage());
+                _messageApplyer.ApplyMessage(_receiverQueue.GetMessage());
             }
         }
 
