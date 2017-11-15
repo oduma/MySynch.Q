@@ -1,7 +1,0 @@
-..\receiver\log4net.config
-..\receiver\log4net.dll
-..\receiver\MySynch.Q.Common.dll
-..\receiver\Sciendo.Common.dll
-..\receiver\RabbitMQ.Client.dll
-..\receiver\MySynch.Q.Receiver.exe
-..\receiver\MySynch.Q.Receiver.exe.config
