@@ -1,9 +1,0 @@
-..\sender\log4net.config
-..\sender\RabbitMQ.Client.dll
-..\sender\Topshelf.dll
-..\sender\Sciendo.Common.dll
-..\sender\log4net.dll
-..\sender\Newtonsoft.Json.dll
-..\sender\MySynch.Q.Common.dll
-..\sender\MySynch.Q.Sender.exe
-..\sender\MySynch.Q.Sender.exe.config
