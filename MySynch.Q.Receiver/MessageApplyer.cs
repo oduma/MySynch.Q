@@ -2,18 +2,26 @@
 using Sciendo.Common.Logging;
 using Sciendo.Common.Serialization;
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using Sciendo.Common.IO;
+using Sciendo.Common.MySynchExtensions;
 
 namespace MySynch.Q.Receiver
 {
     public class MessageApplyer
     {
         private readonly string _rootPath;
-        public MessageApplyer(string rootPath)
+        private readonly IEnumerable<ITextMessageTranslator> _textMessageTranslators;
+        private readonly IEnumerable<IBinaryMessageTranslator> _binaryMessageTranslators;
+
+        public MessageApplyer(string rootPath,IEnumerable<ITextMessageTranslator> textMessageTranslators, IEnumerable<IBinaryMessageTranslator> binaryMessageTranslators)
         {
             _rootPath = rootPath;
+            _textMessageTranslators = textMessageTranslators;
+            _binaryMessageTranslators = binaryMessageTranslators;
         }
 
         internal void ApplyMessage(byte[] message)
@@ -21,13 +29,13 @@ namespace MySynch.Q.Receiver
             LoggingManager.Debug("Applying a message...");
             if (message != null && message.Length > 0)
             {
-                var msgWithBody= Serializer.Deserialize<TransferMessage>(Encoding.UTF8.GetString(message));
-                if (msgWithBody.Body == null)
-                    ApplyDelete(msgWithBody.SourceRootPath ,msgWithBody.Name);
-                else if (msgWithBody.BodyType == BodyType.Binary)
-                    ApplyBinaryUpSert(msgWithBody.SourceRootPath, msgWithBody.Name, (byte[]) msgWithBody.Body);
+                var transferMessage= Serializer.Deserialize<TransferMessage>(Encoding.UTF8.GetString(message));
+                if (transferMessage.Body == null)
+                    ApplyDelete(transferMessage.SourceRootPath ,transferMessage.Name);
+                else if (transferMessage.BodyType == BodyType.Binary)
+                    ApplyBinaryUpSert(transferMessage.SourceRootPath, transferMessage.Name, (byte[]) transferMessage.Body);
                 else
-                    ApplyTextUpSert(msgWithBody.SourceRootPath, msgWithBody.Name, (string) msgWithBody.Body);
+                    ApplyTextUpSert(transferMessage.SourceRootPath, transferMessage.Name, (string) transferMessage.Body);
                 LoggingManager.Debug("Message applied.");
             }
             else

@@ -41,7 +41,7 @@ namespace MySynch.Q.Sender
                                         UserName = q.UserName,
                                         Password = q.Password
                                     })
-                            .ToArray(), senderConfig.MinFreeMemory, new MessageFeeder(senderConfig.LocalRootFolder)));
+                            .ToArray(), senderConfig.MinFreeMemory, new MessageFeeder(senderConfig.LocalRootFolder,senderConfig.MessageBodyType)));
             }
             LoggingManager.Debug("Publishers loaded.");
             return publishers;

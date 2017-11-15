@@ -44,7 +44,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Contracts\BodyTransferMessage.cs" />
+    <Compile Include="Contracts\BodyType.cs" />
+    <Compile Include="Contracts\TransferMessage.cs" />
     <Compile Include="Contracts\Management\ContextMessage.cs" />
     <Compile Include="Contracts\Management\DetailMessage.cs" />
     <Compile Include="Contracts\Management\DetailMessageBase.cs" />

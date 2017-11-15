@@ -67,10 +67,10 @@ namespace MySynch.Q.Sender
             return true;
         }
 
-        internal void PublishMessage(BodyTransferMessage message)
+        internal void PublishMessage(TransferMessage message)
         {
             LoggingManager.Debug("Publishing Message...");
-            var tempMessage = Serializer.Serialize<BodyTransferMessage>(message);
+            var tempMessage = Serializer.Serialize<TransferMessage>(message);
             byte[] rawMessage = Encoding.UTF8.GetBytes(tempMessage);
             foreach (var senderQueue in _senderQueues)
             {

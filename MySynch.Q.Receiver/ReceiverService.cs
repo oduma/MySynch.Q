@@ -28,7 +28,7 @@ namespace MySynch.Q.Receiver
 
             foreach (var receiver in ((ReceiversSection)ConfigurationManager.GetSection("receiversSection")).Receivers.Cast<ReceiverElement>())
             {
-                consummers.Add(new Consummer(new MessageApplyer(receiver.LocalRootFolder), new ReceiverQueue
+                consummers.Add(new Consummer(new MessageApplyer(receiver.LocalRootFolder,null,null), new ReceiverQueue
                 {
                     Name = receiver.Name,
                     QueueName = receiver.QueueName,
