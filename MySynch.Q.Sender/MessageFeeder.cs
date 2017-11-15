@@ -10,6 +10,8 @@ namespace MySynch.Q.Sender
 {
     public class MessageFeeder
     {
+        private readonly BodyType _messageBodyType;
+
         private void fsWatcher_Renamed(string oldPath, string newPath)
         {
             if (!More)
@@ -37,21 +39,34 @@ namespace MySynch.Q.Sender
                 LoggingManager.Debug("Waiting 5 seconds queue is busy...");
                 Thread.Sleep(5000);
             }
-            PublishMessage(new BodyTransferMessage { Name = oldPath, Body = null,SourceRootPath=RootPath });
-            PublishMessage(new BodyTransferMessage { Name = newPath, Body = GetFileContent(newPath),SourceRootPath=RootPath });
+            PublishMessage(new TransferMessage { BodyType = _messageBodyType, Name = oldPath, Body = null,SourceRootPath=RootPath });
+            PublishMessage(new TransferMessage { BodyType = _messageBodyType, Name = newPath, Body = GetFileContent(newPath),SourceRootPath=RootPath });
 
         }
 
-        private byte[] GetFileContent(string filePath)
+        private object GetFileContent(string filePath)
         {
+            if (_messageBodyType == BodyType.Binary)
+            {
+                return GetBinaryFileContent(filePath);
+            }
+            if (_messageBodyType == BodyType.Text)
+                return new TextFileReader().Read(filePath);
+            return null;
+        }
+
+        private byte[] GetBinaryFileContent(string filePath )
+        {
+
             FileInfo fInfo = new FileInfo(filePath);
 
             byte[] buffer = new byte[fInfo.Length];
-            using(var fs = File.OpenRead(filePath))
+            using (var fs = File.OpenRead(filePath))
             {
                 fs.Read(buffer, 0, (int)fInfo.Length);
                 return buffer;
             }
+
         }
 
         private void fsWatcher_Deleted(string path)
@@ -74,7 +89,7 @@ namespace MySynch.Q.Sender
                 LoggingManager.Debug("Waiting 5 seconds queue is busy...");
                 Thread.Sleep(5000);
             }
-            PublishMessage(new BodyTransferMessage { Name = path, Body = null, SourceRootPath = RootPath });
+            PublishMessage(new TransferMessage { BodyType = _messageBodyType, Name = path, Body = null, SourceRootPath = RootPath });
         }
 
         private void StopFeeder()
@@ -118,7 +133,7 @@ namespace MySynch.Q.Sender
                 LoggingManager.Debug("Waiting 5 seconds queue is busy...");
                 Thread.Sleep(5000);
             }
-            PublishMessage(new BodyTransferMessage { Name = path, Body = GetFileContent(path), SourceRootPath = RootPath });
+            PublishMessage(new TransferMessage { BodyType = _messageBodyType, Name = path, Body = GetFileContent(path), SourceRootPath = RootPath });
         }
 
         static bool IsFileLocked(FileInfo file)
@@ -157,8 +172,9 @@ namespace MySynch.Q.Sender
         public string RootPath { get; private set; }
 
 
-        public MessageFeeder(string localRootFolder, params string[] filterExtensions)
+        public MessageFeeder(string localRootFolder, BodyType messageBodyType, params string[] filterExtensions)
         {
+            _messageBodyType = messageBodyType;
             LoggingManager.Debug("Constructing _messageFeeder...");
             if (string.IsNullOrEmpty(localRootFolder))
                 throw new ArgumentNullException(nameof(localRootFolder));
@@ -177,13 +193,13 @@ namespace MySynch.Q.Sender
 
         }
 
-        public Action<BodyTransferMessage> PublishMessage { get; set; }
+        public Action<TransferMessage> PublishMessage { get; set; }
 
         public Func<bool> ShouldPublishMessage { get; set; } 
 
         public bool More { get; set; }
 
-        public void Initialize(bool acceptMessages, Action<BodyTransferMessage> publishMessage, Func<bool> shouldPublishMessage)
+        public void Initialize(bool acceptMessages, Action<TransferMessage> publishMessage, Func<bool> shouldPublishMessage)
         {
             More = acceptMessages;
             PublishMessage = publishMessage;
