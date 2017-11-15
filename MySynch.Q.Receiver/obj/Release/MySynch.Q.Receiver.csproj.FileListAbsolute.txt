@@ -22,10 +22,3 @@ C:\Code\m\MySynch.Q\receiver\log4net.config
 C:\Code\m\MySynch.Q\receiver\MySynch.Q.Receiver.exe.config
 C:\Code\m\MySynch.Q\receiver\MySynch.Q.Receiver.exe
 C:\Code\m\MySynch.Q\receiver\MySynch.Q.Receiver.pdb
-C:\Code\Sciendo\MySynch.Q\MySynch.Q.Receiver\obj\Release\MySynch.Q.Receiver.csprojResolveAssemblyReference.cache
-C:\Code\Sciendo\MySynch.Q\receiver\log4net.config
-C:\Code\Sciendo\MySynch.Q\receiver\MySynch.Q.Receiver.exe.config
-C:\Code\Sciendo\MySynch.Q\receiver\MySynch.Q.Receiver.exe
-C:\Code\Sciendo\MySynch.Q\receiver\MySynch.Q.Receiver.pdb
-C:\Code\Sciendo\MySynch.Q\MySynch.Q.Receiver\obj\Release\MySynch.Q.Receiver.exe
-C:\Code\Sciendo\MySynch.Q\MySynch.Q.Receiver\obj\Release\MySynch.Q.Receiver.pdb
