@@ -43,9 +43,14 @@ namespace MySynch.Q.Receiver
                 var localFolder = Path.GetDirectoryName(localFileName);
                 if(!Directory.Exists(localFolder))
                     Directory.CreateDirectory(localFolder);
-                using (var fs = File.Create(localFileName, body.Length))
+                if(body.Length==0)
+                    File.WriteAllText(localFileName,string.Empty);
+                else
                 {
-                    fs.Write(body, 0, body.Length);
+                    using (var fs = File.Create(localFileName, body.Length))
+                    {
+                        fs.Write(body, 0, body.Length);
+                    }
                 }
                 LoggingManager.Debug("Upsert applied.");
             }

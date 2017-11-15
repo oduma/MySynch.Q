@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.ExceptionServices;
 using System.ServiceProcess;
 using System.Text;
 using System.Threading.Tasks;
+using log4net.Core;
 using Topshelf;
+using Sciendo.Common.Logging;
 
 namespace MySynch.Q.Sender
 {
@@ -26,19 +29,9 @@ namespace MySynch.Q.Sender
                         s.WhenShutdown(tc => tc.Shutdown());
                         s.WhenContinued(tc => tc.Continue());
                         s.WhenPaused(tc => tc.Pause());
+
                     });
                 x.RunAsLocalSystem();
-
-#if DEBUG
-                x.SetServiceName("SciendoSynchSenderDebug");
-                x.SetDisplayName("Sciendo Synch Sender (Debug)");
-                x.SetDescription("Sends messages when files located at change (Debug)");
-#else
-                x.SetServiceName("Sciendo Synch Sender");
-                x.SetDisplayName("Sciendo Synch Sender");
-                x.SetDescription("Sends messages when files located at change");
-#endif
-
             });
         }
     }

@@ -11,7 +11,7 @@ namespace MySynch.Q.Sender
 {
     public partial class SenderService
     {
-        private List<Publisher> _publishers;
+        private readonly List<Publisher> _publishers;
         public SenderService()
         {
             LoggingManager.Debug("Constructing Sender...");
@@ -22,6 +22,7 @@ namespace MySynch.Q.Sender
 
         private List<Publisher> LoadAllPublishers()
         {
+            LoggingManager.Debug("Loading publishers...");
             var publishers = new List<Publisher>();
             foreach (
                 var senderConfig in
@@ -34,6 +35,7 @@ namespace MySynch.Q.Sender
                                 q =>
                                     new SenderQueue
                                     {
+                                        QueueName = q.QueueName,
                                         Name = q.Name,
                                         HostName = q.HostName,
                                         UserName = q.UserName,
@@ -41,6 +43,7 @@ namespace MySynch.Q.Sender
                                     })
                             .ToArray(), senderConfig.MinFreeMemory, new MessageFeeder(senderConfig.LocalRootFolder)));
             }
+            LoggingManager.Debug("Publishers loaded.");
             return publishers;
         }
 
@@ -56,10 +59,10 @@ namespace MySynch.Q.Sender
             foreach (var publisher in _publishers)
             {
                 publisher.Initialize();
-                publisher.CancellationTokenSource=new CancellationTokenSource();
+                publisher.CancellationTokenSource = new CancellationTokenSource();
                 publisher.CancellationToken = publisher.CancellationTokenSource.Token;
                 publisher.CancellationToken.Register(publisher.Stop);
-                Task currentSendTask= new Task(publisher.TryStart,publisher.CancellationToken);
+                Task currentSendTask = new Task(publisher.TryStart, publisher.CancellationToken);
                 currentSendTask.Start();
             }
             LoggingManager.Debug("Senders started.");

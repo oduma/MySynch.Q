@@ -11,7 +11,7 @@ namespace MySynch.Q.Receiver
 {
     public partial class ReceiverService
     {
-        private List<Consummer> _consummers;
+        private readonly List<Consummer> _consummers;
         public ReceiverService()
         {
             LoggingManager.Debug("Constructing Receivers...");

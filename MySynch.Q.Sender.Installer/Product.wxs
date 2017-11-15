@@ -35,24 +35,24 @@
       <Component Id="cmp304E3306A1574B33AACC7019DDCB7A7D" Directory="INSTALLLOCATION" Guid="{304E3306-A157-4B33-AACC-7019DDCB7A7D}">
         <File Id="fil304E3306A1574B33AACC7019DDCB7A7D" KeyPath="yes" Source="..\sender\RabbitMQ.Client.dll" />
       </Component>
-      <Component Id="cmp287848F0AB75467089B91924621826CB" Directory="INSTALLLOCATION" Guid="{287848F0-AB75-4670-89B9-1924621826CB}">
-        <File Id="fil287848F0AB75467089B91924621826CB" KeyPath="yes" Source="..\sender\System.Net.Http.Formatting.dll" />
+      <Component Id="cmp45F8AC10B3C14D54B90CA9E727E7AC66" Directory="INSTALLLOCATION" Guid="{45F8AC10-B3C1-4D54-B90C-A9E727E7AC66}">
+        <File Id="fil45F8AC10B3C14D54B90CA9E727E7AC66" KeyPath="yes" Source="..\sender\Topshelf.dll" />
       </Component>
       <Component Id="MySynch.Q.Sender.exe.config" Directory="INSTALLLOCATION" Guid="{7C74FEB9-2A53-4E73-86A9-C1D001FEAAF5}">
         <File Id="MySynch.Q.Sender.exe.config" KeyPath="yes" Source="..\sender\MySynch.Q.Sender.exe.config" />
         <util:XmlFile Id="SetSenderRootFolder"
                       Action="setValue"
-                      ElementPath="//sender/@localRootFolder"
+                      ElementPath="//sendersSection/senders/add/@localRootFolder"
                       Value="[SRCROOTDIRVAL]"
                       File="[#MySynch.Q.Sender.exe.config]" />
         <util:XmlFile Id="SetQueueHostName"
                 Action="setValue"
-                ElementPath="//sender/queues/add/@hostName"
+                ElementPath="//add/@hostName"
                 Value="[SRCQUEUEHOSTNAME]"
                 File="[#MySynch.Q.Sender.exe.config]" />
         <util:XmlFile Id="SetMinMemory"
                       Action="setValue"
-                      ElementPath="//sender/@minMem"
+                      ElementPath="//add/@minMem"
                       Value="[MINMEM]"
                       File="[#MySynch.Q.Sender.exe.config]" />
 
@@ -67,7 +67,6 @@
           DisplayName="MySynch Queue Sender"
           Description="Monitores folder [SRCROOTDIRVAL] and publishes any changes to all the queues at the *@[SRCQUEUEHOSTNAME]."
           Start="auto"
-          Account="NT Authority\NetworkService"
           ErrorControl="ignore"
           Interactive="no">
         </ServiceInstall>

@@ -22,3 +22,6 @@ C:\Code\Sciendo\MySynch.Q\MySynch.Q.Tests\bin\Debug\nunit.framework.xml
 C:\Code\Sciendo\MySynch.Q\MySynch.Q.Tests\obj\Debug\MySynch.Q.Tests.csprojResolveAssemblyReference.cache
 C:\Code\Sciendo\MySynch.Q\MySynch.Q.Tests\obj\Debug\MySynch.Q.Tests.dll
 C:\Code\Sciendo\MySynch.Q\MySynch.Q.Tests\obj\Debug\MySynch.Q.Tests.pdb
+C:\Code\Sciendo\MySynch.Q\MySynch.Q.Tests\bin\Debug\Sciendo.Common.dll
+C:\Code\Sciendo\MySynch.Q\MySynch.Q.Tests\bin\Debug\log4net.dll
+C:\Code\Sciendo\MySynch.Q\MySynch.Q.Tests\bin\Debug\log4net.xml

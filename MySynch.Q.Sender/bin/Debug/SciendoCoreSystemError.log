@@ -397,3 +397,46 @@ File name: 'C:\Code\work\Sciendo\MySynch.Q\Source-Debug\f2\f3\abc.txt'
    at System.Threading.TimerQueue.FireNextTimers()
    at System.Threading.TimerQueue.AppDomainTimerCallback()
 , 2017-02-13 15:40:26,959
+[(null)] , System.NullReferenceException: Object reference not set to an instance of an object.
+   at MySynch.Q.Sender.SenderQueue.StartChannel() in C:\Code\Sciendo\MySynch.Q\MySynch.Q.Sender\SenderQueue.cs:line 30
+, 2017-11-13 08:58:52,540
+[(null)] , System.IO.FileNotFoundException: Could not find file 'C:\Code\work\Sciendo\MySynch.Q\Source-Debug\Music\New Text Document.txt'.
+File name: 'C:\Code\work\Sciendo\MySynch.Q\Source-Debug\Music\New Text Document.txt'
+   at System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
+   at System.IO.FileInfo.get_Length()
+   at MySynch.Q.Sender.MessageFeeder.GetFileContent(String filePath) in C:\Code\Sciendo\MySynch.Q\MySynch.Q.Sender\MessageFeeder.cs:line 48
+   at MySynch.Q.Sender.MessageFeeder.fsWatcher_Changed(String path) in C:\Code\Sciendo\MySynch.Q\MySynch.Q.Sender\MessageFeeder.cs:line 120
+   at MySynch.Q.Common.DirectoryMonitor.FireEvent(String path, PendingEvent evt) in C:\Code\Sciendo\MySynch.Q\MySynch.Q.Common\DirectoryMonitor.cs:line 201
+   at MySynch.Q.Common.DirectoryMonitor.<>c__DisplayClass22_0.<OnTimeout>b__1(String key) in C:\Code\Sciendo\MySynch.Q\MySynch.Q.Common\DirectoryMonitor.cs:line 170
+   at System.Collections.Generic.List`1.ForEach(Action`1 action)
+   at MySynch.Q.Common.DirectoryMonitor.OnTimeout(Object state) in C:\Code\Sciendo\MySynch.Q\MySynch.Q.Common\DirectoryMonitor.cs:line 167
+   at System.Threading.TimerQueueTimer.CallCallbackInContext(Object state)
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state, Boolean preserveSyncCtx)
+   at System.Threading.ExecutionContext.Run(ExecutionContext executionContext, ContextCallback callback, Object state, Boolean preserveSyncCtx)
+   at System.Threading.TimerQueueTimer.CallCallback()
+   at System.Threading.TimerQueueTimer.Fire()
+   at System.Threading.TimerQueue.FireNextTimers()
+   at System.Threading.TimerQueue.AppDomainTimerCallback()
+, 2017-11-13 18:44:56,819
+[(null)] , RabbitMQ.Client.Exceptions.BrokerUnreachableException: None of the specified endpoints were reachable ---> System.IO.IOException: Unable to write data to the transport connection: An existing connection was forcibly closed by the remote host. ---> System.Net.Sockets.SocketException: An existing connection was forcibly closed by the remote host
+   at System.Net.Sockets.Socket.Send(Byte[] buffer, Int32 offset, Int32 size, SocketFlags socketFlags)
+   at System.Net.Sockets.NetworkStream.Write(Byte[] buffer, Int32 offset, Int32 size)
+   --- End of inner exception stack trace ---
+   at System.Net.Sockets.NetworkStream.Write(Byte[] buffer, Int32 offset, Int32 size)
+   at System.IO.BufferedStream.Flush()
+   at System.IO.BinaryWriter.Flush()
+   at RabbitMQ.Client.Impl.SocketFrameHandler.WriteFrame(Frame frame)
+   at RabbitMQ.Client.Impl.Command.Transmit(Int32 channelNumber, Connection connection)
+   at RabbitMQ.Client.Impl.SessionBase.Transmit(Command cmd)
+   at RabbitMQ.Client.Impl.MainSession.Transmit(Command cmd)
+   at RabbitMQ.Client.Impl.ModelBase.ModelSend(MethodBase method, ContentHeaderBase header, Byte[] body)
+   at RabbitMQ.Client.Framing.Impl.Model.ConnectionTuneOk(UInt16 channelMax, UInt32 frameMax, UInt16 heartbeat)
+   at RabbitMQ.Client.Framing.Impl.Connection.StartAndTune()
+   at RabbitMQ.Client.Framing.Impl.Connection.Open(Boolean insist)
+   at RabbitMQ.Client.Framing.Impl.Connection..ctor(IConnectionFactory factory, Boolean insist, IFrameHandler frameHandler)
+   at RabbitMQ.Client.Framing.Impl.ProtocolBase.CreateConnection(IConnectionFactory factory, Boolean insist, IFrameHandler frameHandler)
+   at RabbitMQ.Client.ConnectionFactory.CreateConnection()
+   --- End of inner exception stack trace ---
+   at RabbitMQ.Client.ConnectionFactory.CreateConnection()
+   at MySynch.Q.Sender.SenderQueue.StartChannel() in C:\Code\Sciendo\MySynch.Q\MySynch.Q.Sender\SenderQueue.cs:line 36
+, 2017-11-13 19:01:31,196

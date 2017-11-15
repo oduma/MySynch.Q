@@ -19,11 +19,11 @@ namespace MySynch.Q.Sender
 
         internal Publisher(SenderQueue[] senderQueues, string minFreeMemory, MessageFeeder messageFeeder)
         {
-            LoggingManager.Debug("Constructing Publisher...");
+            LoggingManager.Debug($"Constructing {messageFeeder.RootPath} Publisher...");
             _senderQueues = senderQueues;
             _minFreeMemory = minFreeMemory;
             _messageFeeder = messageFeeder;
-            LoggingManager.Debug("Publisher Constructed.");
+            LoggingManager.Debug($"Publisher {messageFeeder.RootPath} Constructed.");
         }
 
         private readonly SenderQueue[] _senderQueues;

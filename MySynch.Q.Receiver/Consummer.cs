@@ -53,7 +53,8 @@ namespace MySynch.Q.Receiver
             LoggingManager.Debug("More: " + More);
             while(More)
             {
-                _messageApplyer.ApplyMessage(_receiverQueue.GetMessage());
+                var message = _receiverQueue.GetMessage();
+                _messageApplyer.ApplyMessage(message);
             }
         }
 

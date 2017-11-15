@@ -55,7 +55,6 @@ namespace MySynch.Q.Receiver
         {
             Channel.QueueDeclare(QueueName, true, false, true, null);
             return ((BasicDeliverEventArgs)_consumer.Queue.Dequeue()).Body;
-            return null;
         } 
     }
 }

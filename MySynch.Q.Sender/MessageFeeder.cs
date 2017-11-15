@@ -4,6 +4,7 @@ using Sciendo.Common.Logging;
 using System;
 using System.IO;
 using System.Threading;
+using Sciendo.Common.IO;
 
 namespace MySynch.Q.Sender
 {
@@ -36,8 +37,8 @@ namespace MySynch.Q.Sender
                 LoggingManager.Debug("Waiting 5 seconds queue is busy...");
                 Thread.Sleep(5000);
             }
-            PublishMessage(new BodyTransferMessage { Name = oldPath, Body = null,SourceRootPath=_rootPath });
-            PublishMessage(new BodyTransferMessage { Name = newPath, Body = GetFileContent(newPath),SourceRootPath=_rootPath });
+            PublishMessage(new BodyTransferMessage { Name = oldPath, Body = null,SourceRootPath=RootPath });
+            PublishMessage(new BodyTransferMessage { Name = newPath, Body = GetFileContent(newPath),SourceRootPath=RootPath });
 
         }
 
@@ -73,7 +74,7 @@ namespace MySynch.Q.Sender
                 LoggingManager.Debug("Waiting 5 seconds queue is busy...");
                 Thread.Sleep(5000);
             }
-            PublishMessage(new BodyTransferMessage { Name = path, Body = null, SourceRootPath = _rootPath });
+            PublishMessage(new BodyTransferMessage { Name = path, Body = null, SourceRootPath = RootPath });
         }
 
         private void StopFeeder()
@@ -117,7 +118,7 @@ namespace MySynch.Q.Sender
                 LoggingManager.Debug("Waiting 5 seconds queue is busy...");
                 Thread.Sleep(5000);
             }
-            PublishMessage(new BodyTransferMessage { Name = path, Body = GetFileContent(path), SourceRootPath = _rootPath });
+            PublishMessage(new BodyTransferMessage { Name = path, Body = GetFileContent(path), SourceRootPath = RootPath });
         }
 
         static bool IsFileLocked(FileInfo file)
@@ -152,20 +153,20 @@ namespace MySynch.Q.Sender
             return false;
         }
 
-        private DirectoryMonitor _fsWatcher;
-        private string _rootPath;
+        private readonly DirectoryMonitor _fsWatcher;
+        public string RootPath { get; private set; }
 
 
-        public MessageFeeder(string localRootFolder)
+        public MessageFeeder(string localRootFolder, params string[] filterExtensions)
         {
             LoggingManager.Debug("Constructing _messageFeeder...");
             if (string.IsNullOrEmpty(localRootFolder))
-                throw new ArgumentNullException("localRootFolder");
+                throw new ArgumentNullException(nameof(localRootFolder));
             if (!Directory.Exists(localRootFolder))
                 throw new ArgumentException("localRootFolder does not exist");
 
             _fsWatcher = new DirectoryMonitor(localRootFolder);
-            _rootPath = localRootFolder;
+            RootPath = localRootFolder;
 
             StopFeeder();
             _fsWatcher.Change += fsWatcher_Changed;
