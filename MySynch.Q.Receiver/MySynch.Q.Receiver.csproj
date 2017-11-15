@@ -53,6 +53,14 @@
       <HintPath>..\packages\Sciendo.Common.1.0.0-Build00020\lib\net40\Sciendo.Common.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Sciendo.IOC, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sciendo.IOC.1.0.0-Build00020\lib\portable40-net40+sl5+win8+wp8\Sciendo.IOC.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Sciendo.IOC.Configuration, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sciendo.IOC.Configuration.1.0.0-Build00020\lib\net45\Sciendo.IOC.Configuration.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Configuration.Install" />

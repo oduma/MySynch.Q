@@ -51,6 +51,7 @@
     <Compile Include="Contracts\Management\NodeManagementMessage.cs" />
     <Compile Include="Contracts\Management\Rate.cs" />
     <Compile Include="Contracts\Management\VersionMessage.cs" />
+    <Compile Include="IMessageTranslator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
