@@ -4,6 +4,6 @@ namespace MySynch.Q.Common
 {
     public interface IMessageTranslator
     {
-        TransferMessage Translate(TransferMessage inMessage);
+        TransferMessage Translate(TransferMessage inMessage,params object[] additionalParams);
     }
 }
