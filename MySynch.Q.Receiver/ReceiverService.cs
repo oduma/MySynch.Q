@@ -6,12 +6,15 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using MySynch.Q.Receiver.Configuration;
+using MySynch.Q.Common;
 
 namespace MySynch.Q.Receiver
 {
     public partial class ReceiverService
     {
         private readonly List<Consummer> _consummers;
+        private readonly IMessageTranslator[] _messageTranslators;
+
         public ReceiverService()
         {
             LoggingManager.Debug("Constructing Receivers...");
@@ -21,6 +24,11 @@ namespace MySynch.Q.Receiver
             LoggingManager.Debug("Receivers constructed.");
         }
 
+        public ReceiverService(IMessageTranslator[] messageTranslators)
+        {
+            this._messageTranslators = messageTranslators;
+        }
+
         private List<Consummer> LoadAllConsummers()
         {
             var consummers = new List<Consummer>();
@@ -28,7 +36,7 @@ namespace MySynch.Q.Receiver
 
             foreach (var receiver in ((ReceiversSection)ConfigurationManager.GetSection("receiversSection")).Receivers.Cast<ReceiverElement>())
             {
-                consummers.Add(new Consummer(new MessageApplyer(receiver.LocalRootFolder,null,null), new ReceiverQueue
+                consummers.Add(new Consummer(new MessageApplyer(receiver.LocalRootFolder,_messageTranslators), new ReceiverQueue
                 {
                     Name = receiver.Name,
                     QueueName = receiver.QueueName,

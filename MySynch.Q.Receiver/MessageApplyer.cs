@@ -28,6 +28,7 @@ namespace MySynch.Q.Receiver
             if (message != null && message.Length > 0)
             {
                 var transferMessage= Serializer.Deserialize<TransferMessage>(Encoding.UTF8.GetString(message));
+                ApplyMessageTranslation(transferMessage);
                 if (transferMessage.Body == null)
                     ApplyDelete(transferMessage.SourceRootPath ,transferMessage.Name);
                 else if (transferMessage.BodyType == BodyType.Binary)
@@ -42,11 +43,17 @@ namespace MySynch.Q.Receiver
             }
         }
 
+        private void ApplyMessageTranslation(TransferMessage transferMessage)
+        {
+            foreach (var messageTranslator in _messageTranslators)
+            {
+                transferMessage = messageTranslator.Translate(transferMessage);
+            }
+        }
+
         private void ApplyTextUpSert(string sourceRootPath, string name, string body)
         {
             LoggingManager.Debug("Applying upsert from " + sourceRootPath + " to " + _rootPath + " of " + name);
-
-            //apply all transformations on the messagebody
 
             try
             {
@@ -67,8 +74,6 @@ namespace MySynch.Q.Receiver
         private void ApplyBinaryUpSert(string sourceRootPath, string name, byte[] body)
         {
             LoggingManager.Debug("Applying upsert from " + sourceRootPath + " to " + _rootPath + " of " + name);
-
-            //apply all transformations on the messagebody
 
             try
             {
