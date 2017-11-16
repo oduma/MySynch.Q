@@ -6,22 +6,20 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using MySynch.Q.Common;
 using Sciendo.Common.IO;
-using Sciendo.Common.MySynchExtensions;
 
 namespace MySynch.Q.Receiver
 {
     public class MessageApplyer
     {
         private readonly string _rootPath;
-        private readonly IEnumerable<ITextMessageTranslator> _textMessageTranslators;
-        private readonly IEnumerable<IBinaryMessageTranslator> _binaryMessageTranslators;
+        private readonly IEnumerable<IMessageTranslator> _messageTranslators;
 
-        public MessageApplyer(string rootPath,IEnumerable<ITextMessageTranslator> textMessageTranslators, IEnumerable<IBinaryMessageTranslator> binaryMessageTranslators)
+        public MessageApplyer(string rootPath,IEnumerable<IMessageTranslator> messageTranslators)
         {
             _rootPath = rootPath;
-            _textMessageTranslators = textMessageTranslators;
-            _binaryMessageTranslators = binaryMessageTranslators;
+            _messageTranslators = messageTranslators;
         }
 
         internal void ApplyMessage(byte[] message)

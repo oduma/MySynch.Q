@@ -46,15 +46,15 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\log4net.2.0.3\lib\net40-full\log4net.dll</HintPath>
     </Reference>
+    <Reference Include="MySynch.Q.Common, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MySynch.Q.Common.1.0.0-CI00006\lib\net461\MySynch.Q.Common.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="RabbitMQ.Client">
       <HintPath>..\packages\RabbitMQ.Client.3.5.0\lib\net40\RabbitMQ.Client.dll</HintPath>
     </Reference>
     <Reference Include="Sciendo.Common, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sciendo.Common.1.0.0-Build00020\lib\net40\Sciendo.Common.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Sciendo.Common.MySynchExtensions, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sciendo.Common.MySynchExtensions.1.0.0-Build00022\lib\net452\Sciendo.Common.MySynchExtensions.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Sciendo.IOC, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -66,7 +66,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Sciendo.Playlist.Translator, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sciendo.Playlist.Translator.1.0.0-CI00001\lib\net452\Sciendo.Playlist.Translator.dll</HintPath>
+      <HintPath>..\packages\Sciendo.Playlist.Translator.1.0.0-CI00002\lib\net461\Sciendo.Playlist.Translator.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -122,12 +122,6 @@
     </None>
     <None Include="packages.config" />
     <None Include="Properties\SlowCheetah\SlowCheetah.Transforms.targets" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\MySynch.Q.Common\MySynch.Q.Common.csproj">
-      <Project>{696f72f6-22a7-41ef-a57d-0876b593721e}</Project>
-      <Name>MySynch.Q.Common</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SlowCheetahTargets)" Condition="Exists('$(SlowCheetahTargets)')" Label="SlowCheetah" />
