@@ -34,10 +34,12 @@ C:\Code\Sciendo\MySynch.Q\MySynch.Q.Receiver\bin\Debug\MySynch.Q.Common.dll
 C:\Code\Sciendo\MySynch.Q\MySynch.Q.Receiver\bin\Debug\RabbitMQ.Client.dll
 C:\Code\Sciendo\MySynch.Q\MySynch.Q.Receiver\bin\Debug\Sciendo.Common.dll
 C:\Code\Sciendo\MySynch.Q\MySynch.Q.Receiver\bin\Debug\Topshelf.dll
-C:\Code\Sciendo\MySynch.Q\MySynch.Q.Receiver\bin\Debug\MySynch.Q.Common.pdb
 C:\Code\Sciendo\MySynch.Q\MySynch.Q.Receiver\bin\Debug\log4net.xml
 C:\Code\Sciendo\MySynch.Q\MySynch.Q.Receiver\bin\Debug\RabbitMQ.Client.xml
 C:\Code\Sciendo\MySynch.Q\MySynch.Q.Receiver\bin\Debug\Topshelf.xml
 C:\Code\Sciendo\MySynch.Q\MySynch.Q.Receiver\obj\Debug\MySynch.Q.Receiver.csprojResolveAssemblyReference.cache
 C:\Code\Sciendo\MySynch.Q\MySynch.Q.Receiver\obj\Debug\MySynch.Q.Receiver.exe
 C:\Code\Sciendo\MySynch.Q\MySynch.Q.Receiver\obj\Debug\MySynch.Q.Receiver.pdb
+C:\Code\Sciendo\MySynch.Q\MySynch.Q.Receiver\bin\Debug\Sciendo.IOC.Configuration.dll
+C:\Code\Sciendo\MySynch.Q\MySynch.Q.Receiver\bin\Debug\Sciendo.IOC.dll
+C:\Code\Sciendo\MySynch.Q\MySynch.Q.Receiver\bin\Debug\Sciendo.Playlist.Translator.dll

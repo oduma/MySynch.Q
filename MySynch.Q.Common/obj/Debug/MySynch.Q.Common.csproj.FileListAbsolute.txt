@@ -17,12 +17,8 @@ C:\Code\m\MySynch.Q\MySynch.Q.Common\obj\Debug\MySynch.Q.Common.pdb
 C:\Code\Sciendo\MySynch.Q\MySynch.Q.Common\bin\Debug\MySynch.Q.Common.dll
 C:\Code\Sciendo\MySynch.Q\MySynch.Q.Common\bin\Debug\MySynch.Q.Common.pdb
 C:\Code\Sciendo\MySynch.Q\MySynch.Q.Common\bin\Debug\log4net.dll
-C:\Code\Sciendo\MySynch.Q\MySynch.Q.Common\bin\Debug\Newtonsoft.Json.dll
-C:\Code\Sciendo\MySynch.Q\MySynch.Q.Common\bin\Debug\RabbitMQ.Client.dll
 C:\Code\Sciendo\MySynch.Q\MySynch.Q.Common\bin\Debug\Sciendo.Common.dll
 C:\Code\Sciendo\MySynch.Q\MySynch.Q.Common\bin\Debug\log4net.xml
-C:\Code\Sciendo\MySynch.Q\MySynch.Q.Common\bin\Debug\Newtonsoft.Json.xml
-C:\Code\Sciendo\MySynch.Q\MySynch.Q.Common\bin\Debug\RabbitMQ.Client.xml
 C:\Code\Sciendo\MySynch.Q\MySynch.Q.Common\obj\Debug\MySynch.Q.Common.dll
 C:\Code\Sciendo\MySynch.Q\MySynch.Q.Common\obj\Debug\MySynch.Q.Common.pdb
 C:\Code\Sciendo\MySynch.Q\MySynch.Q.Common\obj\Debug\MySynch.Q.Common.csprojResolveAssemblyReference.cache
