@@ -1,16 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Linq;
-using System.ServiceProcess;
-using System.Text;
-using System.Threading.Tasks;
-using MySynch.Q.Common;
-using Sciendo.Common.Logging;
+﻿using Sciendo.Common.Logging;
 using Sciendo.IOC;
 using Sciendo.IOC.Configuration;
 using Sciendo.Playlist.Translator;
-using Sciendo.Playlist.Translator.Configuration;
 using Topshelf;
 
 namespace MySynch.Q.Receiver
@@ -23,11 +14,7 @@ namespace MySynch.Q.Receiver
         static void Main()
         {
             LoggingManager.Debug("Loading playlists configuration ...");
-            var findAndReplaceParameters= GetSortedParams(((FindAndReplaceConfigSection)ConfigurationManager.GetSection("playlistTranslatorSection"))
-                        .FromToParams
-                        .Cast<FromToParamsElement>().Select(e => e).OrderBy(e => e.Priority));
-            LoggingManager.Debug("Playlists configuration loaded.");
-            Container.GetInstance().UsingConfiguration().AddFirstFromFilteredAssemblies<ITranslator>(LifeStyle.Transient, "textTranslators",findAndReplaceParameters);
+            Container.GetInstance().UsingConfiguration().AddFirstFromFilteredAssemblies<ITranslator>(LifeStyle.Transient, "textTranslators");
 
             HostFactory.Run(x =>
             {
@@ -45,15 +32,6 @@ namespace MySynch.Q.Receiver
             });
         }
 
-        private static Dictionary<string, string> GetSortedParams(IOrderedEnumerable<FromToParamsElement> fromToParams)
-        {
-            var result = new Dictionary<string, string>();
-            foreach (var fromToParam in fromToParams)
-            {
-                result.Add(fromToParam.From, fromToParam.To);
-            }
-            return result;
-        }
     }
 }
 

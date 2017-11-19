@@ -26,7 +26,9 @@ namespace MySynch.Q.Receiver
             LoggingManager.Debug("Applying a message...");
             if (message != null && message.Length > 0)
             {
+                LoggingManager.Debug("Message not null trying to deserialize it...");
                 var transferMessage= Serializer.Deserialize<TransferMessage>(Encoding.UTF8.GetString(message));
+                LoggingManager.Debug($"Message deserialized:{transferMessage.Name}");
                 if (transferMessage.Body == null)
                     ApplyDelete(transferMessage.SourceRootPath ,transferMessage.Name);
                 else if (transferMessage.BodyType == BodyType.Binary)
