@@ -30,16 +30,28 @@
       <Component Id="cmp5r" Directory="INSTALLLOCATION" Guid="{BAA1A8B4-369A-43C7-A079-E10B4DD3030B}">
         <File Id="fil5r" KeyPath="yes" Source="..\receiver\RabbitMQ.Client.dll" />
       </Component>
+      <Component Id="cmp6r" Directory="INSTALLLOCATION" Guid="{389392C8-2F0E-4071-B7C2-177C953114A4}">
+        <File Id="fil6r" KeyPath="yes" Source="..\receiver\Sciendo.IOC.Configuration.dll" />
+      </Component>
+      <Component Id="cmp7r" Directory="INSTALLLOCATION" Guid="{BCAF06D2-62AD-40B2-9AA0-33324686E974}">
+        <File Id="fil7r" KeyPath="yes" Source="..\receiver\Sciendo.IOC.dll" />
+      </Component>
+      <Component Id="cmp8r" Directory="INSTALLLOCATION" Guid="{1A8B3FB2-6C6B-41F7-89A9-C677DA278162}">
+        <File Id="fil8r" KeyPath="yes" Source="..\receiver\Sciendo.Playlist.Translator.dll" />
+      </Component>
+      <Component Id="cmp9r" Directory="INSTALLLOCATION" Guid="{D35099FA-E97E-4094-9ACD-470DAC961525}">
+        <File Id="fil9r" KeyPath="yes" Source="..\receiver\Topshelf.dll" />
+      </Component>
       <Component Id="MySynch.Q.Receiver.exe.config" Directory="INSTALLLOCATION" Guid="{842915BC-03E8-4020-BC0A-FE0FC55208A6}">
         <File Id="MySynch.Q.Receiver.exe.config" KeyPath="yes" Source="..\receiver\MySynch.Q.Receiver.exe.config" />
         <util:XmlFile Id="SetReceiverRootFolder"
                       Action="setValue"
-                      ElementPath="//receiver/@localRootFolder"
+                      ElementPath="//receiversSection/receivers/add/@localRootFolder"
                       Value="[RCVROOTDIRVAL]"
                       File="[#MySynch.Q.Receiver.exe.config]" />
         <util:XmlFile Id="SetQueueHostName"
                         Action="setValue"
-                        ElementPath="//receiver/@hostName"
+                        ElementPath="//receiversSection/receivers/add/@hostName"
                         Value="[RCVQUEUEHOSTNAME]"
                         File="[#MySynch.Q.Receiver.exe.config]" />
       </Component>
@@ -53,7 +65,6 @@
           DisplayName="MySynch Queue Receiver"
           Description="Populates folder [RCVROOTDIRVAL] based on any changes from the queue: queue1@[RCVQUEUEHOSTNAME]."
           Start="auto"
-          Account="NT Authority\NetworkService"
           ErrorControl="ignore"
           Interactive="no">
         </ServiceInstall>

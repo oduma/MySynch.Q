@@ -6,6 +6,7 @@ using System.ServiceProcess;
 using System.Text;
 using System.Threading.Tasks;
 using MySynch.Q.Common;
+using Sciendo.Common.Logging;
 using Sciendo.IOC;
 using Sciendo.IOC.Configuration;
 using Sciendo.Playlist.Translator;
@@ -21,10 +22,12 @@ namespace MySynch.Q.Receiver
         /// </summary>
         static void Main()
         {
+            LoggingManager.Debug("Loading playlists configuration ...");
             var findAndReplaceParameters= GetSortedParams(((FindAndReplaceConfigSection)ConfigurationManager.GetSection("playlistTranslatorSection"))
                         .FromToParams
                         .Cast<FromToParamsElement>().Select(e => e).OrderBy(e => e.Priority));
-            var configuredContainer = Container.GetInstance().UsingConfiguration().AddFirstFromFilteredAssemblies<ITranslator>(LifeStyle.Transient, "textTranslators",findAndReplaceParameters);
+            LoggingManager.Debug("Playlists configuration loaded.");
+            Container.GetInstance().UsingConfiguration().AddFirstFromFilteredAssemblies<ITranslator>(LifeStyle.Transient, "textTranslators",findAndReplaceParameters);
 
             HostFactory.Run(x =>
             {
@@ -39,16 +42,6 @@ namespace MySynch.Q.Receiver
                         s.WhenPaused(tc => tc.Pause());
                     });
                 x.RunAsLocalSystem();
-
-#if DEBUG
-                x.SetServiceName("Sciendo Synch Receiver (Debug)");
-                x.SetDisplayName("Sciendo Synch Receiver (Debug)");
-                x.SetDescription("Receives messages from  a queue and persists files to folder. (Debug)");
-#else
-                x.SetServiceName("Sciendo Synch Receiver");
-                x.SetDisplayName("Sciendo Synch Receiver");
-                x.SetDescription("Receives messages from  a queue and persists files to folder.");
-#endif
             });
         }
 
