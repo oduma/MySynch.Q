@@ -4,3 +4,10 @@ C:\Code\Sciendo\MySynch.Q\MySynch.Q\MySynch.Q.Sender.Installer\bin\Release\MySyn
 C:\Code\m\MySynch.Q\MySynch.Q.Sender.Installer\bin\Release\cab1.cab
 C:\Code\m\MySynch.Q\MySynch.Q.Sender.Installer\bin\Release\MySynch.Q.Sender.Installer.msi
 C:\Code\m\MySynch.Q\MySynch.Q.Sender.Installer\bin\Release\MySynch.Q.Sender.Installer.wixpdb
+C:\Code\Sciendo\MySynch.Q\MySynch.Q.Sender.Installer\bin\Release\cab1.cab
+C:\Code\Sciendo\MySynch.Q\MySynch.Q.Sender.Installer\bin\Release\MySynch.Q.Sender.Installer.msi
+C:\Code\Sciendo\MySynch.Q\MySynch.Q.Sender.Installer\bin\Release\MySynch.Q.Sender.Installer.wixpdb
+obj\Release\Product.wixobj
+obj\Release\MySynch.Q.Sender.Installer.wixproj.BindContentsFileListnull.txt
+obj\Release\MySynch.Q.Sender.Installer.wixproj.BindOutputsFileListnull.txt
+obj\Release\MySynch.Q.Sender.Installer.wixproj.BindBuiltOutputsFileListnull.txt

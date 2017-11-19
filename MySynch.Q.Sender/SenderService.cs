@@ -16,17 +16,28 @@ namespace MySynch.Q.Sender
         {
             LoggingManager.Debug("Constructing Sender...");
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
+            LoggingManager.Debug("Before loading publishers...");
             _publishers = LoadAllPublishers();
             LoggingManager.Debug("Sender constructed.");
         }
 
-        private List<Publisher> LoadAllPublishers()
+        private static List<Publisher> LoadAllPublishers()
         {
             LoggingManager.Debug("Loading publishers...");
             var publishers = new List<Publisher>();
-            foreach (
-                var senderConfig in
-                ((SendersSection)ConfigurationManager.GetSection("sendersSection")).Senders.Cast<SenderElement>())
+            IEnumerable<SenderElement> sendersInConfig = null;
+            try
+            {
+                LoggingManager.Debug("Trying to load sendersSection from config file...");
+                sendersInConfig = ((SendersSection)ConfigurationManager.GetSection("sendersSection")).Senders.Cast<SenderElement>();
+                LoggingManager.Debug($"Loaded {sendersInConfig.Count()} from configuration.");
+            }
+            catch (Exception e)
+            {
+                LoggingManager.LogSciendoSystemError("Exception while loading the senders config section.", e);
+            }
+
+            foreach (var senderConfig in sendersInConfig)
             {
                 publishers.Add(
                     new Publisher(
@@ -41,7 +52,7 @@ namespace MySynch.Q.Sender
                                         UserName = q.UserName,
                                         Password = q.Password
                                     })
-                            .ToArray(), senderConfig.MinFreeMemory, new MessageFeeder(senderConfig.LocalRootFolder,senderConfig.MessageBodyType)));
+                            .ToArray(), senderConfig.MinFreeMemory, new MessageFeeder(senderConfig.LocalRootFolder, senderConfig.MessageBodyType)));
             }
             LoggingManager.Debug("Publishers loaded.");
             return publishers;
