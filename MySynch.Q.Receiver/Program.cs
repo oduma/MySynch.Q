@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using MySynch.Q.Common;
 using Sciendo.IOC;
 using Sciendo.IOC.Configuration;
+using Sciendo.Playlist.Translator;
 using Sciendo.Playlist.Translator.Configuration;
 using Topshelf;
 
@@ -23,14 +24,14 @@ namespace MySynch.Q.Receiver
             var findAndReplaceParameters= GetSortedParams(((FindAndReplaceConfigSection)ConfigurationManager.GetSection("playlistTranslatorSection"))
                         .FromToParams
                         .Cast<FromToParamsElement>().Select(e => e).OrderBy(e => e.Priority));
-            var configuredContainer = Container.GetInstance().UsingConfiguration().AddFirstFromFilteredAssemblies<IMessageTranslator>(LifeStyle.Transient, "textTranslators",findAndReplaceParameters);
+            var configuredContainer = Container.GetInstance().UsingConfiguration().AddFirstFromFilteredAssemblies<ITranslator>(LifeStyle.Transient, "textTranslators",findAndReplaceParameters);
 
             HostFactory.Run(x =>
             {
                 x.Service<ReceiverService>(
                     s =>
                     {
-                        s.ConstructUsing(name => new ReceiverService(Container.GetInstance().ResolveAll<IMessageTranslator>()));
+                        s.ConstructUsing(name => new ReceiverService(Container.GetInstance().ResolveAll<ITranslator>()));
                         s.WhenStarted(tc => tc.Start());
                         s.WhenStopped(tc => tc.Stop());
                         s.WhenShutdown(tc => tc.Shutdown());

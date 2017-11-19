@@ -2,24 +2,23 @@
 using Sciendo.Common.Logging;
 using Sciendo.Common.Serialization;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
-using MySynch.Q.Common;
 using Sciendo.Common.IO;
+using Sciendo.Playlist.Translator;
 
 namespace MySynch.Q.Receiver
 {
     public class MessageApplyer
     {
         private readonly string _rootPath;
-        private readonly IEnumerable<IMessageTranslator> _messageTranslators;
+        private readonly IEnumerable<ITranslator> _translators;
 
-        public MessageApplyer(string rootPath,IEnumerable<IMessageTranslator> messageTranslators)
+        public MessageApplyer(string rootPath,IEnumerable<ITranslator> translators)
         {
             _rootPath = rootPath;
-            _messageTranslators = messageTranslators;
+            _translators = translators;
         }
 
         internal void ApplyMessage(byte[] message)
@@ -28,13 +27,12 @@ namespace MySynch.Q.Receiver
             if (message != null && message.Length > 0)
             {
                 var transferMessage= Serializer.Deserialize<TransferMessage>(Encoding.UTF8.GetString(message));
-                ApplyMessageTranslation(transferMessage);
                 if (transferMessage.Body == null)
                     ApplyDelete(transferMessage.SourceRootPath ,transferMessage.Name);
                 else if (transferMessage.BodyType == BodyType.Binary)
                     ApplyBinaryUpSert(transferMessage.SourceRootPath, transferMessage.Name, (byte[]) transferMessage.Body);
                 else
-                    ApplyTextUpSert(transferMessage.SourceRootPath, transferMessage.Name, (string) transferMessage.Body);
+                    ApplyTextUpSert(transferMessage.SourceRootPath, transferMessage.Name, TranslateMessageBody((string) transferMessage.Body));
                 LoggingManager.Debug("Message applied.");
             }
             else
@@ -43,12 +41,13 @@ namespace MySynch.Q.Receiver
             }
         }
 
-        private void ApplyMessageTranslation(TransferMessage transferMessage)
+        private string TranslateMessageBody(string transferMessage)
         {
-            foreach (var messageTranslator in _messageTranslators)
+            foreach (var messageTranslator in _translators)
             {
                 transferMessage = messageTranslator.Translate(transferMessage);
             }
+            return transferMessage;
         }
 
         private void ApplyTextUpSert(string sourceRootPath, string name, string body)

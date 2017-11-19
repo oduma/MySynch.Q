@@ -21,4 +21,3 @@ C:\Code\Sciendo\MySynch.Q\MySynch.Q.Common\bin\Debug\Sciendo.Common.dll
 C:\Code\Sciendo\MySynch.Q\MySynch.Q.Common\bin\Debug\log4net.xml
 C:\Code\Sciendo\MySynch.Q\MySynch.Q.Common\obj\Debug\MySynch.Q.Common.dll
 C:\Code\Sciendo\MySynch.Q\MySynch.Q.Common\obj\Debug\MySynch.Q.Common.pdb
-C:\Code\Sciendo\MySynch.Q\MySynch.Q.Common\obj\Debug\MySynch.Q.Common.csprojResolveAssemblyReference.cache

@@ -6,14 +6,14 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using MySynch.Q.Receiver.Configuration;
-using MySynch.Q.Common;
+using Sciendo.Playlist.Translator;
 
 namespace MySynch.Q.Receiver
 {
     public partial class ReceiverService
     {
         private readonly List<Consummer> _consummers;
-        private readonly IMessageTranslator[] _messageTranslators;
+        private readonly ITranslator[] _translators;
 
         public ReceiverService()
         {
@@ -24,9 +24,9 @@ namespace MySynch.Q.Receiver
             LoggingManager.Debug("Receivers constructed.");
         }
 
-        public ReceiverService(IMessageTranslator[] messageTranslators)
+        public ReceiverService(ITranslator[] translators):this()
         {
-            this._messageTranslators = messageTranslators;
+            this._translators = translators;
         }
 
         private List<Consummer> LoadAllConsummers()
@@ -36,7 +36,7 @@ namespace MySynch.Q.Receiver
 
             foreach (var receiver in ((ReceiversSection)ConfigurationManager.GetSection("receiversSection")).Receivers.Cast<ReceiverElement>())
             {
-                consummers.Add(new Consummer(new MessageApplyer(receiver.LocalRootFolder,_messageTranslators), new ReceiverQueue
+                consummers.Add(new Consummer(new MessageApplyer(receiver.LocalRootFolder,_translators), new ReceiverQueue
                 {
                     Name = receiver.Name,
                     QueueName = receiver.QueueName,
