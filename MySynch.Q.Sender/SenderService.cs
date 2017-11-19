@@ -39,6 +39,7 @@ namespace MySynch.Q.Sender
 
             foreach (var senderConfig in sendersInConfig)
             {
+
                 publishers.Add(
                     new Publisher(
                         senderConfig.Queues.Cast<QueueElement>()

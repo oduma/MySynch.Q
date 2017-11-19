@@ -15,18 +15,14 @@ namespace MySynch.Q.Receiver
         private readonly List<Consummer> _consummers;
         private readonly ITranslator[] _translators;
 
-        public ReceiverService()
+        public ReceiverService(ITranslator[] translators)
         {
             LoggingManager.Debug("Constructing Receivers...");
+            this._translators = translators;
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
             _consummers = LoadAllConsummers();
 
             LoggingManager.Debug("Receivers constructed.");
-        }
-
-        public ReceiverService(ITranslator[] translators):this()
-        {
-            this._translators = translators;
         }
 
         private List<Consummer> LoadAllConsummers()

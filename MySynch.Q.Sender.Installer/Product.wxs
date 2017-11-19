@@ -47,12 +47,12 @@
                       File="[#MySynch.Q.Sender.exe.config]" />
         <util:XmlFile Id="SetQueueHostName"
                 Action="setValue"
-                ElementPath="//add/@hostName"
+                ElementPath="//sendersSection/senders/add/queues/add/@hostName"
                 Value="[SRCQUEUEHOSTNAME]"
                 File="[#MySynch.Q.Sender.exe.config]" />
         <util:XmlFile Id="SetMinMemory"
                       Action="setValue"
-                      ElementPath="//add/@minMem"
+                      ElementPath="//sendersSection/senders/add/@minMem"
                       Value="[MINMEM]"
                       File="[#MySynch.Q.Sender.exe.config]" />
 
