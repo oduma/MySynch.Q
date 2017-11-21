@@ -4,6 +4,7 @@ using Sciendo.Common.Logging;
 using System;
 using System.IO;
 using System.Threading;
+using System.Web;
 using Sciendo.Common.IO;
 
 namespace MySynch.Q.Sender
@@ -51,7 +52,7 @@ namespace MySynch.Q.Sender
                 return GetBinaryFileContent(filePath);
             }
             if (_messageBodyType == BodyType.Text)
-                return new TextFileReader().Read(filePath);
+                return  new TextFileReader().Read(filePath);
             return null;
         }
 

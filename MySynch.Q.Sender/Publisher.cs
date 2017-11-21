@@ -54,16 +54,16 @@ namespace MySynch.Q.Sender
 
         private bool ShouldPublishMessage()
         {
-            LoggingManager.Debug("Should Publish Message...");
-            foreach (var senderQueue in _senderQueues.Where(q => q.Channel != null && !q.Channel.IsClosed))
-            {
-                if (!senderQueue.ShouldSendMessage(_minFreeMemory))
-                {
-                    LoggingManager.Debug("Queue " + senderQueue.Name + " on " + senderQueue.HostName + " sais NO!");
-                    return false;
-                }
-            }
-            LoggingManager.Debug("All Queues can accespt messages");
+            //LoggingManager.Debug("Should Publish Message...");
+            //foreach (var senderQueue in _senderQueues.Where(q => q.Channel != null && !q.Channel.IsClosed))
+            //{
+            //    if (!senderQueue.ShouldSendMessage(_minFreeMemory))
+            //    {
+            //        LoggingManager.Debug("Queue " + senderQueue.Name + " on " + senderQueue.HostName + " sais NO!");
+            //        return false;
+            //    }
+            //}
+            //LoggingManager.Debug("All Queues can accespt messages");
             return true;
         }
 

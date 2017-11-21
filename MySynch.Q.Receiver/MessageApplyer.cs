@@ -27,15 +27,23 @@ namespace MySynch.Q.Receiver
             if (message != null && message.Length > 0)
             {
                 LoggingManager.Debug("Message not null trying to deserialize it...");
-                var transferMessage= Serializer.Deserialize<TransferMessage>(Encoding.UTF8.GetString(message));
-                LoggingManager.Debug($"Message deserialized:{transferMessage.Name}");
-                if (transferMessage.Body == null)
-                    ApplyDelete(transferMessage.SourceRootPath ,transferMessage.Name);
-                else if (transferMessage.BodyType == BodyType.Binary)
-                    ApplyBinaryUpSert(transferMessage.SourceRootPath, transferMessage.Name, (byte[]) transferMessage.Body);
-                else
-                    ApplyTextUpSert(transferMessage.SourceRootPath, transferMessage.Name, TranslateMessageBody((string) transferMessage.Body));
-                LoggingManager.Debug("Message applied.");
+                try
+                {
+                    var transferMessage = Serializer.Deserialize<TransferMessage>(Encoding.UTF8.GetString(message));
+                    LoggingManager.Debug($"Message deserialized:{transferMessage.Name}");
+                    if (transferMessage.Body == null)
+                        ApplyDelete(transferMessage.SourceRootPath, transferMessage.Name);
+                    else if (transferMessage.BodyType == BodyType.Binary)
+                        ApplyBinaryUpSert(transferMessage.SourceRootPath, transferMessage.Name, (byte[])transferMessage.Body);
+                    else
+                        ApplyTextUpSert(transferMessage.SourceRootPath, transferMessage.Name, TranslateMessageBody((string)transferMessage.Body));
+                    LoggingManager.Debug("Message applied.");
+                }
+                catch (Exception e)
+                {
+                    LoggingManager.Debug("Exception occured during applying the message. NOt Applied. See error logs.");
+                    LoggingManager.LogSciendoSystemError(e);
+                }
             }
             else
             {
