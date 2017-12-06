@@ -1,0 +1,68 @@
+﻿<Window x:Class="MySynch.Q.Sender.Configurator.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MySynch.Q.Sender.Configurator"
+        mc:Ignorable="d"
+        Title="Sender Configurator" Height="350" Width="525">
+<DataGrid 
+    CanUserDeleteRows="True" 
+    CanUserResizeColumns="True" 
+    CanUserAddRows="True" 
+    AutoGenerateColumns="False"
+    ItemsSource="{Binding Senders}">
+    <DataGrid.Columns>
+        <DataGridTemplateColumn Header="Local Root Folder" IsReadOnly="False" Width="*">
+            <DataGridTemplateColumn.CellTemplate>
+                <DataTemplate>
+                    <Label Content="{Binding LocalRootFolderViewModel.LocalRootFolder}"></Label>
+                </DataTemplate>
+            </DataGridTemplateColumn.CellTemplate>
+            <DataGridTemplateColumn.CellEditingTemplate>
+                <DataTemplate>
+                        <local:RootFolderControl DataContext="{Binding LocalRootFolderViewModel}"></local:RootFolderControl>
+                </DataTemplate>
+            </DataGridTemplateColumn.CellEditingTemplate>
+        </DataGridTemplateColumn>
+        <DataGridTemplateColumn Header="Message Body Type" IsReadOnly="False" Width="Auto">
+            <DataGridTemplateColumn.CellTemplate>
+                <DataTemplate>
+                    <Label Content="{Binding MessageBodyType}"></Label>
+                </DataTemplate>
+            </DataGridTemplateColumn.CellTemplate>
+            <DataGridTemplateColumn.CellEditingTemplate>
+                    <DataTemplate>
+                        <ComboBox ItemsSource="{Binding Path=DataContext.AllAvailableBodyTypes, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" SelectedValue="{Binding MessageBodyType}"/>
+                    </DataTemplate>
+                </DataGridTemplateColumn.CellEditingTemplate>
+        </DataGridTemplateColumn>
+        <DataGridTemplateColumn Header="Minimum Memory" IsReadOnly="False" Width="Auto">
+            <DataGridTemplateColumn.CellTemplate>
+                <DataTemplate>
+                        <Label Content="{Binding MinMemory}"></Label>
+                </DataTemplate>
+            </DataGridTemplateColumn.CellTemplate>
+            <DataGridTemplateColumn.CellEditingTemplate>
+                <DataTemplate>
+                    <TextBox Text="{Binding MinMemory}"></TextBox>
+                </DataTemplate>
+            </DataGridTemplateColumn.CellEditingTemplate>
+        </DataGridTemplateColumn>
+        <DataGridTemplateColumn Header="Queues" IsReadOnly="False" Width="Auto">
+            <DataGridTemplateColumn.CellTemplate>
+                <DataTemplate>
+                    <Button Content="{Binding QueuesLauncherTitle}" Command="{Binding ViewQueues}"></Button>
+                </DataTemplate>
+            </DataGridTemplateColumn.CellTemplate>
+        </DataGridTemplateColumn>
+            <DataGridTemplateColumn Header="Filters" IsReadOnly="False" Width="Auto">
+                <DataGridTemplateColumn.CellTemplate>
+                    <DataTemplate>
+                        <Button Content="{Binding FiltersLauncherTitle}" Command="{Binding ViewFilters}"></Button>
+                    </DataTemplate>
+                </DataGridTemplateColumn.CellTemplate>
+            </DataGridTemplateColumn>
+        </DataGrid.Columns>
+</DataGrid>
+</Window>
