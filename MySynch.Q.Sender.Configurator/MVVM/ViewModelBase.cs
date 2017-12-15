@@ -4,7 +4,7 @@ using System.Linq.Expressions;
 
 namespace MySynch.Q.Sender.Configurator.MVVM
 {
-    internal abstract class ViewModelBase : INotifyPropertyChanged
+    public abstract class ViewModelBase : INotifyPropertyChanged
     {
         #region Events
 

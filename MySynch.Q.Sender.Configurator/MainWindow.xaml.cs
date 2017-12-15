@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using MySynch.Q.Sender.Configurator.Mappers;
+using MySynch.Q.Sender.Configurator.Models;
 using MySynch.Q.Sender.Configurator.MVVM;
 
 namespace MySynch.Q.Sender.Configurator
@@ -24,7 +26,8 @@ namespace MySynch.Q.Sender.Configurator
         public MainWindow()
         {
             InitializeComponent();
-            var senderConfiguratorViewModel = new SendersConfiguratorViewModel();
+            var senderConfiguratorViewModel = new SendersConfiguratorViewModel(new ConfigurationProvider(),
+                new SendersProvider(new MapSenders((new MapSender(new MapFilters(new MapFilter()),new MapQueues(new MapQueue()))))));
             senderConfiguratorViewModel.InitiateView();
             this.DataContext = senderConfiguratorViewModel;
         }

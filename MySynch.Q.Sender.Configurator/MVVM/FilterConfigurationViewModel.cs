@@ -1,6 +1,6 @@
 ﻿namespace MySynch.Q.Sender.Configurator.MVVM
 {
-    internal class FilterConfigurationViewModel
+    public class FilterConfigurationViewModel
     {
         public string Key { get; set; }
 

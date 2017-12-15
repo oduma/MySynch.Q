@@ -4,7 +4,7 @@ using MySynch.Q.Common.Contracts;
 
 namespace MySynch.Q.Sender.Configurator.MVVM
 {
-    internal class SenderConfigurationViewModel:ViewModelBase
+    public class SenderConfigurationViewModel:ViewModelBase
     {
         private QueuesConfiguratorViewModel _queuesViewModel;
         private FiltersConfiguratorViewModel _filtersViewModel;
@@ -58,7 +58,8 @@ namespace MySynch.Q.Sender.Configurator.MVVM
                 if (value != _queuesViewModel)
                 {
                     _queuesViewModel = value;
-                    NoOfQueues = _queuesViewModel.Queues.Count;
+                    if(_queuesViewModel.Queues!=null)
+                        NoOfQueues = _queuesViewModel.Queues.Count;
                     RaisePropertyChanged(()=>NoOfQueues);
                     RaisePropertyChanged(()=>QueuesLauncherTitle);
                 }
@@ -73,7 +74,8 @@ namespace MySynch.Q.Sender.Configurator.MVVM
                 if (value != _filtersViewModel)
                 {
                     _filtersViewModel = value;
-                    NoOfFilters = _filtersViewModel.Filters.Count;
+                    if(_filtersViewModel.Filters!=null)
+                        NoOfFilters = _filtersViewModel.Filters.Count;
                     RaisePropertyChanged(() => NoOfFilters);
                     RaisePropertyChanged(() => FiltersLauncherTitle);
                 }

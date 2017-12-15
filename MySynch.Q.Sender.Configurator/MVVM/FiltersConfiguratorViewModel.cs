@@ -2,7 +2,7 @@
 
 namespace MySynch.Q.Sender.Configurator.MVVM
 {
-    internal class FiltersConfiguratorViewModel:ViewModelBase
+    public class FiltersConfiguratorViewModel:ViewModelBase
     {
         public string QueuesViewTitle => $"Filters for sender - {SenderIdentifier}";
 

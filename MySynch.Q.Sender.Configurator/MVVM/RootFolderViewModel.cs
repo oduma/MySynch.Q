@@ -5,7 +5,7 @@ using Microsoft.WindowsAPICodePack.Dialogs;
 
 namespace MySynch.Q.Sender.Configurator.MVVM
 {
-    internal class RootFolderViewModel:ViewModelBase
+    public class RootFolderViewModel:ViewModelBase
     {
         public ICommand SelectFolder { get; private set; }
         public string LocalRootFolder { get; set; }

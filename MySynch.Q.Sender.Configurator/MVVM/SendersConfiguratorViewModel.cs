@@ -1,12 +1,21 @@
-﻿using System.Collections.ObjectModel;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using MySynch.Q.Common.Contracts;
+using MySynch.Q.Sender.Configurator.Mappers;
+using MySynch.Q.Sender.Configurator.Models;
 
 namespace MySynch.Q.Sender.Configurator.MVVM
 {
     internal class SendersConfiguratorViewModel:ViewModelBase
     {
-        public SendersConfiguratorViewModel()
+        private readonly IConfigurationProvider _configurationProvider;
+        private readonly ISendersProvider _sendersProvider;
+
+        public SendersConfiguratorViewModel(IConfigurationProvider configurationProvider,
+            ISendersProvider sendersProvider)
         {
+            _configurationProvider = configurationProvider;
+            _sendersProvider = sendersProvider;
             AllAvailableBodyTypes = new[] {BodyType.None, BodyType.Binary, BodyType.Text,};
         }
 
@@ -28,31 +37,7 @@ namespace MySynch.Q.Sender.Configurator.MVVM
         public BodyType[] AllAvailableBodyTypes { get; private set; }
         public void InitiateView()
         {
-            Senders = new ObservableCollection<SenderConfigurationViewModel>();
-            Senders.Add(new SenderConfigurationViewModel
-            {
-                LocalRootFolderViewModel = new RootFolderViewModel {LocalRootFolder = "cccccccc"},
-                MessageBodyType = BodyType.Binary,
-                MinMemory = 2000,
-                QueuesViewModel =
-                    new QueuesConfiguratorViewModel
-                    {
-                        Queues =
-                            new ObservableCollection<QueueConfigurationViewModel>
-                            {
-                                new QueueConfigurationViewModel {Name = "queue1"}
-                            }
-                    },
-                FiltersViewModel =
-                    new FiltersConfiguratorViewModel
-                    {
-                        Filters =
-                            new ObservableCollection<FilterConfigurationViewModel>
-                            {
-                                new FilterConfigurationViewModel {Key = "abc", Value = ".abc"}
-                            }
-                    }
-            });
+            Senders =_sendersProvider.GetSenders(_configurationProvider.GetConfigInfo());
         }
     }
 }

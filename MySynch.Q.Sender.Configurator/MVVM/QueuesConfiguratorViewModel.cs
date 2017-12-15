@@ -3,7 +3,7 @@ using System.Windows.Input;
 
 namespace MySynch.Q.Sender.Configurator.MVVM
 {
-    internal class QueuesConfiguratorViewModel:ViewModelBase
+    public class QueuesConfiguratorViewModel:ViewModelBase
     {
 
         public string QueuesViewTitle => $"Queues for sender - {SenderIdentifier}";

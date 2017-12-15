@@ -1,6 +1,6 @@
 ﻿namespace MySynch.Q.Sender.Configurator.MVVM
 {
-    internal class QueueConfigurationViewModel:ViewModelBase
+    public class QueueConfigurationViewModel:ViewModelBase
     {
         public string Name { get; set; }
 
