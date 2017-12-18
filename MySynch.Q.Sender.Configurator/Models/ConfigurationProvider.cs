@@ -7,9 +7,10 @@ namespace MySynch.Q.Sender.Configurator.Models
 {
     public class ConfigurationProvider:IConfigurationProvider
     {
+        private const string ConfigurationproviderSection = "senderLocator";
         public SenderSectionLocator GetConfigInfo()
         {
-            var configSection = ConfigurationManager.GetSection("senderLocator") as SenderLocatorSection;
+            var configSection = ConfigurationManager.GetSection(ConfigurationproviderSection) as SenderLocatorSection;
             if (string.IsNullOrEmpty(configSection?.Location))
                 return null;
             if (string.IsNullOrEmpty(configSection.SectionId))

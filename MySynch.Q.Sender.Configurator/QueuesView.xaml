@@ -6,7 +6,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MySynch.Q.Sender.Configurator"
         mc:Ignorable="d"
-        Title="{Binding QueuesViewTitle}" Height="300" Width="300">
+        Title="{Binding QueuesViewTitle}" Height="250" Width="725">
         <DataGrid 
     CanUserDeleteRows="True" 
     CanUserResizeColumns="True" 

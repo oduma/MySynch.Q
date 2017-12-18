@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Windows.Input;
 using MySynch.Q.Common.Contracts;
 using MySynch.Q.Sender.Configurator.Mappers;
 using MySynch.Q.Sender.Configurator.Models;
@@ -18,6 +19,8 @@ namespace MySynch.Q.Sender.Configurator.MVVM
             _sendersProvider = sendersProvider;
             AllAvailableBodyTypes = new[] {BodyType.None, BodyType.Binary, BodyType.Text,};
         }
+
+        public ICommand Save { get; private set; }
 
         private ObservableCollection<SenderConfigurationViewModel> _senders;
 
@@ -38,6 +41,18 @@ namespace MySynch.Q.Sender.Configurator.MVVM
         public void InitiateView()
         {
             Senders =_sendersProvider.GetSenders(_configurationProvider.GetConfigInfo());
+            Save= new RelayCommand(SaveConfig);
+        }
+
+        private void SaveConfig()
+        {
+            if (_sendersProvider.SetSenders(Senders, _configurationProvider.GetConfigInfo()))
+            {
+                //mark as saved
+                return;
+            }
+            //mark as unsaved
+            return;
         }
     }
 }
