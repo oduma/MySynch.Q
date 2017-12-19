@@ -8,7 +8,7 @@ namespace MySynch.Q.Common.Configurators
 {
     public class ConfigurationProvider:IConfigurationProvider
     {
-        private const string ConfigurationproviderSection = "configurationLocator";
+        private const string ConfigurationproviderSection = "locatorsSection";
         public IEnumerable<ConfigurationSectionLocator> GetConfigInfo()
         {
             var configSection = ConfigurationManager.GetSection(ConfigurationproviderSection) as ConfigurationLocatorSection;
