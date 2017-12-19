@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Windows.Input;
 using Microsoft.WindowsAPICodePack.Dialogs;
+using Sciendo.Common.WPF.MVVM;
 
 namespace MySynch.Q.Sender.Configurator.MVVM
 {

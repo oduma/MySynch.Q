@@ -77,6 +77,10 @@
       <Project>{283c942e-2fa7-4cbd-8bbe-d36b1fb3c373}</Project>
       <Name>MySynch.Q.Sender.Configurator</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Sciendo.Common.WPF.MVVM\Sciendo.Common.WPF.MVVM.csproj">
+      <Project>{7DB31FAC-3744-43C3-844B-BBD6D8186985}</Project>
+      <Name>Sciendo.Common.WPF.MVVM</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="acknowledgements.txt" />

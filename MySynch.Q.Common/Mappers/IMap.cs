@@ -1,7 +1,6 @@
-﻿using System.Configuration;
-using System.Xml;
+﻿using System.Xml;
 
-namespace MySynch.Q.Sender.Configurator.Mappers
+namespace MySynch.Q.Common.Mappers
 {
     public interface IMap<T1,T2>
     {

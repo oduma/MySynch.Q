@@ -1,19 +1,21 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Windows.Input;
+using MySynch.Q.Common.Configurators;
 using MySynch.Q.Common.Contracts;
 using MySynch.Q.Sender.Configurator.Mappers;
-using MySynch.Q.Sender.Configurator.Models;
+using Sciendo.Common.WPF.MVVM;
 
 namespace MySynch.Q.Sender.Configurator.MVVM
 {
     internal class SendersConfiguratorViewModel:ViewModelBase
     {
         private readonly IConfigurationProvider _configurationProvider;
-        private readonly ISendersProvider _sendersProvider;
+        private readonly IConfigurationViewModelProvider<SenderConfigurationViewModel> _sendersProvider;
 
         public SendersConfiguratorViewModel(IConfigurationProvider configurationProvider,
-            ISendersProvider sendersProvider)
+            IConfigurationViewModelProvider<SenderConfigurationViewModel> sendersProvider)
         {
             _configurationProvider = configurationProvider;
             _sendersProvider = sendersProvider;
@@ -40,13 +42,13 @@ namespace MySynch.Q.Sender.Configurator.MVVM
         public BodyType[] AllAvailableBodyTypes { get; private set; }
         public void InitiateView()
         {
-            Senders =_sendersProvider.GetSenders(_configurationProvider.GetConfigInfo());
+            Senders =_sendersProvider.GetViewModelsCollection(_configurationProvider.GetConfigInfo()?.FirstOrDefault());
             Save= new RelayCommand(SaveConfig);
         }
 
         private void SaveConfig()
         {
-            if (_sendersProvider.SetSenders(Senders, _configurationProvider.GetConfigInfo()))
+            if (_sendersProvider.SetViewModelsCollection(Senders, _configurationProvider.GetConfigInfo()?.FirstOrDefault()))
             {
                 //mark as saved
                 return;

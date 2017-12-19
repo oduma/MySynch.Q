@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 
-namespace MySynch.Q.Sender.Configurator.MVVM
+namespace Sciendo.Common.WPF.MVVM
 {
 
     public class RelayCommand : ICommand
@@ -19,7 +15,7 @@ namespace MySynch.Q.Sender.Configurator.MVVM
         {
         }
 
-        /// <exception cref="ArgumentNullException"><paramref name="execute" /> is <c>null</c>.</exception>
+        /// <exception cref="System.ArgumentNullException"><paramref name="execute" /> is <c>null</c>.</exception>
         public RelayCommand(Action execute, Func<bool> canExecute)
         {
             if (execute == null)

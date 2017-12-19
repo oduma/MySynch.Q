@@ -44,6 +44,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Configurators\ConfigurationProvider.cs" />
+    <Compile Include="Configurators\ConfigurationToViewModelProvider.cs" />
+    <Compile Include="Configurators\Configuration\ConfigurationLocatorSection.cs" />
+    <Compile Include="Configurators\Configuration\LocatorElement.cs" />
+    <Compile Include="Configurators\Configuration\LocatorElementCollection.cs" />
+    <Compile Include="Configurators\Description\TargetConfigurationDescription.cs" />
+    <Compile Include="Configurators\IConfigurationProvider.cs" />
+    <Compile Include="Configurators\ConfigurationSectionLocator.cs" />
+    <Compile Include="Configurators\IConfigurationViewModelProvider.cs" />
     <Compile Include="Contracts\BodyType.cs" />
     <Compile Include="Contracts\TransferMessage.cs" />
     <Compile Include="Contracts\Management\ContextMessage.cs" />
@@ -52,10 +61,17 @@
     <Compile Include="Contracts\Management\NodeManagementMessage.cs" />
     <Compile Include="Contracts\Management\Rate.cs" />
     <Compile Include="Contracts\Management\VersionMessage.cs" />
+    <Compile Include="Mappers\IMap.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Sciendo.Common.WPF.MVVM\Sciendo.Common.WPF.MVVM.csproj">
+      <Project>{7db31fac-3744-43c3-844b-bbd6d8186985}</Project>
+      <Name>Sciendo.Common.WPF.MVVM</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

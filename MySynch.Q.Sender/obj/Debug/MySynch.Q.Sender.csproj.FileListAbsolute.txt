@@ -47,3 +47,5 @@ C:\Code\Sciendo\MySynch.Q\MySynch.Q.Sender\bin\Debug\Topshelf.xml
 C:\Code\Sciendo\MySynch.Q\MySynch.Q.Sender\obj\Debug\MySynch.Q.Sender.csprojResolveAssemblyReference.cache
 C:\Code\Sciendo\MySynch.Q\MySynch.Q.Sender\obj\Debug\MySynch.Q.Sender.exe
 C:\Code\Sciendo\MySynch.Q\MySynch.Q.Sender\obj\Debug\MySynch.Q.Sender.pdb
+C:\Code\Sciendo\MySynch.Q\MySynch.Q.Sender\bin\Debug\Sciendo.Common.WPF.MVVM.dll
+C:\Code\Sciendo\MySynch.Q\MySynch.Q.Sender\bin\Debug\Sciendo.Common.WPF.MVVM.pdb

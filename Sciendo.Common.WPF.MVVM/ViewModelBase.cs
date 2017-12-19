@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.Linq.Expressions;
 
-namespace MySynch.Q.Sender.Configurator.MVVM
+namespace Sciendo.Common.WPF.MVVM
 {
     public abstract class ViewModelBase : INotifyPropertyChanged
     {

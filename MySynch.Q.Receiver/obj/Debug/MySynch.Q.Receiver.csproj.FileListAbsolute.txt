@@ -44,3 +44,5 @@ C:\Code\Sciendo\MySynch.Q\MySynch.Q.Receiver\bin\Debug\Sciendo.IOC.Configuration
 C:\Code\Sciendo\MySynch.Q\MySynch.Q.Receiver\bin\Debug\Sciendo.IOC.dll
 C:\Code\Sciendo\MySynch.Q\MySynch.Q.Receiver\bin\Debug\Sciendo.Playlist.Translator.dll
 C:\Code\Sciendo\MySynch.Q\MySynch.Q.Receiver\bin\Debug\MySynch.Q.Common.pdb
+C:\Code\Sciendo\MySynch.Q\MySynch.Q.Receiver\bin\Debug\Sciendo.Common.WPF.MVVM.dll
+C:\Code\Sciendo\MySynch.Q\MySynch.Q.Receiver\bin\Debug\Sciendo.Common.WPF.MVVM.pdb

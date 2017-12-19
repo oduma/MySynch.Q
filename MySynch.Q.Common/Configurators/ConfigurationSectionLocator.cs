@@ -1,6 +1,6 @@
-﻿namespace MySynch.Q.Sender.Configurator.Models
+﻿namespace MySynch.Q.Common.Configurators
 {
-    public class SenderSectionLocator
+    public class ConfigurationSectionLocator
     {
         public string FilePath { get; set; }
 

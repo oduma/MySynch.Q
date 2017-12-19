@@ -1,5 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using System.Windows.Input;
+using Sciendo.Common.WPF.MVVM;
 
 namespace MySynch.Q.Sender.Configurator.MVVM
 {

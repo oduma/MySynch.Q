@@ -65,8 +65,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Configuration\SenderLocatorSection.cs" />
-    <Compile Include="Configuration\TargetConfigurationDescription.cs" />
     <Compile Include="Configuration\TargetFilterConfigurationDescription.cs" />
     <Compile Include="Configuration\TargetQueueConfigurationDescription.cs" />
     <Compile Include="Configuration\TargetSenderConfigurationDescription.cs" />
@@ -75,26 +73,17 @@
     </Compile>
     <Compile Include="ICloseable.cs" />
     <Compile Include="Mappers\ExtensionMethods.cs" />
-    <Compile Include="Mappers\IMap.cs" />
     <Compile Include="Mappers\MapFilter.cs" />
     <Compile Include="Mappers\MapFilters.cs" />
     <Compile Include="Mappers\MapQueue.cs" />
     <Compile Include="Mappers\MapQueues.cs" />
     <Compile Include="Mappers\MapSender.cs" />
     <Compile Include="Mappers\MapSenders.cs" />
-    <Compile Include="Models\ConfigurationProvider.cs" />
-    <Compile Include="Models\IConfigurationProvider.cs" />
-    <Compile Include="Models\ISendersProvider.cs" />
-    <Compile Include="Models\SenderSectionLocator.cs" />
-    <Compile Include="Models\SendersProvider.cs" />
     <Compile Include="MVVM\FilterConfigurationViewModel.cs" />
     <Compile Include="MVVM\FiltersConfiguratorViewModel.cs" />
-    <Compile Include="MVVM\GenericRelayCommand.cs" />
     <Compile Include="MVVM\QueueConfigurationViewModel.cs" />
-    <Compile Include="MVVM\RelayCommand.cs" />
     <Compile Include="MVVM\RootFolderViewModel.cs" />
     <Compile Include="MVVM\SenderConfigurationViewModel.cs" />
-    <Compile Include="MVVM\ViewModelBase.cs" />
     <Compile Include="MVVM\QueuesConfiguratorViewModel.cs" />
     <Compile Include="QueuesView.xaml.cs">
       <DependentUpon>QueuesView.xaml</DependentUpon>
@@ -164,7 +153,12 @@
       <Project>{696f72f6-22a7-41ef-a57d-0876b593721e}</Project>
       <Name>MySynch.Q.Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Sciendo.Common.WPF.MVVM\Sciendo.Common.WPF.MVVM.csproj">
+      <Project>{7DB31FAC-3744-43C3-844B-BBD6D8186985}</Project>
+      <Name>Sciendo.Common.WPF.MVVM</Name>
+    </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

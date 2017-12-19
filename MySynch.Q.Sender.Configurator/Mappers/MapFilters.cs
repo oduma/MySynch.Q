@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
+using MySynch.Q.Common.Mappers;
 using MySynch.Q.Sender.Configurator.Configuration;
 using MySynch.Q.Sender.Configurator.MVVM;
 

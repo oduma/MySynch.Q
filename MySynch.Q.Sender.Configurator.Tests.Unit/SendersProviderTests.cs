@@ -7,10 +7,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
+using MySynch.Q.Common.Configurators;
+using MySynch.Q.Common.Configurators.Description;
 using MySynch.Q.Common.Contracts;
+using MySynch.Q.Common.Mappers;
 using MySynch.Q.Sender.Configurator.Configuration;
 using MySynch.Q.Sender.Configurator.Mappers;
-using MySynch.Q.Sender.Configurator.Models;
 using MySynch.Q.Sender.Configurator.MVVM;
 using NUnit.Framework;
 using Rhino.Mocks;
@@ -23,8 +25,8 @@ namespace MySynch.Q.Sender.Configurator.Tests.Unit
         [Test]
         public void GetSendersNoSectionIdentifierTests()
         {
-            SendersProvider sendersProvider = new SendersProvider(null);
-            var sendersCollection = sendersProvider.GetSenders(null);
+            ConfigurationToViewModelProvider<SenderConfigurationViewModel> sendersProvider = new ConfigurationToViewModelProvider<SenderConfigurationViewModel>(null);
+            var sendersCollection = sendersProvider.GetViewModelsCollection(null);
             Assert.IsNotNull(sendersCollection);
             Assert.IsEmpty(sendersCollection);
         }
@@ -32,8 +34,8 @@ namespace MySynch.Q.Sender.Configurator.Tests.Unit
         [Test]
         public void GetSendersNoSenderLocatorFilePathTests()
         {
-            SendersProvider sendersProvider = new SendersProvider(null);
-            var sendersCollection = sendersProvider.GetSenders(new SenderSectionLocator());
+            ConfigurationToViewModelProvider<SenderConfigurationViewModel> sendersProvider = new ConfigurationToViewModelProvider<SenderConfigurationViewModel>(null);
+            var sendersCollection = sendersProvider.GetViewModelsCollection(new ConfigurationSectionLocator());
             Assert.IsNotNull(sendersCollection);
             Assert.IsEmpty(sendersCollection);
         }
@@ -41,15 +43,15 @@ namespace MySynch.Q.Sender.Configurator.Tests.Unit
         [Test]
         public void GetSendersSenderLocatorFilePathNotValidTests()
         {
-            SendersProvider sendersProvider = new SendersProvider(null);
-            Assert.Throws<FileNotFoundException>(() => sendersProvider.GetSenders(new SenderSectionLocator {FilePath = "aaa"}));
+            ConfigurationToViewModelProvider<SenderConfigurationViewModel> sendersProvider = new ConfigurationToViewModelProvider<SenderConfigurationViewModel>(null);
+            Assert.Throws<FileNotFoundException>(() => sendersProvider.GetViewModelsCollection(new ConfigurationSectionLocator {FilePath = "aaa"}));
         }
 
         [Test]
         public void GetSendersNoMapSendersTests()
         {
-            SendersProvider sendersProvider = new SendersProvider(null);
-            var sendersCollection = sendersProvider.GetSenders(new SenderSectionLocator
+            ConfigurationToViewModelProvider<SenderConfigurationViewModel> sendersProvider = new ConfigurationToViewModelProvider<SenderConfigurationViewModel>(null);
+            var sendersCollection = sendersProvider.GetViewModelsCollection(new ConfigurationSectionLocator
             {
                 FilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "test.config")
             });
@@ -61,12 +63,12 @@ namespace MySynch.Q.Sender.Configurator.Tests.Unit
         public void GetSendersSenderLocatorEmptySectionIdentifierTests()
         {
 
-            SendersProvider sendersProvider =
-                new SendersProvider(
+            ConfigurationToViewModelProvider<SenderConfigurationViewModel> sendersProvider =
+                new ConfigurationToViewModelProvider<SenderConfigurationViewModel>(
                     new MapSenders(new MapSender(new MapFilters(new MapFilter()), new MapQueues(new MapQueue()))));
             Assert.Throws<ConfigurationErrorsException>(
                 () =>
-                    sendersProvider.GetSenders(new SenderSectionLocator
+                    sendersProvider.GetViewModelsCollection(new ConfigurationSectionLocator
                     {
                         FilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "test.config")
                     }));
@@ -75,12 +77,12 @@ namespace MySynch.Q.Sender.Configurator.Tests.Unit
         public void GetSendersSenderLocatorNotFoundSectionIdentifierTests()
         {
 
-            SendersProvider sendersProvider =
-                new SendersProvider(
+            ConfigurationToViewModelProvider<SenderConfigurationViewModel> sendersProvider =
+                new ConfigurationToViewModelProvider<SenderConfigurationViewModel>(
                     new MapSenders(new MapSender(new MapFilters(new MapFilter()), new MapQueues(new MapQueue()))));
             Assert.Throws<ConfigurationErrorsException>(
                 () =>
-                    sendersProvider.GetSenders(new SenderSectionLocator
+                    sendersProvider.GetViewModelsCollection(new ConfigurationSectionLocator
                     {
                         FilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "test.config"),
                         SectionIdentifier="wrongsectionIdentifier"
@@ -95,8 +97,8 @@ namespace MySynch.Q.Sender.Configurator.Tests.Unit
             var fakeDoc = new XmlDocument();
             var fakeElement = fakeDoc.CreateElement("fake");
             mockMapSenders.Expect(s => s.Map(fakeElement)).IgnoreArguments().Return(null);
-            SendersProvider sendersProvider = new SendersProvider(mockMapSenders);
-            var sendersResult = sendersProvider.GetSenders(new SenderSectionLocator
+            ConfigurationToViewModelProvider<SenderConfigurationViewModel> sendersProvider = new ConfigurationToViewModelProvider<SenderConfigurationViewModel>(mockMapSenders);
+            var sendersResult = sendersProvider.GetViewModelsCollection(new ConfigurationSectionLocator
                     {
                         FilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "test.config"),
                         SectionIdentifier = TargetConfigurationDescription.SenderSectionElementName
@@ -108,10 +110,10 @@ namespace MySynch.Q.Sender.Configurator.Tests.Unit
         [Test]
         public void GetSendersOkTests()
         {
-            SendersProvider sendersProvider =
-                new SendersProvider(
+            ConfigurationToViewModelProvider<SenderConfigurationViewModel> sendersProvider =
+                new ConfigurationToViewModelProvider<SenderConfigurationViewModel>(
                     new MapSenders(new MapSender(new MapFilters(new MapFilter()), new MapQueues(new MapQueue()))));
-            var senders = sendersProvider.GetSenders(new SenderSectionLocator
+            var senders = sendersProvider.GetViewModelsCollection(new ConfigurationSectionLocator
             {
                 FilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "test.config"),
                 SectionIdentifier = TargetConfigurationDescription.SenderSectionElementName
@@ -152,35 +154,35 @@ namespace MySynch.Q.Sender.Configurator.Tests.Unit
         [Test]
         public void SetSendersNoSenderSectionLocatorTests()
         {
-            SendersProvider sendersProvider = new SendersProvider(null);
-            var result = sendersProvider.SetSenders(null,null);
+            ConfigurationToViewModelProvider<SenderConfigurationViewModel> sendersProvider = new ConfigurationToViewModelProvider<SenderConfigurationViewModel>(null);
+            var result = sendersProvider.SetViewModelsCollection(null,null);
             Assert.False(result);
         }
 
         [Test]
         public void SetSendersSenderSectionLocatorNoFilePathTests()
         {
-            SendersProvider sendersProvider = new SendersProvider(null);
-            var result = sendersProvider.SetSenders(null, new SenderSectionLocator ());
+            ConfigurationToViewModelProvider<SenderConfigurationViewModel> sendersProvider = new ConfigurationToViewModelProvider<SenderConfigurationViewModel>(null);
+            var result = sendersProvider.SetViewModelsCollection(null, new ConfigurationSectionLocator ());
             Assert.False(result);
         }
 
         [Test]
         public void SetSendersSenderSectionLocatorWrongFilePathTests()
         {
-            SendersProvider sendersProvider = new SendersProvider(null);
+            ConfigurationToViewModelProvider<SenderConfigurationViewModel> sendersProvider = new ConfigurationToViewModelProvider<SenderConfigurationViewModel>(null);
             Assert.Throws<FileNotFoundException>(
-                () => sendersProvider.SetSenders(null, new SenderSectionLocator {FilePath = "wrong"}));
+                () => sendersProvider.SetViewModelsCollection(null, new ConfigurationSectionLocator {FilePath = "wrong"}));
         }
 
         [Test]
         public void SetSendersSenderSectionLocatorNoSectionIdentifierTests()
         {
-            SendersProvider sendersProvider = new SendersProvider(null);
+            ConfigurationToViewModelProvider<SenderConfigurationViewModel> sendersProvider = new ConfigurationToViewModelProvider<SenderConfigurationViewModel>(null);
             Assert.Throws<ConfigurationErrorsException>(
                 () =>
-                    sendersProvider.SetSenders(null,
-                        new SenderSectionLocator
+                    sendersProvider.SetViewModelsCollection(null,
+                        new ConfigurationSectionLocator
                         {
                             FilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "test.config")
                         }));
@@ -188,11 +190,11 @@ namespace MySynch.Q.Sender.Configurator.Tests.Unit
         [Test]
         public void SetSendersSenderSectionLocatorWrongSectionIdentifierTests()
         {
-            SendersProvider sendersProvider = new SendersProvider(null);
+            ConfigurationToViewModelProvider<SenderConfigurationViewModel> sendersProvider = new ConfigurationToViewModelProvider<SenderConfigurationViewModel>(null);
             Assert.Throws<ConfigurationErrorsException>(
                 () =>
-                    sendersProvider.SetSenders(null,
-                        new SenderSectionLocator
+                    sendersProvider.SetViewModelsCollection(null,
+                        new ConfigurationSectionLocator
                         {
                             FilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "test.config"),
                             SectionIdentifier="wrongSection"
@@ -201,9 +203,9 @@ namespace MySynch.Q.Sender.Configurator.Tests.Unit
         [Test]
         public void SetSendersNoInputTests()
         {
-            SendersProvider sendersProvider = new SendersProvider(null);
-            var result = sendersProvider.SetSenders(null,
-                new SenderSectionLocator
+            ConfigurationToViewModelProvider<SenderConfigurationViewModel> sendersProvider = new ConfigurationToViewModelProvider<SenderConfigurationViewModel>(null);
+            var result = sendersProvider.SetViewModelsCollection(null,
+                new ConfigurationSectionLocator
                 {
                     FilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "test-write.config"),
                     SectionIdentifier = TargetConfigurationDescription.SenderSectionElementName
@@ -219,8 +221,8 @@ namespace MySynch.Q.Sender.Configurator.Tests.Unit
         [Test]
         public void SetSendersNoMapSendersTests()
         {
-            SendersProvider sendersProvider = new SendersProvider(null);
-            var result = sendersProvider.SetSenders(new ObservableCollection<SenderConfigurationViewModel>(), new SenderSectionLocator
+            ConfigurationToViewModelProvider<SenderConfigurationViewModel> sendersProvider = new ConfigurationToViewModelProvider<SenderConfigurationViewModel>(null);
+            var result = sendersProvider.SetViewModelsCollection(new ObservableCollection<SenderConfigurationViewModel>(), new ConfigurationSectionLocator
             {
                 FilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "test-write.config"),
                 SectionIdentifier = TargetConfigurationDescription.SenderSectionElementName
@@ -236,8 +238,8 @@ namespace MySynch.Q.Sender.Configurator.Tests.Unit
             var fakeDoc = new XmlDocument();
             var fakeElement = fakeDoc.CreateElement("fake");
             mockMapSenders.Expect(s => s.UnMap(new ObservableCollection<SenderConfigurationViewModel>(),fakeElement)).IgnoreArguments().Return(null);
-            SendersProvider sendersProvider = new SendersProvider(mockMapSenders);
-            var result = sendersProvider.SetSenders(new ObservableCollection<SenderConfigurationViewModel>(), new SenderSectionLocator
+            ConfigurationToViewModelProvider<SenderConfigurationViewModel> sendersProvider = new ConfigurationToViewModelProvider<SenderConfigurationViewModel>(mockMapSenders);
+            var result = sendersProvider.SetViewModelsCollection(new ObservableCollection<SenderConfigurationViewModel>(), new ConfigurationSectionLocator
             {
                 FilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "test-write.config"),
                 SectionIdentifier = TargetConfigurationDescription.SenderSectionElementName
@@ -253,8 +255,8 @@ namespace MySynch.Q.Sender.Configurator.Tests.Unit
             var fakeDoc = new XmlDocument();
             var fakeElement = fakeDoc.CreateElement(TargetConfigurationDescription.SenderSectionElementName);
             mockMapSenders.Expect(s => s.UnMap(new ObservableCollection<SenderConfigurationViewModel>(),fakeElement)).IgnoreArguments().Return(fakeElement);
-            SendersProvider sendersProvider = new SendersProvider(mockMapSenders);
-            var result = sendersProvider.SetSenders(new ObservableCollection<SenderConfigurationViewModel>(), new SenderSectionLocator
+            ConfigurationToViewModelProvider<SenderConfigurationViewModel> sendersProvider = new ConfigurationToViewModelProvider<SenderConfigurationViewModel>(mockMapSenders);
+            var result = sendersProvider.SetViewModelsCollection(new ObservableCollection<SenderConfigurationViewModel>(), new ConfigurationSectionLocator
             {
                 FilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "test-write.config"),
                 SectionIdentifier = TargetConfigurationDescription.SenderSectionElementName
