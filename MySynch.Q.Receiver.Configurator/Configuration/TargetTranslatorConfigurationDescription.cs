@@ -6,6 +6,8 @@
         public static string From => "from";
         public static string To => "to";
         public static string Priority => "priority";
+        public static string SectionName => "playlistTranslatorSection";
+
         public static string TranslatorElementName = "translator";
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Input;
 using MySynch.Q.Common.Contracts;
+using MySynch.Q.Controls.MVVM;
 using Sciendo.Common.WPF.MVVM;
 
 namespace MySynch.Q.Sender.Configurator.MVVM
@@ -9,7 +10,7 @@ namespace MySynch.Q.Sender.Configurator.MVVM
     {
         private QueuesConfiguratorViewModel _queuesViewModel;
         private FiltersConfiguratorViewModel _filtersViewModel;
-        public RootFolderViewModel LocalRootFolderViewModel { get; set; }
+        public FolderPickerViewModel LocalRootFolderViewModel { get; set; }
 
         public BodyType MessageBodyType { get; set; }
 
@@ -31,7 +32,7 @@ namespace MySynch.Q.Sender.Configurator.MVVM
 
         private void ShowFilters()
         {
-            FiltersViewModel.SenderIdentifier = this.LocalRootFolderViewModel.LocalRootFolder;
+            FiltersViewModel.SenderIdentifier = this.LocalRootFolderViewModel.Folder;
             var filtersView = new FiltersView(FiltersViewModel);
             var dialogResult = filtersView.ShowDialog();
             NoOfFilters = FiltersViewModel.Filters.Count;
@@ -40,7 +41,7 @@ namespace MySynch.Q.Sender.Configurator.MVVM
 
         private void ShowQueues()
         {
-            QueuesViewModel.SenderIdentifier = this.LocalRootFolderViewModel.LocalRootFolder;
+            QueuesViewModel.SenderIdentifier = this.LocalRootFolderViewModel.Folder;
             var queuesView=new QueuesView(QueuesViewModel);
             var dialogResult = queuesView.ShowDialog();
             NoOfQueues = QueuesViewModel.Queues.Count;

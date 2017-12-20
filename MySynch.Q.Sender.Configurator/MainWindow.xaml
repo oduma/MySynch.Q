@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MySynch.Q.Sender.Configurator"
+        xmlns:controls="clr-namespace:MySynch.Q.Controls;assembly=MySynch.Q.Controls"
         mc:Ignorable="d"
         Title="Sender Configurator" Height="250" Width="725">
     <Grid>
@@ -33,7 +34,7 @@
                     </DataGridTemplateColumn.CellTemplate>
                     <DataGridTemplateColumn.CellEditingTemplate>
                         <DataTemplate>
-                            <local:RootFolderControl DataContext="{Binding LocalRootFolderViewModel}"></local:RootFolderControl>
+                            <controls:RootFolderControl DataContext="{Binding LocalRootFolderViewModel}"></controls:RootFolderControl>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellEditingTemplate>
                 </DataGridTemplateColumn>
@@ -80,3 +81,4 @@
         <Button Content="Save" Grid.Column="1" Grid.Row="1" Command="{Binding Save}"></Button>
     </Grid>
 </Window>
+

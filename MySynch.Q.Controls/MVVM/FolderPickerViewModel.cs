@@ -1,17 +1,16 @@
 ﻿using System.IO;
-using System.Linq;
 using System.Windows.Input;
 using Microsoft.WindowsAPICodePack.Dialogs;
 using Sciendo.Common.WPF.MVVM;
 
-namespace MySynch.Q.Sender.Configurator.MVVM
+namespace MySynch.Q.Controls.MVVM
 {
-    public class RootFolderViewModel:ViewModelBase
+    public class FolderPickerViewModel:ViewModelBase
     {
         public ICommand SelectFolder { get; private set; }
-        public string LocalRootFolder { get; set; }
+        public string Folder { get; set; }
 
-        public RootFolderViewModel()
+        public FolderPickerViewModel()
         {
             SelectFolder=new RelayCommand(ShowSelectFolder);
         }
@@ -19,13 +18,13 @@ namespace MySynch.Q.Sender.Configurator.MVVM
         private void ShowSelectFolder()
         {
             var dialog = new CommonOpenFileDialog();
-            if (Directory.Exists(LocalRootFolder))
-                dialog.InitialDirectory = LocalRootFolder;
+            if (Directory.Exists(Folder))
+                dialog.InitialDirectory = Folder;
             dialog.IsFolderPicker = true;
             if (dialog.ShowDialog() == CommonFileDialogResult.Ok)
             {
-                LocalRootFolder = dialog.FileName;
-                RaisePropertyChanged(() => LocalRootFolder);
+                Folder = dialog.FileName;
+                RaisePropertyChanged(() => Folder);
             }
         }
     }

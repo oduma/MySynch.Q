@@ -10,5 +10,6 @@
         public static string UserName => "user";
         public static string Password => "password";
         public static string ReceiverElementName => "receiver";
+        public static string SectionName => "receiversSection";
     }
 }

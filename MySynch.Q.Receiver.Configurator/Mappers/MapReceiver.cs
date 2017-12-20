@@ -2,6 +2,7 @@
 using System.Xml;
 using MySynch.Q.Common.Contracts;
 using MySynch.Q.Common.Mappers;
+using MySynch.Q.Controls.MVVM;
 using MySynch.Q.Receiver.Configurator.Configuration;
 using MySynch.Q.Receiver.Configurator.MVVM;
 
@@ -30,9 +31,9 @@ namespace MySynch.Q.Receiver.Configurator.Mappers
                 return new ReceiverConfigurationViewModel();
             return new ReceiverConfigurationViewModel
             {
-                LocalRootFolderViewModel = new RootFolderViewModel
+                LocalRootFolderViewModel = new FolderPickerViewModel
                 {
-                    LocalRootFolder = localRootFolderAttributeValue
+                    Folder = localRootFolderAttributeValue
                 },
 
                 Host = hostAttributeValue,
@@ -46,12 +47,12 @@ namespace MySynch.Q.Receiver.Configurator.Mappers
 
         public XmlElement UnMap(ReceiverConfigurationViewModel input, XmlElement parrentElement)
         {
-            if (string.IsNullOrEmpty(input?.LocalRootFolderViewModel?.LocalRootFolder))
+            if (string.IsNullOrEmpty(input?.LocalRootFolderViewModel?.Folder))
                 return null;
             if (parrentElement == null)
                 return null;
             var newElement = parrentElement.CreateElement(TargetReceiverConfigurationDescription.ReceiverElementName);
-            newElement.CreateAttribute(TargetReceiverConfigurationDescription.LocalRootFolder, input.LocalRootFolderViewModel.LocalRootFolder);
+            newElement.CreateAttribute(TargetReceiverConfigurationDescription.LocalRootFolder, input.LocalRootFolderViewModel.Folder);
             newElement.CreateAttribute(TargetReceiverConfigurationDescription.HostName, input.Host);
             newElement.CreateAttribute(TargetReceiverConfigurationDescription.Name, input.Name);
             newElement.CreateAttribute(TargetReceiverConfigurationDescription.Password, input.Password);

@@ -135,7 +135,7 @@ namespace MySynch.Q.Configurators.Tests.Unit.Sender
             });
             Assert.IsNotEmpty(senders);
             Assert.AreEqual(2, senders.Count());
-            Assert.AreEqual(@"C:\Code\work\Sciendo\MySynch.Q\Source-Debug\Music\",senders[0].LocalRootFolderViewModel.LocalRootFolder);
+            Assert.AreEqual(@"C:\Code\work\Sciendo\MySynch.Q\Source-Debug\Music\",senders[0].LocalRootFolderViewModel.Folder);
             Assert.AreEqual(BodyType.Binary, senders[0].MessageBodyType);
             Assert.AreEqual(60000, senders[0].MinMemory);
             Assert.IsNull(senders[0].FiltersViewModel);
@@ -146,7 +146,7 @@ namespace MySynch.Q.Configurators.Tests.Unit.Sender
             Assert.AreEqual("octo-laptop", senders[0].QueuesViewModel.Queues[0].Host);
             Assert.AreEqual("user", senders[0].QueuesViewModel.Queues[0].Password);
             Assert.AreEqual("user", senders[0].QueuesViewModel.Queues[0].User);
-            Assert.AreEqual(@"C:\Code\work\Sciendo\MySynch.Q\Source-Debug\Playlists\", senders[1].LocalRootFolderViewModel.LocalRootFolder);
+            Assert.AreEqual(@"C:\Code\work\Sciendo\MySynch.Q\Source-Debug\Playlists\", senders[1].LocalRootFolderViewModel.Folder);
             Assert.AreEqual(BodyType.Text, senders[1].MessageBodyType);
             Assert.AreEqual(60000, senders[1].MinMemory);
             Assert.IsNotEmpty(senders[1].FiltersViewModel.Filters);

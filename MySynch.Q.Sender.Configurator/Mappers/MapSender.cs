@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Xml;
 using MySynch.Q.Common.Contracts;
 using MySynch.Q.Common.Mappers;
+using MySynch.Q.Controls.MVVM;
 using MySynch.Q.Sender.Configurator.Configuration;
 using MySynch.Q.Sender.Configurator.MVVM;
 
@@ -51,9 +52,9 @@ namespace MySynch.Q.Sender.Configurator.Mappers
             if (!int.TryParse(minMemoryAttributeValue, out minMemory))
                 minMemory = 0;
 
-            senderConfigurationViewModel.LocalRootFolderViewModel = new RootFolderViewModel
+            senderConfigurationViewModel.LocalRootFolderViewModel = new FolderPickerViewModel
             {
-                LocalRootFolder = localRootFolderAttributeValue
+                Folder = localRootFolderAttributeValue
             };
             senderConfigurationViewModel.MessageBodyType = bodyType;
 
@@ -95,12 +96,12 @@ namespace MySynch.Q.Sender.Configurator.Mappers
                 return null;
             if (_mapQueues == null)
                 return null;
-            if (string.IsNullOrEmpty(input?.LocalRootFolderViewModel?.LocalRootFolder))
+            if (string.IsNullOrEmpty(input?.LocalRootFolderViewModel?.Folder))
                 return null;
             if (parrentElement == null)
                 return null;
             var newElement = parrentElement.CreateElement(TargetSenderConfigurationDescription.SenderElementName);
-            newElement.CreateAttribute(TargetSenderConfigurationDescription.LocalRootFolder,input.LocalRootFolderViewModel.LocalRootFolder);
+            newElement.CreateAttribute(TargetSenderConfigurationDescription.LocalRootFolder,input.LocalRootFolderViewModel.Folder);
             newElement.CreateAttribute(TargetSenderConfigurationDescription.MessageBodyType,input.MessageBodyType.ToString());
             newElement.CreateAttribute(TargetSenderConfigurationDescription.MinMemory, input.MinMemory.ToString());
             if(input.FiltersViewModel!=null)

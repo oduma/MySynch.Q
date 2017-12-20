@@ -1,5 +1,6 @@
 ﻿using System.Xml;
 using MySynch.Q.Common.Mappers;
+using MySynch.Q.Controls.MVVM;
 using MySynch.Q.Receiver.Configurator.Configuration;
 using MySynch.Q.Receiver.Configurator.Mappers;
 using MySynch.Q.Receiver.Configurator.MVVM;
@@ -52,7 +53,7 @@ namespace MySynch.Q.Configurators.Tests.Unit.Receiver
             Assert.AreEqual("passwordValue", receiverConfigurationViewModel.Password);
             Assert.AreEqual("userValue", receiverConfigurationViewModel.User);
             Assert.IsNotNull(receiverConfigurationViewModel.LocalRootFolderViewModel);
-            Assert.AreEqual("localRootFolderValue", receiverConfigurationViewModel.LocalRootFolderViewModel.LocalRootFolder);
+            Assert.AreEqual("localRootFolderValue", receiverConfigurationViewModel.LocalRootFolderViewModel.Folder);
         }
 
         [Test]
@@ -78,7 +79,7 @@ namespace MySynch.Q.Configurators.Tests.Unit.Receiver
             XmlDocument xmlDocument = new XmlDocument();
             XmlElement parrentElement = xmlDocument.CreateElement(TargetReceiverConfigurationDescription.ReceiversCollectionElementName);
 
-            XmlElement receiverElement = mapReceiver.UnMap(new ReceiverConfigurationViewModel { LocalRootFolderViewModel = new RootFolderViewModel {LocalRootFolder = "localRootFolderValue"} }, parrentElement);
+            XmlElement receiverElement = mapReceiver.UnMap(new ReceiverConfigurationViewModel { LocalRootFolderViewModel = new FolderPickerViewModel {Folder = "localRootFolderValue"} }, parrentElement);
             Assert.IsNotNull(receiverElement);
             Assert.AreEqual("localRootFolderValue", receiverElement.GetAttribute(TargetReceiverConfigurationDescription.LocalRootFolder));
             Assert.IsEmpty(receiverElement.GetAttribute(TargetReceiverConfigurationDescription.QueueName));
@@ -105,7 +106,7 @@ namespace MySynch.Q.Configurators.Tests.Unit.Receiver
                 mapReceiver.UnMap(
                     new ReceiverConfigurationViewModel
                     {
-                        LocalRootFolderViewModel = new RootFolderViewModel {LocalRootFolder = "localRootFolderValue"},
+                        LocalRootFolderViewModel = new FolderPickerViewModel {Folder = "localRootFolderValue"},
                         Host = "hostValue",
                         QueueName = "queueNameValue",
                         Name = "nameValue",

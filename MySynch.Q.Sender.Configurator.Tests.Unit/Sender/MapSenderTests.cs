@@ -2,6 +2,7 @@
 using System.Xml;
 using MySynch.Q.Common.Contracts;
 using MySynch.Q.Common.Mappers;
+using MySynch.Q.Controls.MVVM;
 using MySynch.Q.Sender.Configurator.Configuration;
 using MySynch.Q.Sender.Configurator.Mappers;
 using MySynch.Q.Sender.Configurator.MVVM;
@@ -93,7 +94,7 @@ namespace MySynch.Q.Configurators.Tests.Unit.Sender
             var mapSender = new MapSender(new MapCollectionNodeNoAttributes<FilterConfigurationViewModel>(mockMapFilter,TargetFilterConfigurationDescription.FiltersCollectionElementName), new MapCollectionNodeNoAttributes<QueueConfigurationViewModel>(mockMapQueue,TargetQueueConfigurationDescription.QueuesCollectionElementName));
             var senderConfigurationViewModel = mapSender.Map(senderElement);
             Assert.IsNotNull(senderConfigurationViewModel);
-            Assert.AreEqual("localRootFolderValue", senderConfigurationViewModel.LocalRootFolderViewModel.LocalRootFolder);
+            Assert.AreEqual("localRootFolderValue", senderConfigurationViewModel.LocalRootFolderViewModel.Folder);
             Assert.AreEqual(BodyType.Text, senderConfigurationViewModel.MessageBodyType);
             Assert.AreEqual(2, senderConfigurationViewModel.MinMemory);
             Assert.IsNotNull(senderConfigurationViewModel.FiltersViewModel);
@@ -116,7 +117,7 @@ namespace MySynch.Q.Configurators.Tests.Unit.Sender
             var mapSender = new MapSender(new MapCollectionNodeNoAttributes<FilterConfigurationViewModel>(mockMapFilter,TargetFilterConfigurationDescription.FiltersCollectionElementName), new MapCollectionNodeNoAttributes<QueueConfigurationViewModel>(mockMapQueue,TargetQueueConfigurationDescription.QueuesCollectionElementName));
             var senderConfigurationViewModel = mapSender.Map(senderElement);
             Assert.IsNotNull(senderConfigurationViewModel);
-            Assert.AreEqual("localRootFolderValue", senderConfigurationViewModel.LocalRootFolderViewModel.LocalRootFolder);
+            Assert.AreEqual("localRootFolderValue", senderConfigurationViewModel.LocalRootFolderViewModel.Folder);
             Assert.AreEqual(BodyType.None, senderConfigurationViewModel.MessageBodyType);
             Assert.AreEqual(2, senderConfigurationViewModel.MinMemory);
             Assert.IsNotNull(senderConfigurationViewModel.FiltersViewModel);
@@ -139,7 +140,7 @@ namespace MySynch.Q.Configurators.Tests.Unit.Sender
             var mapSender = new MapSender(new MapCollectionNodeNoAttributes<FilterConfigurationViewModel>(mockMapFilter,TargetFilterConfigurationDescription.FiltersCollectionElementName), new MapCollectionNodeNoAttributes<QueueConfigurationViewModel>(mockMapQueue,TargetQueueConfigurationDescription.QueuesCollectionElementName));
             var senderConfigurationViewModel = mapSender.Map(senderElement);
             Assert.IsNotNull(senderConfigurationViewModel);
-            Assert.AreEqual("localRootFolderValue", senderConfigurationViewModel.LocalRootFolderViewModel.LocalRootFolder);
+            Assert.AreEqual("localRootFolderValue", senderConfigurationViewModel.LocalRootFolderViewModel.Folder);
             Assert.AreEqual(BodyType.Binary, senderConfigurationViewModel.MessageBodyType);
             Assert.AreEqual(0, senderConfigurationViewModel.MinMemory);
             Assert.IsNotNull(senderConfigurationViewModel.FiltersViewModel);
@@ -163,7 +164,7 @@ namespace MySynch.Q.Configurators.Tests.Unit.Sender
             var mapSender = new MapSender(mockMapFilters, new MapCollectionNodeNoAttributes<QueueConfigurationViewModel>(mockMapQueue,TargetQueueConfigurationDescription.QueuesCollectionElementName));
             var senderConfigurationViewModel = mapSender.Map(senderElement);
             Assert.IsNotNull(senderConfigurationViewModel);
-            Assert.AreEqual("localRootFolderValue", senderConfigurationViewModel.LocalRootFolderViewModel.LocalRootFolder);
+            Assert.AreEqual("localRootFolderValue", senderConfigurationViewModel.LocalRootFolderViewModel.Folder);
             Assert.AreEqual(BodyType.Text, senderConfigurationViewModel.MessageBodyType);
             Assert.AreEqual(2, senderConfigurationViewModel.MinMemory);
             Assert.IsNull(senderConfigurationViewModel.FiltersViewModel.Filters);
@@ -186,7 +187,7 @@ namespace MySynch.Q.Configurators.Tests.Unit.Sender
             var mapSender = new MapSender(new MapCollectionNodeNoAttributes<FilterConfigurationViewModel>(mockMapFilter,TargetFilterConfigurationDescription.FiltersCollectionElementName), mockMapQueues);
             var senderConfigurationViewModel = mapSender.Map(senderElement);
             Assert.IsNotNull(senderConfigurationViewModel);
-            Assert.AreEqual("localRootFolderValue", senderConfigurationViewModel.LocalRootFolderViewModel.LocalRootFolder);
+            Assert.AreEqual("localRootFolderValue", senderConfigurationViewModel.LocalRootFolderViewModel.Folder);
             Assert.AreEqual(BodyType.Text, senderConfigurationViewModel.MessageBodyType);
             Assert.AreEqual(2, senderConfigurationViewModel.MinMemory);
             Assert.IsNotNull(senderConfigurationViewModel.FiltersViewModel);
@@ -246,7 +247,7 @@ namespace MySynch.Q.Configurators.Tests.Unit.Sender
                 mapSender.UnMap(
                     new SenderConfigurationViewModel
                     {
-                        LocalRootFolderViewModel = new RootFolderViewModel {LocalRootFolder = "localRootFolderValue"}
+                        LocalRootFolderViewModel = new FolderPickerViewModel {Folder = "localRootFolderValue"}
                     }, parrentElement);
             Assert.IsNotNull(senderElement);
             Assert.AreEqual("localRootFolderValue", senderElement.GetAttribute(TargetSenderConfigurationDescription.LocalRootFolder));
@@ -262,7 +263,7 @@ namespace MySynch.Q.Configurators.Tests.Unit.Sender
             XmlDocument xmlDocument = new XmlDocument();
             XmlElement parrentElement = xmlDocument.CreateElement(TargetSenderConfigurationDescription.SendersCollectionElementName);
 
-            XmlElement senderElement = mapSender.UnMap(new SenderConfigurationViewModel {LocalRootFolderViewModel = new RootFolderViewModel()}, parrentElement);
+            XmlElement senderElement = mapSender.UnMap(new SenderConfigurationViewModel {LocalRootFolderViewModel = new FolderPickerViewModel()}, parrentElement);
             Assert.IsNull(senderElement);
         }
 
@@ -283,7 +284,7 @@ namespace MySynch.Q.Configurators.Tests.Unit.Sender
                     new SenderConfigurationViewModel
                     {
                         
-                        LocalRootFolderViewModel=new RootFolderViewModel {LocalRootFolder="localRootFolderValue"}, 
+                        LocalRootFolderViewModel=new FolderPickerViewModel {Folder="localRootFolderValue"}, 
                         FiltersViewModel = new FiltersConfiguratorViewModel
                         {
                             Filters =
@@ -315,7 +316,7 @@ namespace MySynch.Q.Configurators.Tests.Unit.Sender
                     new SenderConfigurationViewModel
                     {
 
-                        LocalRootFolderViewModel = new RootFolderViewModel { LocalRootFolder = "localRootFolderValue" },
+                        LocalRootFolderViewModel = new FolderPickerViewModel { Folder = "localRootFolderValue" },
                         QueuesViewModel = new QueuesConfiguratorViewModel
                         {
                             Queues =
@@ -352,7 +353,7 @@ namespace MySynch.Q.Configurators.Tests.Unit.Sender
 
             XmlElement senderResultElement = mapSender.UnMap(new SenderConfigurationViewModel
             {
-                LocalRootFolderViewModel = new RootFolderViewModel { LocalRootFolder="localRootFolderValue"},
+                LocalRootFolderViewModel = new FolderPickerViewModel { Folder="localRootFolderValue"},
                 MessageBodyType=BodyType.Text,
                 MinMemory=4,
                 FiltersViewModel = new FiltersConfiguratorViewModel(),

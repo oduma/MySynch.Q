@@ -78,14 +78,10 @@
     <Compile Include="MVVM\FilterConfigurationViewModel.cs" />
     <Compile Include="MVVM\FiltersConfiguratorViewModel.cs" />
     <Compile Include="MVVM\QueueConfigurationViewModel.cs" />
-    <Compile Include="MVVM\RootFolderViewModel.cs" />
     <Compile Include="MVVM\SenderConfigurationViewModel.cs" />
     <Compile Include="MVVM\QueuesConfiguratorViewModel.cs" />
     <Compile Include="QueuesView.xaml.cs">
       <DependentUpon>QueuesView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="RootFolderControl.xaml.cs">
-      <DependentUpon>RootFolderControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="MVVM\SendersConfiguratorViewModel.cs" />
     <Page Include="FiltersView.xaml">
@@ -105,10 +101,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="QueuesView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="RootFolderControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -148,6 +140,10 @@
     <ProjectReference Include="..\MySynch.Q.Common\MySynch.Q.Common.csproj">
       <Project>{696f72f6-22a7-41ef-a57d-0876b593721e}</Project>
       <Name>MySynch.Q.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MySynch.Q.Controls\MySynch.Q.Controls.csproj">
+      <Project>{83a41dd0-4705-4b2c-986b-4309683310a3}</Project>
+      <Name>MySynch.Q.Controls</Name>
     </ProjectReference>
     <ProjectReference Include="..\Sciendo.Common.WPF.MVVM\Sciendo.Common.WPF.MVVM.csproj">
       <Project>{7DB31FAC-3744-43C3-844B-BBD6D8186985}</Project>

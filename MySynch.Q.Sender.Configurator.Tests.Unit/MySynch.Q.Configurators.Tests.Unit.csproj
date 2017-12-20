@@ -74,6 +74,10 @@
       <Project>{696f72f6-22a7-41ef-a57d-0876b593721e}</Project>
       <Name>MySynch.Q.Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\MySynch.Q.Controls\MySynch.Q.Controls.csproj">
+      <Project>{83a41dd0-4705-4b2c-986b-4309683310a3}</Project>
+      <Name>MySynch.Q.Controls</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MySynch.Q.Receiver.Configurator\MySynch.Q.Receiver.Configurator.csproj">
       <Project>{8bcb8eca-be49-469f-8e1b-bcf2ad6518a0}</Project>
       <Name>MySynch.Q.Receiver.Configurator</Name>

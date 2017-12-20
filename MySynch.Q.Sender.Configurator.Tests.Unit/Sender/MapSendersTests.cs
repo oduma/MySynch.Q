@@ -3,6 +3,7 @@ using System.Linq;
 using System.Xml;
 using MySynch.Q.Common.Contracts;
 using MySynch.Q.Common.Mappers;
+using MySynch.Q.Controls.MVVM;
 using MySynch.Q.Sender.Configurator.Configuration;
 using MySynch.Q.Sender.Configurator.Mappers;
 using MySynch.Q.Sender.Configurator.MVVM;
@@ -67,7 +68,7 @@ namespace MySynch.Q.Configurators.Tests.Unit.Sender
                 .IgnoreArguments()
                 .Return(new SenderConfigurationViewModel
                 {
-                    LocalRootFolderViewModel = new RootFolderViewModel {LocalRootFolder = "localRootFolderValue"},
+                    LocalRootFolderViewModel = new FolderPickerViewModel {Folder = "localRootFolderValue"},
                     MessageBodyType = BodyType.Text,
                     MinMemory = 5
                 });
@@ -76,7 +77,7 @@ namespace MySynch.Q.Configurators.Tests.Unit.Sender
             Assert.IsNotNull(senders);
             Assert.IsNotEmpty(senders);
             Assert.AreEqual(1, senders.Count);
-            Assert.AreEqual("localRootFolderValue", senders[0].LocalRootFolderViewModel.LocalRootFolder);
+            Assert.AreEqual("localRootFolderValue", senders[0].LocalRootFolderViewModel.Folder);
             Assert.AreEqual(BodyType.Text, senders[0].MessageBodyType);
             Assert.AreEqual(5,senders[0].MinMemory);
         }
@@ -119,9 +120,9 @@ namespace MySynch.Q.Configurators.Tests.Unit.Sender
                     {
                         new SenderConfigurationViewModel
                         {
-                            LocalRootFolderViewModel = new RootFolderViewModel
+                            LocalRootFolderViewModel = new FolderPickerViewModel
                             {
-                                LocalRootFolder="localRootFolderValue"
+                                Folder="localRootFolderValue"
                             },
                             MessageBodyType = BodyType.Binary,
                             MinMemory =6
@@ -174,9 +175,9 @@ namespace MySynch.Q.Configurators.Tests.Unit.Sender
                     {
                         new SenderConfigurationViewModel
                         {
-                            LocalRootFolderViewModel = new RootFolderViewModel
+                            LocalRootFolderViewModel = new FolderPickerViewModel
                             {
-                                LocalRootFolder="localRootFolderValue"
+                                Folder="localRootFolderValue"
                             },
                             MessageBodyType = BodyType.Binary,
                             MinMemory =6,

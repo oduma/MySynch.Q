@@ -4,6 +4,7 @@ using System.Linq;
 using System.Windows.Input;
 using MySynch.Q.Common.Configurators;
 using MySynch.Q.Common.Contracts;
+using MySynch.Q.Sender.Configurator.Configuration;
 using MySynch.Q.Sender.Configurator.Mappers;
 using Sciendo.Common.WPF.MVVM;
 
@@ -42,7 +43,7 @@ namespace MySynch.Q.Sender.Configurator.MVVM
         public BodyType[] AllAvailableBodyTypes { get; private set; }
         public void InitiateView()
         {
-            Senders =_sendersProvider.GetViewModelsCollection(_configurationProvider.GetConfigInfo()?.FirstOrDefault());
+            Senders =_sendersProvider.GetViewModelsCollection(_configurationProvider.GetConfigInfo()?.FirstOrDefault(c=>c.SectionIdentifier==TargetSenderConfigurationDescription.SectionElementName));
             Save= new RelayCommand(SaveConfig);
         }
 
