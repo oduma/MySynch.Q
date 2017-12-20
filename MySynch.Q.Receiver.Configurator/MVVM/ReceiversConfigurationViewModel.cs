@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 using MySynch.Q.Common.Configurators;
 using MySynch.Q.Receiver.Configurator.Configuration;
@@ -11,19 +7,19 @@ using Sciendo.Common.WPF.MVVM;
 
 namespace MySynch.Q.Receiver.Configurator.MVVM
 {
-    public class ReceiversConfiguratorViewModel : ViewModelBase
+    public class ReceiversConfigurationViewModel : ViewModelBase
     {
-        private ConfigurationProvider _configurationProvider;
-        private ConfigurationToViewModelProvider<ReceiverConfigurationViewModel> _receiversConfigurationToViewModelProvider;
-        private ConfigurationToViewModelProvider<TranslatorConfigurationViewModel> _translatorsConfigurationToViewModelProvider;
+        private readonly ConfigurationProvider _configurationProvider;
+        private readonly ConfigurationToViewModelProvider<ReceiverConfigurationViewModel> _receiversConfigurationToViewModelProvider;
+        private readonly ConfigurationToViewModelProvider<TranslatorConfigurationViewModel> _translatorsConfigurationToViewModelProvider;
 
-        public ReceiversConfiguratorViewModel(ConfigurationProvider configurationProvider, 
+        public ReceiversConfigurationViewModel(ConfigurationProvider configurationProvider, 
             ConfigurationToViewModelProvider<ReceiverConfigurationViewModel> receiversConfigurationToViewModelProvider, 
             ConfigurationToViewModelProvider<TranslatorConfigurationViewModel> translatorsConfigurationToViewModelProvider)
         {
-            this._configurationProvider = configurationProvider;
-            this._receiversConfigurationToViewModelProvider = receiversConfigurationToViewModelProvider;
-            this._translatorsConfigurationToViewModelProvider = translatorsConfigurationToViewModelProvider;
+            _configurationProvider = configurationProvider;
+            _receiversConfigurationToViewModelProvider = receiversConfigurationToViewModelProvider;
+            _translatorsConfigurationToViewModelProvider = translatorsConfigurationToViewModelProvider;
         }
 
         public ICommand Save { get; private set; }

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Windows.Input;
+﻿using System.Windows.Input;
 using MySynch.Q.Common.Contracts;
 using MySynch.Q.Controls.MVVM;
 using Sciendo.Common.WPF.MVVM;
@@ -8,8 +7,8 @@ namespace MySynch.Q.Sender.Configurator.MVVM
 {
     public class SenderConfigurationViewModel:ViewModelBase
     {
-        private QueuesConfiguratorViewModel _queuesViewModel;
-        private FiltersConfiguratorViewModel _filtersViewModel;
+        private QueuesConfigurationViewModel _queuesViewModel;
+        private FiltersConfigurationViewModel _filtersViewModel;
         public FolderPickerViewModel LocalRootFolderViewModel { get; set; }
 
         public BodyType MessageBodyType { get; set; }
@@ -32,18 +31,18 @@ namespace MySynch.Q.Sender.Configurator.MVVM
 
         private void ShowFilters()
         {
-            FiltersViewModel.SenderIdentifier = this.LocalRootFolderViewModel.Folder;
+            FiltersViewModel.SenderIdentifier = LocalRootFolderViewModel.Folder;
             var filtersView = new FiltersView(FiltersViewModel);
-            var dialogResult = filtersView.ShowDialog();
+            filtersView.ShowDialog();
             NoOfFilters = FiltersViewModel.Filters.Count;
             RaisePropertyChanged(() => FiltersLauncherTitle);
         }
 
         private void ShowQueues()
         {
-            QueuesViewModel.SenderIdentifier = this.LocalRootFolderViewModel.Folder;
+            QueuesViewModel.SenderIdentifier = LocalRootFolderViewModel.Folder;
             var queuesView=new QueuesView(QueuesViewModel);
-            var dialogResult = queuesView.ShowDialog();
+            queuesView.ShowDialog();
             NoOfQueues = QueuesViewModel.Queues.Count;
             RaisePropertyChanged(()=>QueuesLauncherTitle);
         }
@@ -52,7 +51,7 @@ namespace MySynch.Q.Sender.Configurator.MVVM
 
         public ICommand ViewFilters { get; private set; }
 
-        public QueuesConfiguratorViewModel QueuesViewModel
+        public QueuesConfigurationViewModel QueuesViewModel
         {
             get { return _queuesViewModel; }
             set
@@ -68,7 +67,7 @@ namespace MySynch.Q.Sender.Configurator.MVVM
             }
         }
 
-        public FiltersConfiguratorViewModel FiltersViewModel
+        public FiltersConfigurationViewModel FiltersViewModel
         {
             get { return _filtersViewModel; }
             set

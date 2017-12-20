@@ -181,7 +181,7 @@ namespace MySynch.Q.Configurators.Tests.Unit.Sender
                             },
                             MessageBodyType = BodyType.Binary,
                             MinMemory =6,
-                            FiltersViewModel = new FiltersConfiguratorViewModel
+                            FiltersViewModel = new FiltersConfigurationViewModel
                             {
                                 Filters = new ObservableCollection<FilterConfigurationViewModel>
                                 {
@@ -192,7 +192,7 @@ namespace MySynch.Q.Configurators.Tests.Unit.Sender
                                     }
                                 }
                             },
-                            QueuesViewModel = new QueuesConfiguratorViewModel
+                            QueuesViewModel = new QueuesConfigurationViewModel
                             {
                                 Queues= new ObservableCollection<QueueConfigurationViewModel>
                                 {

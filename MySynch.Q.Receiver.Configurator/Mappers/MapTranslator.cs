@@ -5,7 +5,7 @@ using MySynch.Q.Receiver.Configurator.MVVM;
 
 namespace MySynch.Q.Receiver.Configurator.Mappers
 {
-    public class MapTextTranslator : IMap<XmlElement, TranslatorConfigurationViewModel>
+    public class MapTranslator : IMap<XmlElement, TranslatorConfigurationViewModel>
     {
         public TranslatorConfigurationViewModel Map(XmlElement input)
         {
@@ -16,7 +16,7 @@ namespace MySynch.Q.Receiver.Configurator.Mappers
             var priorityAttributeValue = input.GetAttribute(TargetTranslatorConfigurationDescription.Priority);
             if (string.IsNullOrEmpty(fromAttributeValue) || string.IsNullOrEmpty(toNameAttributeValue) || string.IsNullOrEmpty(priorityAttributeValue))
                 return new TranslatorConfigurationViewModel();
-            int priority = 0;
+            int priority;
             if (!int.TryParse(priorityAttributeValue, out priority))
                 priority = 0;
 

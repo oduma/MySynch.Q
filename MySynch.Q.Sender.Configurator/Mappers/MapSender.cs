@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml;
 using MySynch.Q.Common.Contracts;
 using MySynch.Q.Common.Mappers;
@@ -48,7 +44,7 @@ namespace MySynch.Q.Sender.Configurator.Mappers
             if(!Enum.TryParse(messageBodyTypeAttributeValue,out bodyType))
                 bodyType=BodyType.None;
 
-            int minMemory = 0;
+            int minMemory;
             if (!int.TryParse(minMemoryAttributeValue, out minMemory))
                 minMemory = 0;
 
@@ -67,7 +63,7 @@ namespace MySynch.Q.Sender.Configurator.Mappers
         {
             if (senderElement.GetElementsByTagName(TargetFilterConfigurationDescription.FiltersCollectionElementName).Count != 0)
             {
-                senderConfigurationViewModel.FiltersViewModel = new FiltersConfiguratorViewModel
+                senderConfigurationViewModel.FiltersViewModel = new FiltersConfigurationViewModel
                 {
                     Filters =
                         _mapFilters.Map(
@@ -78,7 +74,7 @@ namespace MySynch.Q.Sender.Configurator.Mappers
             }
             if (senderElement.GetElementsByTagName(TargetQueueConfigurationDescription.QueuesCollectionElementName).Count != 0)
             {
-                senderConfigurationViewModel.QueuesViewModel = new QueuesConfiguratorViewModel
+                senderConfigurationViewModel.QueuesViewModel = new QueuesConfigurationViewModel
                 {
                     Queues =
                         _mapQueues.Map(

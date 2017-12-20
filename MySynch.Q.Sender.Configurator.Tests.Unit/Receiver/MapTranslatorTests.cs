@@ -16,7 +16,7 @@ namespace MySynch.Q.Configurators.Tests.Unit.Receiver
         [Test]
         public void MapTextTranslatorNoElement()
         {
-            MapTextTranslator mapTextTranslator = new MapTextTranslator();
+            MapTranslator mapTextTranslator = new MapTranslator();
             Assert.IsNull(mapTextTranslator.Map(null));
         }
         [Test]
@@ -24,7 +24,7 @@ namespace MySynch.Q.Configurators.Tests.Unit.Receiver
         {
             XmlDocument xmlDocument = new XmlDocument();
             var translatorElement = xmlDocument.CreateElement(TargetTranslatorConfigurationDescription.TranslatorElementName);
-            MapTextTranslator mapTextTranslator = new MapTextTranslator();
+            MapTranslator mapTextTranslator = new MapTranslator();
             var translatorConfigurationViewModel = mapTextTranslator.Map(translatorElement);
             Assert.IsNotNull(translatorConfigurationViewModel);
             Assert.IsNull(translatorConfigurationViewModel.From);
@@ -40,7 +40,7 @@ namespace MySynch.Q.Configurators.Tests.Unit.Receiver
             translatorElement.CreateAttribute(TargetTranslatorConfigurationDescription.From,"fromValue");
             translatorElement.CreateAttribute(TargetTranslatorConfigurationDescription.To,"toValue");
             translatorElement.CreateAttribute(TargetTranslatorConfigurationDescription.Priority, "2");
-            MapTextTranslator mapTextTranslator = new MapTextTranslator();
+            MapTranslator mapTextTranslator = new MapTranslator();
             var translatorConfigurationViewModel = mapTextTranslator.Map(translatorElement);
             Assert.IsNotNull(translatorConfigurationViewModel);
             Assert.AreEqual("fromValue",translatorConfigurationViewModel.From);
@@ -56,7 +56,7 @@ namespace MySynch.Q.Configurators.Tests.Unit.Receiver
             translatorElement.CreateAttribute(TargetTranslatorConfigurationDescription.From, "fromValue");
             translatorElement.CreateAttribute(TargetTranslatorConfigurationDescription.To, "toValue");
             translatorElement.CreateAttribute(TargetTranslatorConfigurationDescription.Priority, "xas");
-            MapTextTranslator mapTextTranslator = new MapTextTranslator();
+            MapTranslator mapTextTranslator = new MapTranslator();
             var translatorConfigurationViewModel = mapTextTranslator.Map(translatorElement);
             Assert.IsNotNull(translatorConfigurationViewModel);
             Assert.AreEqual("fromValue", translatorConfigurationViewModel.From);
@@ -66,7 +66,7 @@ namespace MySynch.Q.Configurators.Tests.Unit.Receiver
         [Test]
         public void UnMapEmptyViewModel()
         {
-            var mapTextTranslator= new MapTextTranslator();
+            var mapTextTranslator= new MapTranslator();
 
             Assert.IsNull(mapTextTranslator.UnMap(null,null));
         }
@@ -74,7 +74,7 @@ namespace MySynch.Q.Configurators.Tests.Unit.Receiver
         [Test]
         public void UnMapEmptyParrentElement()
         {
-            var mapTextTranslator = new MapTextTranslator();
+            var mapTextTranslator = new MapTranslator();
 
             Assert.IsNull(mapTextTranslator.UnMap(new TranslatorConfigurationViewModel(), null));
         }
@@ -82,7 +82,7 @@ namespace MySynch.Q.Configurators.Tests.Unit.Receiver
         [Test]
         public void UnMapWithoutAValue()
         {
-            var mapTextTranslator = new MapTextTranslator();
+            var mapTextTranslator = new MapTranslator();
             XmlDocument xmlDocument = new XmlDocument();
             XmlElement parrentElement = xmlDocument.CreateElement(TargetTranslatorConfigurationDescription.TranslatorsCollectionElementName);
 
@@ -95,7 +95,7 @@ namespace MySynch.Q.Configurators.Tests.Unit.Receiver
         [Test]
         public void UnMapWithoutAKey()
         {
-            var mapTextTranslator = new MapTextTranslator();
+            var mapTextTranslator = new MapTranslator();
             XmlDocument xmlDocument = new XmlDocument();
             XmlElement parrentElement = xmlDocument.CreateElement(TargetTranslatorConfigurationDescription.TranslatorsCollectionElementName);
 
@@ -105,7 +105,7 @@ namespace MySynch.Q.Configurators.Tests.Unit.Receiver
         [Test]
         public void UnMapOk()
         {
-            var mapTextTranslator = new MapTextTranslator();
+            var mapTextTranslator = new MapTranslator();
             XmlDocument xmlDocument = new XmlDocument();
             XmlElement parrentElement = xmlDocument.CreateElement(TargetTranslatorConfigurationDescription.TranslatorsCollectionElementName);
 

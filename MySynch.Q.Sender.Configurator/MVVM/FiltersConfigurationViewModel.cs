@@ -3,7 +3,7 @@ using Sciendo.Common.WPF.MVVM;
 
 namespace MySynch.Q.Sender.Configurator.MVVM
 {
-    public class FiltersConfiguratorViewModel:ViewModelBase
+    public class FiltersConfigurationViewModel:ViewModelBase
     {
         public string QueuesViewTitle => $"Filters for sender - {SenderIdentifier}";
 

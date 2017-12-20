@@ -76,14 +76,14 @@
     <Compile Include="Mappers\MapQueue.cs" />
     <Compile Include="Mappers\MapSender.cs" />
     <Compile Include="MVVM\FilterConfigurationViewModel.cs" />
-    <Compile Include="MVVM\FiltersConfiguratorViewModel.cs" />
+    <Compile Include="MVVM\FiltersConfigurationViewModel.cs" />
     <Compile Include="MVVM\QueueConfigurationViewModel.cs" />
     <Compile Include="MVVM\SenderConfigurationViewModel.cs" />
-    <Compile Include="MVVM\QueuesConfiguratorViewModel.cs" />
+    <Compile Include="MVVM\QueuesConfigurationViewModel.cs" />
     <Compile Include="QueuesView.xaml.cs">
       <DependentUpon>QueuesView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MVVM\SendersConfiguratorViewModel.cs" />
+    <Compile Include="MVVM\SendersConfigurationViewModel.cs" />
     <Page Include="FiltersView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

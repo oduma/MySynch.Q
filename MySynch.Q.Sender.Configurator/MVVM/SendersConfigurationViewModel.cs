@@ -1,21 +1,19 @@
-﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Input;
 using MySynch.Q.Common.Configurators;
 using MySynch.Q.Common.Contracts;
 using MySynch.Q.Sender.Configurator.Configuration;
-using MySynch.Q.Sender.Configurator.Mappers;
 using Sciendo.Common.WPF.MVVM;
 
 namespace MySynch.Q.Sender.Configurator.MVVM
 {
-    internal class SendersConfiguratorViewModel:ViewModelBase
+    internal class SendersConfigurationViewModel:ViewModelBase
     {
         private readonly IConfigurationProvider _configurationProvider;
         private readonly IConfigurationViewModelProvider<SenderConfigurationViewModel> _sendersProvider;
 
-        public SendersConfiguratorViewModel(IConfigurationProvider configurationProvider,
+        public SendersConfigurationViewModel(IConfigurationProvider configurationProvider,
             IConfigurationViewModelProvider<SenderConfigurationViewModel> sendersProvider)
         {
             _configurationProvider = configurationProvider;

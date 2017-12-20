@@ -1,10 +1,9 @@
 ﻿using System.Collections.ObjectModel;
-using System.Windows.Input;
 using Sciendo.Common.WPF.MVVM;
 
 namespace MySynch.Q.Sender.Configurator.MVVM
 {
-    public class QueuesConfiguratorViewModel:ViewModelBase
+    public class QueuesConfigurationViewModel:ViewModelBase
     {
 
         public string QueuesViewTitle => $"Queues for sender - {SenderIdentifier}";

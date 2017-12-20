@@ -1,6 +1,4 @@
-﻿using System;
-using System.Xml;
-using MySynch.Q.Common.Contracts;
+﻿using System.Xml;
 using MySynch.Q.Common.Mappers;
 using MySynch.Q.Controls.MVVM;
 using MySynch.Q.Receiver.Configurator.Configuration;
@@ -15,7 +13,6 @@ namespace MySynch.Q.Receiver.Configurator.Mappers
             if (input == null)
                 return null;
 
-            var receiverConfigurationViewModel = new ReceiverConfigurationViewModel();
             var localRootFolderAttributeValue = input.GetAttribute(TargetReceiverConfigurationDescription.LocalRootFolder);
             var nameAttributeValue = input.GetAttribute(TargetReceiverConfigurationDescription.Name);
             var queueNameAttributeValue = input.GetAttribute(TargetReceiverConfigurationDescription.QueueName);

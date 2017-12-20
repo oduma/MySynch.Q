@@ -15,7 +15,7 @@ namespace MySynch.Q.Sender.Configurator
         public MainWindow()
         {
             InitializeComponent();
-            var senderConfiguratorViewModel = new SendersConfiguratorViewModel(new ConfigurationProvider(),
+            var senderConfiguratorViewModel = new SendersConfigurationViewModel(new ConfigurationProvider(),
                 new ConfigurationToViewModelProvider<SenderConfigurationViewModel>(
                     new MapCollectionNodeNoAttributes<SenderConfigurationViewModel>(
                         new MapSender(
@@ -25,7 +25,7 @@ namespace MySynch.Q.Sender.Configurator
                                 TargetQueueConfigurationDescription.QueuesCollectionElementName)),
                         TargetSenderConfigurationDescription.SendersCollectionElementName)));
             senderConfiguratorViewModel.InitiateView();
-            this.DataContext = senderConfiguratorViewModel;
+            DataContext = senderConfiguratorViewModel;
         }
     }
 }

@@ -58,8 +58,8 @@ namespace MySynch.Q.Configurators.Tests.Unit.Sender
         {
             XmlDocument xmlDocument = new XmlDocument();
             var senderElement = xmlDocument.CreateElement(TargetSenderConfigurationDescription.SenderElementName);
-            var filtersElement = senderElement.CreateElement(TargetFilterConfigurationDescription.FiltersCollectionElementName);
-            var queuesElement = senderElement.CreateElement(TargetQueueConfigurationDescription.QueuesCollectionElementName);
+            senderElement.CreateElement(TargetFilterConfigurationDescription.FiltersCollectionElementName);
+            senderElement.CreateElement(TargetQueueConfigurationDescription.QueuesCollectionElementName);
             var mockMapFilter = MockRepository.Mock<IMap<XmlElement, FilterConfigurationViewModel>>();
             var mockMapQueue = MockRepository.Mock<IMap<XmlElement, QueueConfigurationViewModel>>();
 
@@ -86,8 +86,8 @@ namespace MySynch.Q.Configurators.Tests.Unit.Sender
             senderElement.CreateAttribute(TargetSenderConfigurationDescription.LocalRootFolder, "localRootFolderValue");
             senderElement.CreateAttribute(TargetSenderConfigurationDescription.MessageBodyType, "Text");
             senderElement.CreateAttribute(TargetSenderConfigurationDescription.MinMemory, "2");
-            var filtersElement = senderElement.CreateElement(TargetFilterConfigurationDescription.FiltersCollectionElementName);
-            var queuesElement = senderElement.CreateElement(TargetQueueConfigurationDescription.QueuesCollectionElementName);
+            senderElement.CreateElement(TargetFilterConfigurationDescription.FiltersCollectionElementName);
+            senderElement.CreateElement(TargetQueueConfigurationDescription.QueuesCollectionElementName);
             var mockMapFilter = MockRepository.Mock<IMap<XmlElement, FilterConfigurationViewModel>>();
             var mockMapQueue = MockRepository.Mock<IMap<XmlElement, QueueConfigurationViewModel>>();
 
@@ -109,8 +109,8 @@ namespace MySynch.Q.Configurators.Tests.Unit.Sender
             senderElement.CreateAttribute(TargetSenderConfigurationDescription.LocalRootFolder, "localRootFolderValue");
             senderElement.CreateAttribute(TargetSenderConfigurationDescription.MessageBodyType, "Textxxx");
             senderElement.CreateAttribute(TargetSenderConfigurationDescription.MinMemory, "2");
-            var filtersElement = senderElement.CreateElement(TargetFilterConfigurationDescription.FiltersCollectionElementName);
-            var queuesElement = senderElement.CreateElement(TargetQueueConfigurationDescription.QueuesCollectionElementName);
+            senderElement.CreateElement(TargetFilterConfigurationDescription.FiltersCollectionElementName);
+            senderElement.CreateElement(TargetQueueConfigurationDescription.QueuesCollectionElementName);
             var mockMapFilter = MockRepository.Mock<IMap<XmlElement, FilterConfigurationViewModel>>();
             var mockMapQueue = MockRepository.Mock<IMap<XmlElement, QueueConfigurationViewModel>>();
 
@@ -132,8 +132,8 @@ namespace MySynch.Q.Configurators.Tests.Unit.Sender
             senderElement.CreateAttribute(TargetSenderConfigurationDescription.LocalRootFolder, "localRootFolderValue");
             senderElement.CreateAttribute(TargetSenderConfigurationDescription.MessageBodyType, "Binary");
             senderElement.CreateAttribute(TargetSenderConfigurationDescription.MinMemory, "xas");
-            var filtersElement = senderElement.CreateElement(TargetFilterConfigurationDescription.FiltersCollectionElementName);
-            var queuesElement = senderElement.CreateElement(TargetQueueConfigurationDescription.QueuesCollectionElementName);
+            senderElement.CreateElement(TargetFilterConfigurationDescription.FiltersCollectionElementName);
+            senderElement.CreateElement(TargetQueueConfigurationDescription.QueuesCollectionElementName);
             var mockMapFilter = MockRepository.Mock<IMap<XmlElement, FilterConfigurationViewModel>>();
             var mockMapQueue = MockRepository.Mock<IMap<XmlElement, QueueConfigurationViewModel>>();
 
@@ -156,7 +156,7 @@ namespace MySynch.Q.Configurators.Tests.Unit.Sender
             senderElement.CreateAttribute(TargetSenderConfigurationDescription.MessageBodyType, "Text");
             senderElement.CreateAttribute(TargetSenderConfigurationDescription.MinMemory, "2");
             var filtersElement = senderElement.CreateElement(TargetFilterConfigurationDescription.FiltersCollectionElementName);
-            var queuesElement = senderElement.CreateElement(TargetQueueConfigurationDescription.QueuesCollectionElementName);
+            senderElement.CreateElement(TargetQueueConfigurationDescription.QueuesCollectionElementName);
             var mockMapFilters = MockRepository.Mock<IMap<XmlElement, ObservableCollection<FilterConfigurationViewModel>>>();
             mockMapFilters.Expect(f => f.Map(filtersElement)).Return(null);
             var mockMapQueue = MockRepository.Mock<IMap<XmlElement, QueueConfigurationViewModel>>();
@@ -179,7 +179,7 @@ namespace MySynch.Q.Configurators.Tests.Unit.Sender
             senderElement.CreateAttribute(TargetSenderConfigurationDescription.LocalRootFolder, "localRootFolderValue");
             senderElement.CreateAttribute(TargetSenderConfigurationDescription.MessageBodyType, "Text");
             senderElement.CreateAttribute(TargetSenderConfigurationDescription.MinMemory, "2");
-            var filtersElement = senderElement.CreateElement(TargetFilterConfigurationDescription.FiltersCollectionElementName);
+            senderElement.CreateElement(TargetFilterConfigurationDescription.FiltersCollectionElementName);
             var queuesElement = senderElement.CreateElement(TargetQueueConfigurationDescription.QueuesCollectionElementName);
             var mockMapFilter = MockRepository.Mock<IMap<XmlElement, FilterConfigurationViewModel>>();
             var mockMapQueues = MockRepository.Mock<IMap<XmlElement, ObservableCollection<QueueConfigurationViewModel>>>();
@@ -285,7 +285,7 @@ namespace MySynch.Q.Configurators.Tests.Unit.Sender
                     {
                         
                         LocalRootFolderViewModel=new FolderPickerViewModel {Folder="localRootFolderValue"}, 
-                        FiltersViewModel = new FiltersConfiguratorViewModel
+                        FiltersViewModel = new FiltersConfigurationViewModel
                         {
                             Filters =
                             new ObservableCollection<FilterConfigurationViewModel>
@@ -317,7 +317,7 @@ namespace MySynch.Q.Configurators.Tests.Unit.Sender
                     {
 
                         LocalRootFolderViewModel = new FolderPickerViewModel { Folder = "localRootFolderValue" },
-                        QueuesViewModel = new QueuesConfiguratorViewModel
+                        QueuesViewModel = new QueuesConfigurationViewModel
                         {
                             Queues =
                             new ObservableCollection<QueueConfigurationViewModel>
@@ -356,8 +356,8 @@ namespace MySynch.Q.Configurators.Tests.Unit.Sender
                 LocalRootFolderViewModel = new FolderPickerViewModel { Folder="localRootFolderValue"},
                 MessageBodyType=BodyType.Text,
                 MinMemory=4,
-                FiltersViewModel = new FiltersConfiguratorViewModel(),
-                QueuesViewModel=new QueuesConfiguratorViewModel()
+                FiltersViewModel = new FiltersConfigurationViewModel(),
+                QueuesViewModel=new QueuesConfigurationViewModel()
             }, parrentElement);
 
             Assert.IsNotNull(senderResultElement);

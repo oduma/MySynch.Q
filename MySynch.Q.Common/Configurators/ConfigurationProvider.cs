@@ -12,14 +12,13 @@ namespace MySynch.Q.Common.Configurators
         public IEnumerable<ConfigurationSectionLocator> GetConfigInfo()
         {
             var configSection = ConfigurationManager.GetSection(ConfigurationproviderSection) as ConfigurationLocatorSection;
-            if(configSection!=null && configSection.Locators!=null && configSection.Locators.Count>=1)
+            if (configSection?.Locators == null || configSection.Locators.Count < 1) yield break;
             foreach (var locator in configSection.Locators)
             {
                 var configSectionLocator = GetConfigInfo((LocatorElement)locator);
                 if (configSectionLocator != null)
                     yield return configSectionLocator;
             }
-
         }
 
         private ConfigurationSectionLocator  GetConfigInfo(LocatorElement locator)
@@ -28,8 +27,7 @@ namespace MySynch.Q.Common.Configurators
                 return null;
             if (string.IsNullOrEmpty(locator.SectionId))
                 return null;
-            var result = new ConfigurationSectionLocator();
-            result.SectionIdentifier =locator.SectionId;
+            var result = new ConfigurationSectionLocator {SectionIdentifier = locator.SectionId};
             if (File.Exists(locator.Location))
             {
                 result.FilePath = locator.Location;

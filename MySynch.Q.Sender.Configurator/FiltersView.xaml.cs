@@ -20,7 +20,7 @@ namespace MySynch.Q.Sender.Configurator
     /// </summary>
     public partial class FiltersView : Window
     {
-        internal FiltersView(FiltersConfiguratorViewModel filtersConfiguratorViewModel)
+        internal FiltersView(FiltersConfigurationViewModel filtersConfiguratorViewModel)
         {
             InitializeComponent();
             filtersConfiguratorViewModel.InitiateView();
