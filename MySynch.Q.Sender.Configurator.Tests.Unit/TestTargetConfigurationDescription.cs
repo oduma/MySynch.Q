@@ -1,4 +1,4 @@
-namespace MySynch.Q.Sender.Configurator.Tests.Unit
+namespace MySynch.Q.Configurators.Tests.Unit
 {
     public static class TestTargetConfigurationDescription
     {

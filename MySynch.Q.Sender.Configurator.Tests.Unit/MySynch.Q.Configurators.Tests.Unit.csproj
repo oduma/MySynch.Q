@@ -7,8 +7,8 @@
     <ProjectGuid>{E007A8A9-DF39-4688-B01D-AE94B1DD4185}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>MySynch.Q.Sender.Configurator.Tests.Unit</RootNamespace>
-    <AssemblyName>MySynch.Q.Sender.Configurator.Tests.Unit</AssemblyName>
+    <RootNamespace>MySynch.Q.Configurators.Tests.Unit</RootNamespace>
+    <AssemblyName>MySynch.Q.Configurators.Tests.Unit</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -50,12 +50,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MapFilterTests.cs" />
-    <Compile Include="MapQueueTests.cs" />
-    <Compile Include="MapSendersTests.cs" />
-    <Compile Include="MapSenderTests.cs" />
+    <Compile Include="Receiver\MapTranslatorTests.cs" />
+    <Compile Include="Receiver\MapReceiverTests.cs" />
+    <Compile Include="Sender\MapFilterTests.cs" />
+    <Compile Include="Sender\MapQueueTests.cs" />
+    <Compile Include="Sender\MapSendersTests.cs" />
+    <Compile Include="Sender\MapSenderTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SendersProviderTests.cs" />
+    <Compile Include="Sender\SendersProviderTests.cs" />
     <Compile Include="TestTargetConfigurationDescription.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -72,6 +74,10 @@
       <Project>{696f72f6-22a7-41ef-a57d-0876b593721e}</Project>
       <Name>MySynch.Q.Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\MySynch.Q.Receiver.Configurator\MySynch.Q.Receiver.Configurator.csproj">
+      <Project>{8bcb8eca-be49-469f-8e1b-bcf2ad6518a0}</Project>
+      <Name>MySynch.Q.Receiver.Configurator</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MySynch.Q.Sender.Configurator\MySynch.Q.Sender.Configurator.csproj">
       <Project>{283c942e-2fa7-4cbd-8bbe-d36b1fb3c373}</Project>
       <Name>MySynch.Q.Sender.Configurator</Name>
@@ -85,6 +91,7 @@
     <Content Include="acknowledgements.txt" />
     <Content Include="license.txt" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

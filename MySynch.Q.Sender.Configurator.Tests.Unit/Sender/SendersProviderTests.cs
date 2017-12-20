@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Configuration;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml;
 using MySynch.Q.Common.Configurators;
 using MySynch.Q.Common.Configurators.Description;
@@ -17,7 +14,7 @@ using MySynch.Q.Sender.Configurator.MVVM;
 using NUnit.Framework;
 using Rhino.Mocks;
 
-namespace MySynch.Q.Sender.Configurator.Tests.Unit
+namespace MySynch.Q.Configurators.Tests.Unit.Sender
 {
     [TestFixture]
     public class SendersProviderTests

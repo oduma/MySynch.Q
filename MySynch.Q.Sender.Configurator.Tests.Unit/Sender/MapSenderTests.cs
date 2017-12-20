@@ -1,21 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Runtime.ExceptionServices;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.ObjectModel;
 using System.Xml;
 using MySynch.Q.Common.Contracts;
 using MySynch.Q.Common.Mappers;
 using MySynch.Q.Sender.Configurator.Configuration;
 using MySynch.Q.Sender.Configurator.Mappers;
 using MySynch.Q.Sender.Configurator.MVVM;
-using NUnit.Framework.Internal;
 using NUnit.Framework;
 using Rhino.Mocks;
 
-namespace MySynch.Q.Sender.Configurator.Tests.Unit
+namespace MySynch.Q.Configurators.Tests.Unit.Sender
 {
     [TestFixture]
     public class MapSenderTests

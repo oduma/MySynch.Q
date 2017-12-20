@@ -28,7 +28,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{A2D2B0
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MySynch.Q.Sender.Configurator", "MySynch.Q.Sender.Configurator\MySynch.Q.Sender.Configurator.csproj", "{283C942E-2FA7-4CBD-8BBE-D36B1FB3C373}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MySynch.Q.Sender.Configurator.Tests.Unit", "MySynch.Q.Sender.Configurator.Tests.Unit\MySynch.Q.Sender.Configurator.Tests.Unit.csproj", "{E007A8A9-DF39-4688-B01D-AE94B1DD4185}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MySynch.Q.Configurators.Tests.Unit", "MySynch.Q.Sender.Configurator.Tests.Unit\MySynch.Q.Configurators.Tests.Unit.csproj", "{E007A8A9-DF39-4688-B01D-AE94B1DD4185}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MySynch.Q.Receiver.Configurator", "MySynch.Q.Receiver.Configurator\MySynch.Q.Receiver.Configurator.csproj", "{8BCB8ECA-BE49-469F-8E1B-BCF2AD6518A0}"
 EndProject

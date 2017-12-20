@@ -56,9 +56,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Mappers\MapTextTranslators.cs" />
-    <Compile Include="Mappers\MapTrextTranslator.cs" />
+    <Compile Include="Mappers\MapTextTranslator.cs" />
+    <Compile Include="MVVM\RootFolderViewModel.cs" />
     <Compile Include="MVVM\TranslatorConfigurationViewModel.cs" />
+    <Compile Include="Configuration\TargetReceiverConfigurationDescription.cs" />
+    <Compile Include="Configuration\TargetTranslatorConfigurationDescription.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -73,7 +75,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Mappers\MapReceivers.cs" />
     <Compile Include="Mappers\MapReceiver.cs" />
     <Compile Include="MVVM\ReceiverConfigurationViewModel.cs" />
     <Compile Include="MVVM\ReceiversConfiguratorViewModel.cs" />

@@ -5,7 +5,7 @@ using MySynch.Q.Sender.Configurator.Mappers;
 using MySynch.Q.Sender.Configurator.MVVM;
 using NUnit.Framework;
 
-namespace MySynch.Q.Sender.Configurator.Tests.Unit
+namespace MySynch.Q.Configurators.Tests.Unit.Sender
 {
     [TestFixture]
     public class MapFilterTests
