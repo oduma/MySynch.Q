@@ -23,7 +23,7 @@ namespace MySynch.Q.Sender.Configurator.Tests.Unit
         public void MapSendersNoMapSender()
         {
 
-            var mapSenders = new MapSenders(null);
+            var mapSenders = new MapCollectionNodeNoAttributes<SenderConfigurationViewModel>(null,TargetSenderConfigurationDescription.SendersCollectionElementName);
             Assert.IsNull(mapSenders.Map(null));
         }
 
@@ -31,7 +31,7 @@ namespace MySynch.Q.Sender.Configurator.Tests.Unit
         public void MapSendersNoElement()
         {
             var mockMapSender = MockRepository.Mock<IMap<XmlElement, SenderConfigurationViewModel>>();
-            var mapSenders = new MapSenders(mockMapSender);
+            var mapSenders = new MapCollectionNodeNoAttributes<SenderConfigurationViewModel>(mockMapSender, TargetSenderConfigurationDescription.SendersCollectionElementName);
             Assert.IsNull(mapSenders.Map(null));
         }
 
@@ -41,7 +41,7 @@ namespace MySynch.Q.Sender.Configurator.Tests.Unit
             XmlDocument xmlDocument = new XmlDocument();
             var sendersElement = xmlDocument.CreateElement(TargetSenderConfigurationDescription.SendersCollectionElementName);
             var mockMapSender = MockRepository.Mock<IMap<XmlElement, SenderConfigurationViewModel>>();
-            var mapSenders = new MapSenders(mockMapSender);
+            var mapSenders = new MapCollectionNodeNoAttributes<SenderConfigurationViewModel>(mockMapSender, TargetSenderConfigurationDescription.SendersCollectionElementName);
             var senders = mapSenders.Map(sendersElement);
             Assert.IsNotNull(senders);
             Assert.IsEmpty(senders);
@@ -55,7 +55,7 @@ namespace MySynch.Q.Sender.Configurator.Tests.Unit
             var senderElement = sendersElement.CreateElement(TargetSenderConfigurationDescription.SenderElementName);
             var mockMapSender = MockRepository.Mock<IMap<XmlElement, SenderConfigurationViewModel>>();
             mockMapSender.Expect(m => m.Map(senderElement)).IgnoreArguments().Return(null);
-            var mapSenders = new MapSenders(mockMapSender);
+            var mapSenders = new MapCollectionNodeNoAttributes<SenderConfigurationViewModel>(mockMapSender, TargetSenderConfigurationDescription.SendersCollectionElementName);
             var senders = mapSenders.Map(sendersElement);
             Assert.IsNotNull(senders);
             Assert.IsEmpty(senders);
@@ -76,7 +76,7 @@ namespace MySynch.Q.Sender.Configurator.Tests.Unit
                     MessageBodyType = BodyType.Text,
                     MinMemory = 5
                 });
-            var mapSenders = new MapSenders(mockMapSender);
+            var mapSenders = new MapCollectionNodeNoAttributes<SenderConfigurationViewModel>(mockMapSender, TargetSenderConfigurationDescription.SendersCollectionElementName);
             var senders = mapSenders.Map(sendersElement);
             Assert.IsNotNull(senders);
             Assert.IsNotEmpty(senders);
@@ -90,7 +90,7 @@ namespace MySynch.Q.Sender.Configurator.Tests.Unit
         public void UnMapSendersNoMapSender()
         {
 
-            var mapSenders = new MapSenders(null);
+            var mapSenders = new MapCollectionNodeNoAttributes<SenderConfigurationViewModel>(null, TargetSenderConfigurationDescription.SendersCollectionElementName);
             Assert.IsNull(mapSenders.UnMap(null, null));
         }
 
@@ -98,7 +98,7 @@ namespace MySynch.Q.Sender.Configurator.Tests.Unit
         public void UnMapEmptyViewModel()
         {
             var mockMapSender = MockRepository.Mock<IMap<XmlElement, SenderConfigurationViewModel>>();
-            var mapSenders = new MapSenders(mockMapSender);
+            var mapSenders = new MapCollectionNodeNoAttributes<SenderConfigurationViewModel>(mockMapSender, TargetSenderConfigurationDescription.SendersCollectionElementName);
             Assert.IsNull(mapSenders.UnMap(null, null));
         }
 
@@ -106,7 +106,7 @@ namespace MySynch.Q.Sender.Configurator.Tests.Unit
         public void UnMapEmptyParrentElement()
         {
             var mockMapSender = MockRepository.Mock<IMap<XmlElement, SenderConfigurationViewModel>>();
-            var mapSenders = new MapSenders(mockMapSender);
+            var mapSenders = new MapCollectionNodeNoAttributes<SenderConfigurationViewModel>(mockMapSender, TargetSenderConfigurationDescription.SendersCollectionElementName);
             Assert.IsNull(mapSenders.UnMap(new ObservableCollection<SenderConfigurationViewModel>(), null));
         }
 
@@ -114,10 +114,10 @@ namespace MySynch.Q.Sender.Configurator.Tests.Unit
         public void UnMapUnMapSenderReturnsNull()
         {
             XmlDocument xmlDocument = new XmlDocument();
-            var parrentElement = xmlDocument.CreateElement(TargetConfigurationDescription.SenderSectionElementName);
+            var parrentElement = xmlDocument.CreateElement(TestTargetConfigurationDescription.SenderSectionElementName);
             var mockMapSender = MockRepository.Mock<IMap<XmlElement, SenderConfigurationViewModel>>();
             mockMapSender.Expect(m => m.UnMap(new SenderConfigurationViewModel(), parrentElement)).IgnoreArguments().Return(null);
-            var mapSenders = new MapSenders(mockMapSender);
+            var mapSenders = new MapCollectionNodeNoAttributes<SenderConfigurationViewModel>(mockMapSender, TargetSenderConfigurationDescription.SendersCollectionElementName);
             var sendersElement =
                 mapSenders.UnMap(
                     new ObservableCollection<SenderConfigurationViewModel>
@@ -133,7 +133,7 @@ namespace MySynch.Q.Sender.Configurator.Tests.Unit
                         }
                     },
                     parrentElement);
-            Assert.AreEqual(TargetConfigurationDescription.SenderSectionElementName, parrentElement.Name);
+            Assert.AreEqual(TestTargetConfigurationDescription.SenderSectionElementName, parrentElement.Name);
             Assert.AreEqual(1, parrentElement.ChildNodes.Count);
             Assert.AreEqual(TargetSenderConfigurationDescription.SendersCollectionElementName, parrentElement.ChildNodes[0].Name);
             Assert.False(parrentElement.ChildNodes[0].HasChildNodes);
@@ -145,14 +145,14 @@ namespace MySynch.Q.Sender.Configurator.Tests.Unit
         public void UnMapNoItemsInTheCollection()
         {
             XmlDocument xmlDocument = new XmlDocument();
-            var parrentElement = xmlDocument.CreateElement(TargetConfigurationDescription.SenderSectionElementName);
+            var parrentElement = xmlDocument.CreateElement(TestTargetConfigurationDescription.SenderSectionElementName);
             var mockMapSender = MockRepository.Mock<IMap<XmlElement, SenderConfigurationViewModel>>();
             mockMapSender.Expect(m => m.UnMap(new SenderConfigurationViewModel(), parrentElement)).IgnoreArguments().Return(null);
-            var mapSenders = new MapSenders(mockMapSender);
+            var mapSenders = new MapCollectionNodeNoAttributes<SenderConfigurationViewModel>(mockMapSender, TargetSenderConfigurationDescription.SendersCollectionElementName);
             var sendersElement =
                 mapSenders.UnMap( new ObservableCollection<SenderConfigurationViewModel>(),
                     parrentElement);
-            Assert.AreEqual(TargetConfigurationDescription.SenderSectionElementName, parrentElement.Name);
+            Assert.AreEqual(TestTargetConfigurationDescription.SenderSectionElementName, parrentElement.Name);
             Assert.AreEqual(1, parrentElement.ChildNodes.Count);
             Assert.AreEqual(TargetSenderConfigurationDescription.SendersCollectionElementName, parrentElement.ChildNodes[0].Name);
             Assert.False(parrentElement.ChildNodes[0].HasChildNodes);
@@ -164,9 +164,15 @@ namespace MySynch.Q.Sender.Configurator.Tests.Unit
         public void UnMapOk()
         {
             XmlDocument xmlDocument = new XmlDocument();
-            var parrentElement = xmlDocument.CreateElement(TargetConfigurationDescription.SenderSectionElementName);
+            var parrentElement = xmlDocument.CreateElement(TestTargetConfigurationDescription.SenderSectionElementName);
             var mapSenders =
-                new MapSenders(new MapSender(new MapFilters(new MapFilter()), new MapQueues(new MapQueue())));
+                new MapCollectionNodeNoAttributes<SenderConfigurationViewModel>(
+                    new MapSender(
+                        new MapCollectionNodeNoAttributes<FilterConfigurationViewModel>(new MapFilter(),
+                            TargetFilterConfigurationDescription.FiltersCollectionElementName),
+                        new MapCollectionNodeNoAttributes<QueueConfigurationViewModel>(new MapQueue(),
+                            TargetQueueConfigurationDescription.QueuesCollectionElementName)),
+                    TargetSenderConfigurationDescription.SendersCollectionElementName);
             var sendersElement =
                 mapSenders.UnMap(
                     new ObservableCollection<SenderConfigurationViewModel>

@@ -61,7 +61,9 @@
     <Compile Include="Contracts\Management\NodeManagementMessage.cs" />
     <Compile Include="Contracts\Management\Rate.cs" />
     <Compile Include="Contracts\Management\VersionMessage.cs" />
+    <Compile Include="Mappers\ExtensionMethods.cs" />
     <Compile Include="Mappers\IMap.cs" />
+    <Compile Include="Mappers\MapCollectionNodeNoAttributes.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

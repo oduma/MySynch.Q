@@ -1,6 +1,6 @@
 ﻿using System.Xml;
 
-namespace MySynch.Q.Sender.Configurator.Mappers
+namespace MySynch.Q.Common.Mappers
 {
     public static class ExtensionMethods
     {

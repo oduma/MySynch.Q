@@ -1,5 +1,7 @@
 ﻿using System.Windows;
 using MySynch.Q.Common.Configurators;
+using MySynch.Q.Common.Mappers;
+using MySynch.Q.Sender.Configurator.Configuration;
 using MySynch.Q.Sender.Configurator.Mappers;
 using MySynch.Q.Sender.Configurator.MVVM;
 
@@ -14,7 +16,14 @@ namespace MySynch.Q.Sender.Configurator
         {
             InitializeComponent();
             var senderConfiguratorViewModel = new SendersConfiguratorViewModel(new ConfigurationProvider(),
-                new ConfigurationToViewModelProvider<SenderConfigurationViewModel>(new MapSenders((new MapSender(new MapFilters(new MapFilter()),new MapQueues(new MapQueue()))))));
+                new ConfigurationToViewModelProvider<SenderConfigurationViewModel>(
+                    new MapCollectionNodeNoAttributes<SenderConfigurationViewModel>(
+                        new MapSender(
+                            new MapCollectionNodeNoAttributes<FilterConfigurationViewModel>(new MapFilter(),
+                                TargetFilterConfigurationDescription.FiltersCollectionElementName),
+                            new MapCollectionNodeNoAttributes<QueueConfigurationViewModel>(new MapQueue(),
+                                TargetQueueConfigurationDescription.QueuesCollectionElementName)),
+                        TargetSenderConfigurationDescription.SendersCollectionElementName)));
             senderConfiguratorViewModel.InitiateView();
             this.DataContext = senderConfiguratorViewModel;
         }

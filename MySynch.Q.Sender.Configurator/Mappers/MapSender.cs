@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,11 +14,11 @@ namespace MySynch.Q.Sender.Configurator.Mappers
 {
     public class MapSender:IMap<XmlElement,SenderConfigurationViewModel>
     {
-        private readonly IMap<XmlElement, FiltersConfiguratorViewModel> _mapFilters;
-        private readonly IMap<XmlElement, QueuesConfiguratorViewModel> _mapQueues;
+        private readonly IMap<XmlElement, ObservableCollection<FilterConfigurationViewModel>> _mapFilters;
+        private readonly IMap<XmlElement, ObservableCollection<QueueConfigurationViewModel>> _mapQueues;
 
-        public MapSender(IMap<XmlElement,FiltersConfiguratorViewModel> mapFilters,
-            IMap<XmlElement,QueuesConfiguratorViewModel> mapQueues)
+        public MapSender(IMap<XmlElement, ObservableCollection<FilterConfigurationViewModel>> mapFilters,
+            IMap<XmlElement, ObservableCollection<QueueConfigurationViewModel>> mapQueues)
         {
             _mapFilters = mapFilters;
             _mapQueues = mapQueues;
@@ -65,13 +66,25 @@ namespace MySynch.Q.Sender.Configurator.Mappers
         {
             if (senderElement.GetElementsByTagName(TargetFilterConfigurationDescription.FiltersCollectionElementName).Count != 0)
             {
-                senderConfigurationViewModel.FiltersViewModel =
-                    _mapFilters.Map((XmlElement)senderElement.GetElementsByTagName(TargetFilterConfigurationDescription.FiltersCollectionElementName)[0]);
+                senderConfigurationViewModel.FiltersViewModel = new FiltersConfiguratorViewModel
+                {
+                    Filters =
+                        _mapFilters.Map(
+                            (XmlElement)
+                            senderElement.GetElementsByTagName(
+                                TargetFilterConfigurationDescription.FiltersCollectionElementName)[0])
+                };
             }
             if (senderElement.GetElementsByTagName(TargetQueueConfigurationDescription.QueuesCollectionElementName).Count != 0)
             {
-                senderConfigurationViewModel.QueuesViewModel =
-                    _mapQueues.Map((XmlElement)senderElement.GetElementsByTagName(TargetQueueConfigurationDescription.QueuesCollectionElementName)[0]);
+                senderConfigurationViewModel.QueuesViewModel = new QueuesConfiguratorViewModel
+                {
+                    Queues =
+                        _mapQueues.Map(
+                            (XmlElement)
+                            senderElement.GetElementsByTagName(
+                                TargetQueueConfigurationDescription.QueuesCollectionElementName)[0])
+                };
             }
 
         }
@@ -91,9 +104,9 @@ namespace MySynch.Q.Sender.Configurator.Mappers
             newElement.CreateAttribute(TargetSenderConfigurationDescription.MessageBodyType,input.MessageBodyType.ToString());
             newElement.CreateAttribute(TargetSenderConfigurationDescription.MinMemory, input.MinMemory.ToString());
             if(input.FiltersViewModel!=null)
-                _mapFilters.UnMap(input.FiltersViewModel, newElement);
+                _mapFilters.UnMap(input.FiltersViewModel.Filters, newElement);
             if(input.QueuesViewModel!=null)
-                _mapQueues.UnMap(input.QueuesViewModel, newElement);
+                _mapQueues.UnMap(input.QueuesViewModel.Queues, newElement);
             return newElement;
         }
     }

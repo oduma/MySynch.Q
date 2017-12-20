@@ -65,7 +65,13 @@ namespace MySynch.Q.Sender.Configurator.Tests.Unit
 
             ConfigurationToViewModelProvider<SenderConfigurationViewModel> sendersProvider =
                 new ConfigurationToViewModelProvider<SenderConfigurationViewModel>(
-                    new MapSenders(new MapSender(new MapFilters(new MapFilter()), new MapQueues(new MapQueue()))));
+                    new MapCollectionNodeNoAttributes<SenderConfigurationViewModel>(
+                        new MapSender(
+                            new MapCollectionNodeNoAttributes<FilterConfigurationViewModel>(new MapFilter(),
+                                TargetFilterConfigurationDescription.FiltersCollectionElementName),
+                            new MapCollectionNodeNoAttributes<QueueConfigurationViewModel>(new MapQueue(),
+                                TargetQueueConfigurationDescription.QueuesCollectionElementName)),
+                        TargetSenderConfigurationDescription.SendersCollectionElementName));
             Assert.Throws<ConfigurationErrorsException>(
                 () =>
                     sendersProvider.GetViewModelsCollection(new ConfigurationSectionLocator
@@ -79,7 +85,13 @@ namespace MySynch.Q.Sender.Configurator.Tests.Unit
 
             ConfigurationToViewModelProvider<SenderConfigurationViewModel> sendersProvider =
                 new ConfigurationToViewModelProvider<SenderConfigurationViewModel>(
-                    new MapSenders(new MapSender(new MapFilters(new MapFilter()), new MapQueues(new MapQueue()))));
+                    new MapCollectionNodeNoAttributes<SenderConfigurationViewModel>(
+                        new MapSender(
+                            new MapCollectionNodeNoAttributes<FilterConfigurationViewModel>(new MapFilter(),
+                                TargetFilterConfigurationDescription.FiltersCollectionElementName),
+                            new MapCollectionNodeNoAttributes<QueueConfigurationViewModel>(new MapQueue(),
+                                TargetQueueConfigurationDescription.QueuesCollectionElementName)),
+                        TargetSenderConfigurationDescription.SendersCollectionElementName));
             Assert.Throws<ConfigurationErrorsException>(
                 () =>
                     sendersProvider.GetViewModelsCollection(new ConfigurationSectionLocator
@@ -101,7 +113,7 @@ namespace MySynch.Q.Sender.Configurator.Tests.Unit
             var sendersResult = sendersProvider.GetViewModelsCollection(new ConfigurationSectionLocator
                     {
                         FilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "test.config"),
-                        SectionIdentifier = TargetConfigurationDescription.SenderSectionElementName
+                        SectionIdentifier = TestTargetConfigurationDescription.SenderSectionElementName
                     });
             Assert.IsNotNull(sendersResult);
             Assert.IsEmpty(sendersResult);
@@ -112,11 +124,17 @@ namespace MySynch.Q.Sender.Configurator.Tests.Unit
         {
             ConfigurationToViewModelProvider<SenderConfigurationViewModel> sendersProvider =
                 new ConfigurationToViewModelProvider<SenderConfigurationViewModel>(
-                    new MapSenders(new MapSender(new MapFilters(new MapFilter()), new MapQueues(new MapQueue()))));
+                    new MapCollectionNodeNoAttributes<SenderConfigurationViewModel>(
+                        new MapSender(
+                            new MapCollectionNodeNoAttributes<FilterConfigurationViewModel>(new MapFilter(),
+                                TargetFilterConfigurationDescription.FiltersCollectionElementName),
+                            new MapCollectionNodeNoAttributes<QueueConfigurationViewModel>(new MapQueue(),
+                                TargetQueueConfigurationDescription.QueuesCollectionElementName)),
+                        TargetSenderConfigurationDescription.SendersCollectionElementName));
             var senders = sendersProvider.GetViewModelsCollection(new ConfigurationSectionLocator
             {
                 FilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "test.config"),
-                SectionIdentifier = TargetConfigurationDescription.SenderSectionElementName
+                SectionIdentifier = TestTargetConfigurationDescription.SenderSectionElementName
             });
             Assert.IsNotEmpty(senders);
             Assert.AreEqual(2, senders.Count());
@@ -208,12 +226,12 @@ namespace MySynch.Q.Sender.Configurator.Tests.Unit
                 new ConfigurationSectionLocator
                 {
                     FilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "test-write.config"),
-                    SectionIdentifier = TargetConfigurationDescription.SenderSectionElementName
+                    SectionIdentifier = TestTargetConfigurationDescription.SenderSectionElementName
                 });
             Assert.True(result);
             XmlDocument actualDocument = new XmlDocument();
             actualDocument.Load(Path.Combine(AppDomain.CurrentDomain.BaseDirectory,"test-write.config"));
-            var actualSection = actualDocument.SelectSingleNode($"/{TargetConfigurationDescription.ConfigurationElementName}/{TargetConfigurationDescription.SenderSectionElementName}");
+            var actualSection = actualDocument.SelectSingleNode($"/{TargetConfigurationDescription.ConfigurationElementName}/{TestTargetConfigurationDescription.SenderSectionElementName}");
             Assert.IsNotNull(actualSection);
             Assert.False(actualSection.HasChildNodes);
         }
@@ -225,7 +243,7 @@ namespace MySynch.Q.Sender.Configurator.Tests.Unit
             var result = sendersProvider.SetViewModelsCollection(new ObservableCollection<SenderConfigurationViewModel>(), new ConfigurationSectionLocator
             {
                 FilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "test-write.config"),
-                SectionIdentifier = TargetConfigurationDescription.SenderSectionElementName
+                SectionIdentifier = TestTargetConfigurationDescription.SenderSectionElementName
             });
             Assert.False(result);
         }
@@ -242,7 +260,7 @@ namespace MySynch.Q.Sender.Configurator.Tests.Unit
             var result = sendersProvider.SetViewModelsCollection(new ObservableCollection<SenderConfigurationViewModel>(), new ConfigurationSectionLocator
             {
                 FilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "test-write.config"),
-                SectionIdentifier = TargetConfigurationDescription.SenderSectionElementName
+                SectionIdentifier = TestTargetConfigurationDescription.SenderSectionElementName
             });
             Assert.False(result);
         }
@@ -253,13 +271,13 @@ namespace MySynch.Q.Sender.Configurator.Tests.Unit
             var mockMapSenders =
                 MockRepository.Mock<IMap<XmlElement, ObservableCollection<SenderConfigurationViewModel>>>();
             var fakeDoc = new XmlDocument();
-            var fakeElement = fakeDoc.CreateElement(TargetConfigurationDescription.SenderSectionElementName);
+            var fakeElement = fakeDoc.CreateElement(TestTargetConfigurationDescription.SenderSectionElementName);
             mockMapSenders.Expect(s => s.UnMap(new ObservableCollection<SenderConfigurationViewModel>(),fakeElement)).IgnoreArguments().Return(fakeElement);
             ConfigurationToViewModelProvider<SenderConfigurationViewModel> sendersProvider = new ConfigurationToViewModelProvider<SenderConfigurationViewModel>(mockMapSenders);
             var result = sendersProvider.SetViewModelsCollection(new ObservableCollection<SenderConfigurationViewModel>(), new ConfigurationSectionLocator
             {
                 FilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "test-write.config"),
-                SectionIdentifier = TargetConfigurationDescription.SenderSectionElementName
+                SectionIdentifier = TestTargetConfigurationDescription.SenderSectionElementName
             });
             Assert.False(result);
         }

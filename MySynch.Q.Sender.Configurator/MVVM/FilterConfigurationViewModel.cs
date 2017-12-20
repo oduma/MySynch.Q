@@ -1,6 +1,8 @@
-﻿namespace MySynch.Q.Sender.Configurator.MVVM
+﻿using Sciendo.Common.WPF.MVVM;
+
+namespace MySynch.Q.Sender.Configurator.MVVM
 {
-    public class FilterConfigurationViewModel
+    public class FilterConfigurationViewModel:ViewModelBase
     {
         public string Key { get; set; }
 

@@ -40,7 +40,7 @@ namespace MySynch.Q.Sender.Configurator.Tests.Unit
         {
             XmlDocument xmlDocument = new XmlDocument();
             var senderElement = xmlDocument.CreateElement(TargetSenderConfigurationDescription.SenderElementName);
-            MapSender mapSender = new MapSender(new MapFilters(null), null);
+            MapSender mapSender = new MapSender(new MapCollectionNodeNoAttributes<FilterConfigurationViewModel>(null, TargetFilterConfigurationDescription.FiltersCollectionElementName), null);
             Assert.IsNull(mapSender.Map(senderElement));
         }
 
@@ -49,7 +49,7 @@ namespace MySynch.Q.Sender.Configurator.Tests.Unit
         {
             XmlDocument xmlDocument = new XmlDocument();
             var senderElement = xmlDocument.CreateElement(TargetSenderConfigurationDescription.SenderElementName);
-            var mapSender = new MapSender(new MapFilters(null), new MapQueues(null));
+            var mapSender = new MapSender(new MapCollectionNodeNoAttributes<FilterConfigurationViewModel>(null,TargetFilterConfigurationDescription.FiltersCollectionElementName), new MapCollectionNodeNoAttributes<QueueConfigurationViewModel>(null,TargetQueueConfigurationDescription.QueuesCollectionElementName));
             var senderConfigurationViewModel = mapSender.Map(senderElement);
             Assert.IsNotNull(senderConfigurationViewModel);
             Assert.IsNull(senderConfigurationViewModel.FiltersViewModel);
@@ -69,7 +69,12 @@ namespace MySynch.Q.Sender.Configurator.Tests.Unit
             var mockMapFilter = MockRepository.Mock<IMap<XmlElement, FilterConfigurationViewModel>>();
             var mockMapQueue = MockRepository.Mock<IMap<XmlElement, QueueConfigurationViewModel>>();
 
-            var mapSender = new MapSender(new MapFilters(mockMapFilter), new MapQueues(mockMapQueue));
+            var mapSender =
+                new MapSender(
+                    new MapCollectionNodeNoAttributes<FilterConfigurationViewModel>(mockMapFilter,
+                        TargetFilterConfigurationDescription.FiltersCollectionElementName),
+                    new MapCollectionNodeNoAttributes<QueueConfigurationViewModel>(mockMapQueue,
+                        TargetQueueConfigurationDescription.QueuesCollectionElementName));
             var senderConfigurationViewModel = mapSender.Map(senderElement);
             Assert.IsNotNull(senderConfigurationViewModel);
             Assert.IsNotNull(senderConfigurationViewModel.FiltersViewModel);
@@ -92,7 +97,7 @@ namespace MySynch.Q.Sender.Configurator.Tests.Unit
             var mockMapFilter = MockRepository.Mock<IMap<XmlElement, FilterConfigurationViewModel>>();
             var mockMapQueue = MockRepository.Mock<IMap<XmlElement, QueueConfigurationViewModel>>();
 
-            var mapSender = new MapSender(new MapFilters(mockMapFilter), new MapQueues(mockMapQueue));
+            var mapSender = new MapSender(new MapCollectionNodeNoAttributes<FilterConfigurationViewModel>(mockMapFilter,TargetFilterConfigurationDescription.FiltersCollectionElementName), new MapCollectionNodeNoAttributes<QueueConfigurationViewModel>(mockMapQueue,TargetQueueConfigurationDescription.QueuesCollectionElementName));
             var senderConfigurationViewModel = mapSender.Map(senderElement);
             Assert.IsNotNull(senderConfigurationViewModel);
             Assert.AreEqual("localRootFolderValue", senderConfigurationViewModel.LocalRootFolderViewModel.LocalRootFolder);
@@ -115,7 +120,7 @@ namespace MySynch.Q.Sender.Configurator.Tests.Unit
             var mockMapFilter = MockRepository.Mock<IMap<XmlElement, FilterConfigurationViewModel>>();
             var mockMapQueue = MockRepository.Mock<IMap<XmlElement, QueueConfigurationViewModel>>();
 
-            var mapSender = new MapSender(new MapFilters(mockMapFilter), new MapQueues(mockMapQueue));
+            var mapSender = new MapSender(new MapCollectionNodeNoAttributes<FilterConfigurationViewModel>(mockMapFilter,TargetFilterConfigurationDescription.FiltersCollectionElementName), new MapCollectionNodeNoAttributes<QueueConfigurationViewModel>(mockMapQueue,TargetQueueConfigurationDescription.QueuesCollectionElementName));
             var senderConfigurationViewModel = mapSender.Map(senderElement);
             Assert.IsNotNull(senderConfigurationViewModel);
             Assert.AreEqual("localRootFolderValue", senderConfigurationViewModel.LocalRootFolderViewModel.LocalRootFolder);
@@ -138,7 +143,7 @@ namespace MySynch.Q.Sender.Configurator.Tests.Unit
             var mockMapFilter = MockRepository.Mock<IMap<XmlElement, FilterConfigurationViewModel>>();
             var mockMapQueue = MockRepository.Mock<IMap<XmlElement, QueueConfigurationViewModel>>();
 
-            var mapSender = new MapSender(new MapFilters(mockMapFilter), new MapQueues(mockMapQueue));
+            var mapSender = new MapSender(new MapCollectionNodeNoAttributes<FilterConfigurationViewModel>(mockMapFilter,TargetFilterConfigurationDescription.FiltersCollectionElementName), new MapCollectionNodeNoAttributes<QueueConfigurationViewModel>(mockMapQueue,TargetQueueConfigurationDescription.QueuesCollectionElementName));
             var senderConfigurationViewModel = mapSender.Map(senderElement);
             Assert.IsNotNull(senderConfigurationViewModel);
             Assert.AreEqual("localRootFolderValue", senderConfigurationViewModel.LocalRootFolderViewModel.LocalRootFolder);
@@ -158,17 +163,17 @@ namespace MySynch.Q.Sender.Configurator.Tests.Unit
             senderElement.CreateAttribute(TargetSenderConfigurationDescription.MinMemory, "2");
             var filtersElement = senderElement.CreateElement(TargetFilterConfigurationDescription.FiltersCollectionElementName);
             var queuesElement = senderElement.CreateElement(TargetQueueConfigurationDescription.QueuesCollectionElementName);
-            var mockMapFilters = MockRepository.Mock<IMap<XmlElement, FiltersConfiguratorViewModel>>();
+            var mockMapFilters = MockRepository.Mock<IMap<XmlElement, ObservableCollection<FilterConfigurationViewModel>>>();
             mockMapFilters.Expect(f => f.Map(filtersElement)).Return(null);
             var mockMapQueue = MockRepository.Mock<IMap<XmlElement, QueueConfigurationViewModel>>();
 
-            var mapSender = new MapSender(mockMapFilters, new MapQueues(mockMapQueue));
+            var mapSender = new MapSender(mockMapFilters, new MapCollectionNodeNoAttributes<QueueConfigurationViewModel>(mockMapQueue,TargetQueueConfigurationDescription.QueuesCollectionElementName));
             var senderConfigurationViewModel = mapSender.Map(senderElement);
             Assert.IsNotNull(senderConfigurationViewModel);
             Assert.AreEqual("localRootFolderValue", senderConfigurationViewModel.LocalRootFolderViewModel.LocalRootFolder);
             Assert.AreEqual(BodyType.Text, senderConfigurationViewModel.MessageBodyType);
             Assert.AreEqual(2, senderConfigurationViewModel.MinMemory);
-            Assert.IsNull(senderConfigurationViewModel.FiltersViewModel);
+            Assert.IsNull(senderConfigurationViewModel.FiltersViewModel.Filters);
             Assert.IsNotNull(senderConfigurationViewModel.QueuesViewModel);
         }
 
@@ -183,16 +188,16 @@ namespace MySynch.Q.Sender.Configurator.Tests.Unit
             var filtersElement = senderElement.CreateElement(TargetFilterConfigurationDescription.FiltersCollectionElementName);
             var queuesElement = senderElement.CreateElement(TargetQueueConfigurationDescription.QueuesCollectionElementName);
             var mockMapFilter = MockRepository.Mock<IMap<XmlElement, FilterConfigurationViewModel>>();
-            var mockMapQueues = MockRepository.Mock<IMap<XmlElement, QueuesConfiguratorViewModel>>();
+            var mockMapQueues = MockRepository.Mock<IMap<XmlElement, ObservableCollection<QueueConfigurationViewModel>>>();
             mockMapQueues.Expect(q => q.Map(queuesElement)).Return(null);
-            var mapSender = new MapSender(new MapFilters(mockMapFilter), mockMapQueues);
+            var mapSender = new MapSender(new MapCollectionNodeNoAttributes<FilterConfigurationViewModel>(mockMapFilter,TargetFilterConfigurationDescription.FiltersCollectionElementName), mockMapQueues);
             var senderConfigurationViewModel = mapSender.Map(senderElement);
             Assert.IsNotNull(senderConfigurationViewModel);
             Assert.AreEqual("localRootFolderValue", senderConfigurationViewModel.LocalRootFolderViewModel.LocalRootFolder);
             Assert.AreEqual(BodyType.Text, senderConfigurationViewModel.MessageBodyType);
             Assert.AreEqual(2, senderConfigurationViewModel.MinMemory);
             Assert.IsNotNull(senderConfigurationViewModel.FiltersViewModel);
-            Assert.IsNull(senderConfigurationViewModel.QueuesViewModel);
+            Assert.IsNull(senderConfigurationViewModel.QueuesViewModel.Queues);
         }
 
         [Test]
@@ -206,7 +211,7 @@ namespace MySynch.Q.Sender.Configurator.Tests.Unit
         [Test]
         public void UnMapNoMapQueues()
         {
-            var mapSender = new MapSender(new MapFilters(null), null);
+            var mapSender = new MapSender(new MapCollectionNodeNoAttributes<FilterConfigurationViewModel>(null,TargetFilterConfigurationDescription.FiltersCollectionElementName), null);
 
             Assert.IsNull(mapSender.UnMap(null, null));
         }
@@ -214,7 +219,7 @@ namespace MySynch.Q.Sender.Configurator.Tests.Unit
         [Test]
         public void UnMapEmptyViewModel()
         {
-            var mapSender = new MapSender(new MapFilters(null), new MapQueues(null));
+            var mapSender = new MapSender(new MapCollectionNodeNoAttributes<FilterConfigurationViewModel>(null,TargetFilterConfigurationDescription.FiltersCollectionElementName), new MapCollectionNodeNoAttributes<QueueConfigurationViewModel>(null,TargetQueueConfigurationDescription.QueuesCollectionElementName));
 
             Assert.IsNull(mapSender.UnMap(null, null));
         }
@@ -222,7 +227,7 @@ namespace MySynch.Q.Sender.Configurator.Tests.Unit
         [Test]
         public void UnMapEmptyParrentElement()
         {
-            var mapSender = new MapSender(new MapFilters(null), new MapQueues(null));
+            var mapSender = new MapSender(new MapCollectionNodeNoAttributes<FilterConfigurationViewModel>(null,TargetFilterConfigurationDescription.FiltersCollectionElementName), new MapCollectionNodeNoAttributes<QueueConfigurationViewModel>(null,TargetQueueConfigurationDescription.QueuesCollectionElementName));
 
             Assert.IsNull(mapSender.UnMap(new SenderConfigurationViewModel(), null));
         }
@@ -230,7 +235,7 @@ namespace MySynch.Q.Sender.Configurator.Tests.Unit
         [Test]
         public void UnMapNoLocalRootFolderInput()
         {
-            var mapSender = new MapSender(new MapFilters(null), new MapQueues(null));
+            var mapSender = new MapSender(new MapCollectionNodeNoAttributes<FilterConfigurationViewModel>(null,TargetFilterConfigurationDescription.FiltersCollectionElementName), new MapCollectionNodeNoAttributes<QueueConfigurationViewModel>(null,TargetQueueConfigurationDescription.QueuesCollectionElementName));
 
             var xmlDocument = new XmlDocument();
             var parrentElement = xmlDocument.CreateElement(TargetSenderConfigurationDescription.SendersCollectionElementName);
@@ -240,7 +245,7 @@ namespace MySynch.Q.Sender.Configurator.Tests.Unit
         [Test]
         public void UnMapWithoutSomeNonKeyValues()
         {
-            var mapSender = new MapSender(new MapFilters(null), new MapQueues(null));
+            var mapSender = new MapSender(new MapCollectionNodeNoAttributes<FilterConfigurationViewModel>(null,TargetFilterConfigurationDescription.FiltersCollectionElementName), new MapCollectionNodeNoAttributes<QueueConfigurationViewModel>(null,TargetQueueConfigurationDescription.QueuesCollectionElementName));
             XmlDocument xmlDocument = new XmlDocument();
             XmlElement parrentElement = xmlDocument.CreateElement(TargetSenderConfigurationDescription.SendersCollectionElementName);
 
@@ -260,7 +265,7 @@ namespace MySynch.Q.Sender.Configurator.Tests.Unit
         [Test]
         public void UnMapWithoutAKey()
         {
-            var mapSender = new MapSender(new MapFilters(null), new MapQueues(null));
+            var mapSender = new MapSender(new MapCollectionNodeNoAttributes<FilterConfigurationViewModel>(null,TargetFilterConfigurationDescription.FiltersCollectionElementName), new MapCollectionNodeNoAttributes<QueueConfigurationViewModel>(null,TargetQueueConfigurationDescription.QueuesCollectionElementName));
             XmlDocument xmlDocument = new XmlDocument();
             XmlElement parrentElement = xmlDocument.CreateElement(TargetSenderConfigurationDescription.SendersCollectionElementName);
 
@@ -273,9 +278,13 @@ namespace MySynch.Q.Sender.Configurator.Tests.Unit
         {
             XmlDocument xmlDocument = new XmlDocument();
             var parrentElement = xmlDocument.CreateElement(TargetSenderConfigurationDescription.SendersCollectionElementName);
-            var mockMapFilters = MockRepository.Mock<IMap<XmlElement, FiltersConfiguratorViewModel>>();
-            mockMapFilters.Expect(m => m.UnMap(new FiltersConfiguratorViewModel(), parrentElement)).IgnoreArguments().Return(null);
-            var mapSender = new MapSender(mockMapFilters,new MapQueues(null));
+            var mockMapFilters = MockRepository.Mock<IMap<XmlElement, ObservableCollection<FilterConfigurationViewModel>>>();
+            mockMapFilters.Expect(
+                m =>
+                    m.UnMap(
+                        new ObservableCollection<FilterConfigurationViewModel> {new FilterConfigurationViewModel()},
+                        parrentElement)).IgnoreArguments().Return(null);
+            var mapSender = new MapSender(mockMapFilters,new MapCollectionNodeNoAttributes<QueueConfigurationViewModel>(null,TargetQueueConfigurationDescription.QueuesCollectionElementName));
             var senderElement =
                 mapSender.UnMap(
                     new SenderConfigurationViewModel
@@ -305,9 +314,9 @@ namespace MySynch.Q.Sender.Configurator.Tests.Unit
         {
             XmlDocument xmlDocument = new XmlDocument();
             var parrentElement = xmlDocument.CreateElement(TargetSenderConfigurationDescription.SendersCollectionElementName);
-            var mockMapQueues = MockRepository.Mock<IMap<XmlElement, QueuesConfiguratorViewModel>>();
-            mockMapQueues.Expect(m => m.UnMap(new QueuesConfiguratorViewModel(), parrentElement)).IgnoreArguments().Return(null);
-            var mapSender = new MapSender(new MapFilters(null), mockMapQueues);
+            var mockMapQueues = MockRepository.Mock<IMap<XmlElement, ObservableCollection<QueueConfigurationViewModel>>>();
+            mockMapQueues.Expect(m => m.UnMap(new ObservableCollection<QueueConfigurationViewModel> { new QueueConfigurationViewModel()}, parrentElement)).IgnoreArguments().Return(null);
+            var mapSender = new MapSender(new MapCollectionNodeNoAttributes<FilterConfigurationViewModel>(null,TargetFilterConfigurationDescription.FiltersCollectionElementName), mockMapQueues);
             var senderElement =
                 mapSender.UnMap(
                     new SenderConfigurationViewModel
@@ -341,10 +350,10 @@ namespace MySynch.Q.Sender.Configurator.Tests.Unit
             XmlElement queuesElement = parrentElement.CreateElement(TargetQueueConfigurationDescription.QueuesCollectionElementName);
             XmlElement filtersElement = parrentElement.CreateElement(TargetFilterConfigurationDescription.FiltersCollectionElementName);
 
-            var mockMapFilters = MockRepository.Mock<IMap<XmlElement, FiltersConfiguratorViewModel>>();
-            mockMapFilters.Expect(f => f.UnMap(new FiltersConfiguratorViewModel(), senderElement)).IgnoreArguments().Return(filtersElement);
-            var mockMapQueues = MockRepository.Mock<IMap<XmlElement, QueuesConfiguratorViewModel>>();
-            mockMapQueues.Expect(q => q.UnMap(new QueuesConfiguratorViewModel(),senderElement)).IgnoreArguments().Return(queuesElement);
+            var mockMapFilters = MockRepository.Mock<IMap<XmlElement, ObservableCollection<FilterConfigurationViewModel>>>();
+            mockMapFilters.Expect(f => f.UnMap(new ObservableCollection<FilterConfigurationViewModel> {new FilterConfigurationViewModel()}, senderElement)).IgnoreArguments().Return(filtersElement);
+            var mockMapQueues = MockRepository.Mock<IMap<XmlElement, ObservableCollection<QueueConfigurationViewModel>>>();
+            mockMapQueues.Expect(q => q.UnMap(new ObservableCollection<QueueConfigurationViewModel> {new QueueConfigurationViewModel()},senderElement)).IgnoreArguments().Return(queuesElement);
 
             var mapSender = new MapSender(mockMapFilters, mockMapQueues);
 
