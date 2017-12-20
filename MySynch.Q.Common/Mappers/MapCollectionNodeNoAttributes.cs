@@ -25,11 +25,11 @@ namespace MySynch.Q.Common.Mappers
                 return null;
             var result = new ObservableCollection<T>();
 
-            foreach (var senderNode in input.ChildNodes)
+            foreach (var node in input.ChildNodes)
             {
-                var mappedSender = _mapCollectionElement.Map((XmlElement) senderNode);
-                if(mappedSender!=null)
-                    result.Add(mappedSender);
+                var mappedNode = _mapCollectionElement.Map((XmlElement) node);
+                if(mappedNode!=null)
+                    result.Add(mappedNode);
             }
 
             return result;

@@ -67,7 +67,15 @@ namespace MySynch.Q.Receiver.Configurator.MVVM
 
         private void SaveConfig()
         {
-            throw new NotImplementedException();
+            if (_receiversConfigurationToViewModelProvider.SetViewModelsCollection(Receivers, _configurationProvider.GetConfigInfo()?.FirstOrDefault(c => c.SectionIdentifier == TargetReceiverConfigurationDescription.SectionName))
+                && _translatorsConfigurationToViewModelProvider.SetViewModelsCollection(Translators, _configurationProvider.GetConfigInfo()?.FirstOrDefault(c => c.SectionIdentifier == TargetTranslatorConfigurationDescription.SectionName)))
+            {
+                //mark as saved
+                return;
+            }
+            //mark as unsaved
+            return;
+
         }
     }
 }

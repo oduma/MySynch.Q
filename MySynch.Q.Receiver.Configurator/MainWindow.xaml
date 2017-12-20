@@ -30,7 +30,7 @@
                 <DataGridTemplateColumn Header="Local Root Folder" IsReadOnly="False" Width="*">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <Label Content="{Binding LocalRootFolderViewModel.LocalRootFolder}"></Label>
+                            <Label Content="{Binding LocalRootFolderViewModel.Folder}"></Label>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                     <DataGridTemplateColumn.CellEditingTemplate>
