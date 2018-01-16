@@ -1,8 +1,10 @@
-﻿using Sciendo.Common.WPF.MVVM;
+﻿using System;
+using System.Windows.Input;
+using Sciendo.Common.WPF.MVVM;
 
 namespace MySynch.Q.Sender.Configurator.MVVM
 {
-    public class QueueConfigurationViewModel:ViewModelBase
+    public class QueueConfigurationViewModel:ViewModelWithTrackChangesBase
     {
         public string Name { get; set; }
 
@@ -13,5 +15,6 @@ namespace MySynch.Q.Sender.Configurator.MVVM
         public string User { get; set; }
 
         public string Password { get; set; }
+
     }
 }

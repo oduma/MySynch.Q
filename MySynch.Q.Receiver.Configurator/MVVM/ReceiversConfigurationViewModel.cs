@@ -9,14 +9,16 @@ namespace MySynch.Q.Receiver.Configurator.MVVM
 {
     public class ReceiversConfigurationViewModel : ViewModelBase
     {
-        private readonly ConfigurationProvider _configurationProvider;
-        private readonly ConfigurationToViewModelProvider<ReceiverConfigurationViewModel> _receiversConfigurationToViewModelProvider;
-        private readonly ConfigurationToViewModelProvider<TranslatorConfigurationViewModel> _translatorsConfigurationToViewModelProvider;
+        private readonly ISvcController _receiverServiceController;
+        private readonly IConfigurationProvider _configurationProvider;
+        private readonly IConfigurationViewModelProvider<ReceiverConfigurationViewModel> _receiversConfigurationToViewModelProvider;
+        private readonly IConfigurationViewModelProvider<TranslatorConfigurationViewModel> _translatorsConfigurationToViewModelProvider;
 
-        public ReceiversConfigurationViewModel(ConfigurationProvider configurationProvider, 
-            ConfigurationToViewModelProvider<ReceiverConfigurationViewModel> receiversConfigurationToViewModelProvider, 
-            ConfigurationToViewModelProvider<TranslatorConfigurationViewModel> translatorsConfigurationToViewModelProvider)
+        public ReceiversConfigurationViewModel(ISvcController receiverServiceController, IConfigurationProvider configurationProvider,
+            IConfigurationViewModelProvider<ReceiverConfigurationViewModel> receiversConfigurationToViewModelProvider,
+            IConfigurationViewModelProvider<TranslatorConfigurationViewModel> translatorsConfigurationToViewModelProvider)
         {
+            _receiverServiceController = receiverServiceController;
             _configurationProvider = configurationProvider;
             _receiversConfigurationToViewModelProvider = receiversConfigurationToViewModelProvider;
             _translatorsConfigurationToViewModelProvider = translatorsConfigurationToViewModelProvider;
@@ -63,13 +65,17 @@ namespace MySynch.Q.Receiver.Configurator.MVVM
 
         private void SaveConfig()
         {
+            var serviceNames = _configurationProvider.GetConfigInfo().Select(l => l.ServiceName).Distinct();
+            _receiverServiceController.Stop(serviceNames);
             if (_receiversConfigurationToViewModelProvider.SetViewModelsCollection(Receivers, _configurationProvider.GetConfigInfo()?.FirstOrDefault(c => c.SectionIdentifier == TargetReceiverConfigurationDescription.SectionName))
                 && _translatorsConfigurationToViewModelProvider.SetViewModelsCollection(Translators, _configurationProvider.GetConfigInfo()?.FirstOrDefault(c => c.SectionIdentifier == TargetTranslatorConfigurationDescription.SectionName)))
             {
                 //mark as saved
+                _receiverServiceController.Start(serviceNames);
                 return;
             }
             //mark as unsaved
+            _receiverServiceController.Start(serviceNames);
             return;
 
         }

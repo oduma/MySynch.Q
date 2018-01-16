@@ -1,9 +1,10 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using Sciendo.Common.WPF.MVVM;
 
 namespace MySynch.Q.Sender.Configurator.MVVM
 {
-    public class QueuesConfigurationViewModel:ViewModelBase
+    public class QueuesConfigurationViewModel:ViewModelWithTrackChangesBase
     {
 
         public string QueuesViewTitle => $"Queues for sender - {SenderIdentifier}";
@@ -18,11 +19,11 @@ namespace MySynch.Q.Sender.Configurator.MVVM
                 if (_queues != value)
                 {
                     _queues = value;
+                    TrackAllChildren(_queues);
                     RaisePropertyChanged(() => Queues);
                 }
             }
         }
-
 
         public void InitiateView()
         {

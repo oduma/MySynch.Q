@@ -41,6 +41,7 @@
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.ServiceProcess" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
@@ -53,6 +54,8 @@
     <Compile Include="Configurators\IConfigurationProvider.cs" />
     <Compile Include="Configurators\ConfigurationSectionLocator.cs" />
     <Compile Include="Configurators\IConfigurationViewModelProvider.cs" />
+    <Compile Include="Configurators\ISvcController.cs" />
+    <Compile Include="Configurators\SvcController.cs" />
     <Compile Include="Contracts\BodyType.cs" />
     <Compile Include="Contracts\TransferMessage.cs" />
     <Compile Include="Contracts\Management\ContextMessage.cs" />

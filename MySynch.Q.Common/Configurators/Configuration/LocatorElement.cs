@@ -11,6 +11,13 @@ namespace MySynch.Q.Common.Configurators.Configuration
             set { this["location"] = value; }
         }
 
+        [ConfigurationProperty("serviceName", DefaultValue = "", IsKey = false, IsRequired = true)]
+        public string ServiceName
+        {
+            get { return (string)this["serviceName"]; }
+            set { this["serviceName"] = value; }
+        }
+
         [ConfigurationProperty("sectionId", DefaultValue = "sendersSection", IsKey = true, IsRequired = true)]
         public string SectionId
         {

@@ -1,17 +1,31 @@
-﻿using System.Windows.Input;
+﻿using System;
+using System.Windows.Input;
 using MySynch.Q.Common.Contracts;
 using MySynch.Q.Controls.MVVM;
 using Sciendo.Common.WPF.MVVM;
 
 namespace MySynch.Q.Sender.Configurator.MVVM
 {
-    public class SenderConfigurationViewModel:ViewModelBase
+    public class SenderConfigurationViewModel:ViewModelWithTrackChangesBase
     {
         private QueuesConfigurationViewModel _queuesViewModel;
         private FiltersConfigurationViewModel _filtersViewModel;
-        public FolderPickerViewModel LocalRootFolderViewModel { get; set; }
+
+        private FolderPickerViewModel _localRootFolderViewModel;
+
+        public FolderPickerViewModel LocalRootFolderViewModel { get {return _localRootFolderViewModel;}
+            set
+            {
+                if (_localRootFolderViewModel != value)
+                {
+                    _localRootFolderViewModel = value;
+                    TrackAllChildren(new [] {_localRootFolderViewModel});
+                }
+            } }
+
 
         public BodyType MessageBodyType { get; set; }
+
 
         public int MinMemory { get; set; }
 
@@ -19,9 +33,41 @@ namespace MySynch.Q.Sender.Configurator.MVVM
 
         public string FiltersLauncherTitle => $"Defined ({NoOfFilters})";
 
-        public int NoOfQueues { get; set; }
+        private int _noOfQueues;
 
-        public int NoOfFilters { get; set; }
+        public int NoOfQueues
+        {
+            get
+            {
+                return _noOfQueues;
+            }
+            set
+            {
+                if (_noOfQueues != value)
+                {
+                    _noOfQueues = value;
+                    RaiseChangeEvent();
+                }
+            }
+        }
+
+        private int _noOfFilters;
+
+        public int NoOfFilters
+        {
+            get
+            {
+                return _noOfFilters;
+            }
+            set
+            {
+                if (_noOfFilters != value)
+                {
+                    _noOfFilters = value;
+                    RaiseChangeEvent();
+                }
+            }
+        }
 
         public SenderConfigurationViewModel()
         {
@@ -43,7 +89,7 @@ namespace MySynch.Q.Sender.Configurator.MVVM
             QueuesViewModel.SenderIdentifier = LocalRootFolderViewModel.Folder;
             var queuesView=new QueuesView(QueuesViewModel);
             queuesView.ShowDialog();
-            NoOfQueues = QueuesViewModel.Queues.Count;
+            NoOfQueues = (QueuesViewModel.Queues!=null)?QueuesViewModel.Queues.Count:0;
             RaisePropertyChanged(()=>QueuesLauncherTitle);
         }
 
@@ -61,6 +107,7 @@ namespace MySynch.Q.Sender.Configurator.MVVM
                     _queuesViewModel = value;
                     if(_queuesViewModel.Queues!=null)
                         NoOfQueues = _queuesViewModel.Queues.Count;
+                    TrackAllChildren(new []{_queuesViewModel});
                     RaisePropertyChanged(()=>NoOfQueues);
                     RaisePropertyChanged(()=>QueuesLauncherTitle);
                 }
@@ -77,11 +124,11 @@ namespace MySynch.Q.Sender.Configurator.MVVM
                     _filtersViewModel = value;
                     if(_filtersViewModel.Filters!=null)
                         NoOfFilters = _filtersViewModel.Filters.Count;
+                    TrackAllChildren(new [] {_filtersViewModel});
                     RaisePropertyChanged(() => NoOfFilters);
                     RaisePropertyChanged(() => FiltersLauncherTitle);
                 }
             }
         }
-
     }
 }

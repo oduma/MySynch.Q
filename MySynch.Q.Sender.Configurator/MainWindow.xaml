@@ -4,11 +4,13 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MySynch.Q.Sender.Configurator"
+        xmlns:intr="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
         xmlns:controls="clr-namespace:MySynch.Q.Controls;assembly=MySynch.Q.Controls"
         mc:Ignorable="d"
-        Title="Sender Configurator" Height="250" Width="725">
+        Title="{Binding WindowTitle}" Height="250" Width="725">
     <Grid>
         <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"></ColumnDefinition>
             <ColumnDefinition Width="*"></ColumnDefinition>
             <ColumnDefinition Width="Auto"></ColumnDefinition>
         </Grid.ColumnDefinitions>
@@ -18,18 +20,18 @@
         </Grid.RowDefinitions>
         <DataGrid 
             Grid.Column="0"
-            Grid.ColumnSpan="2"
+            Grid.ColumnSpan="3"
             Grid.Row="0"
             CanUserDeleteRows="True" 
             CanUserResizeColumns="True" 
-            CanUserAddRows="True" 
+            CanUserAddRows="False" 
             AutoGenerateColumns="False"
             ItemsSource="{Binding Senders}">
             <DataGrid.Columns>
                 <DataGridTemplateColumn Header="Local Root Folder" IsReadOnly="False" Width="*">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <Label Content="{Binding LocalRootFolderViewModel.LocalRootFolder}"></Label>
+                            <Label Content="{Binding LocalRootFolderViewModel.Folder}"></Label>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                     <DataGridTemplateColumn.CellEditingTemplate>
@@ -46,7 +48,15 @@
                     </DataGridTemplateColumn.CellTemplate>
                     <DataGridTemplateColumn.CellEditingTemplate>
                         <DataTemplate>
-                            <ComboBox ItemsSource="{Binding Path=DataContext.AllAvailableBodyTypes, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" SelectedValue="{Binding MessageBodyType}"/>
+                            <ComboBox ItemsSource="{Binding Path=DataContext.AllAvailableBodyTypes, 
+                                RelativeSource={RelativeSource AncestorType={x:Type Window}}}" 
+                                      SelectedValue="{Binding MessageBodyType, Mode=TwoWay}">
+                                <intr:Interaction.Triggers>
+                                    <intr:EventTrigger EventName="SelectionChanged">
+                                        <intr:InvokeCommandAction Command="{Binding ViewChangeRequest}"></intr:InvokeCommandAction>
+                                    </intr:EventTrigger>
+                                </intr:Interaction.Triggers>
+                            </ComboBox>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellEditingTemplate>
                 </DataGridTemplateColumn>
@@ -58,7 +68,13 @@
                     </DataGridTemplateColumn.CellTemplate>
                     <DataGridTemplateColumn.CellEditingTemplate>
                         <DataTemplate>
-                            <TextBox Text="{Binding MinMemory}"></TextBox>
+                            <TextBox Text="{Binding MinMemory, Mode=TwoWay}">
+                                <intr:Interaction.Triggers>
+                                    <intr:EventTrigger EventName="TextChanged">
+                                        <intr:InvokeCommandAction Command="{Binding ViewChangeRequest}"></intr:InvokeCommandAction>
+                                    </intr:EventTrigger>
+                                </intr:Interaction.Triggers>
+                            </TextBox>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellEditingTemplate>
                 </DataGridTemplateColumn>
@@ -78,7 +94,8 @@
                 </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
-        <Button Content="Save" Grid.Column="1" Grid.Row="1" Command="{Binding Save}"></Button>
+        <Button Content="New Sender" Grid.Column="0" Grid.Row="1" Command="{Binding AddNewSender}"></Button>
+        <Button Content="Save" Grid.Column="2" Grid.Row="1" Command="{Binding Save}" IsEnabled="{Binding SaveEnabled}"></Button>
     </Grid>
 </Window>
 

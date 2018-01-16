@@ -1,4 +1,5 @@
 ﻿using System.Windows.Controls;
+using MySynch.Q.Controls.MVVM;
 
 namespace MySynch.Q.Controls
 {

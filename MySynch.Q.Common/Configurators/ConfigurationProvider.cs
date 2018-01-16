@@ -27,7 +27,13 @@ namespace MySynch.Q.Common.Configurators
                 return null;
             if (string.IsNullOrEmpty(locator.SectionId))
                 return null;
-            var result = new ConfigurationSectionLocator {SectionIdentifier = locator.SectionId};
+            if (string.IsNullOrEmpty(locator.ServiceName))
+                return null;
+            var result = new ConfigurationSectionLocator
+            {
+                SectionIdentifier = locator.SectionId,
+                ServiceName = locator.ServiceName
+            };
             if (File.Exists(locator.Location))
             {
                 result.FilePath = locator.Location;

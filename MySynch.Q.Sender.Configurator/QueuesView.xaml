@@ -5,6 +5,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MySynch.Q.Sender.Configurator"
+        xmlns:intr="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
         mc:Ignorable="d"
         Title="{Binding QueuesViewTitle}" Height="250" Width="725">
         <DataGrid 
@@ -21,7 +22,13 @@
                     </DataGridTemplateColumn.CellTemplate>
                     <DataGridTemplateColumn.CellEditingTemplate>
                         <DataTemplate>
-                            <TextBox Text="{Binding Name, Mode=TwoWay}"></TextBox>
+                            <TextBox Text="{Binding Name, Mode=TwoWay}">
+                                <intr:Interaction.Triggers>
+                                    <intr:EventTrigger EventName="TextChanged">
+                                        <intr:InvokeCommandAction Command="{Binding ViewChangeRequest}"></intr:InvokeCommandAction>
+                                    </intr:EventTrigger>
+                                </intr:Interaction.Triggers>
+                            </TextBox>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellEditingTemplate>
                 </DataGridTemplateColumn>
@@ -33,7 +40,13 @@
                     </DataGridTemplateColumn.CellTemplate>
                     <DataGridTemplateColumn.CellEditingTemplate>
                         <DataTemplate>
-                            <TextBox Text="{Binding QueueName, Mode=TwoWay}"></TextBox>
+                            <TextBox Text="{Binding QueueName, Mode=TwoWay}">
+                            <intr:Interaction.Triggers>
+                                <intr:EventTrigger EventName="TextChanged">
+                                    <intr:InvokeCommandAction Command="{Binding ViewChangeRequest}"></intr:InvokeCommandAction>
+                                </intr:EventTrigger>
+                            </intr:Interaction.Triggers>
+                        </TextBox>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellEditingTemplate>
                 </DataGridTemplateColumn>
@@ -45,7 +58,13 @@
                     </DataGridTemplateColumn.CellTemplate>
                     <DataGridTemplateColumn.CellEditingTemplate>
                         <DataTemplate>
-                            <TextBox Text="{Binding Host, Mode=TwoWay}"></TextBox>
+                            <TextBox Text="{Binding Host, Mode=TwoWay}">
+                            <intr:Interaction.Triggers>
+                                <intr:EventTrigger EventName="TextChanged">
+                                    <intr:InvokeCommandAction Command="{Binding ViewChangeRequest}"></intr:InvokeCommandAction>
+                                </intr:EventTrigger>
+                            </intr:Interaction.Triggers>
+                        </TextBox>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellEditingTemplate>
                 </DataGridTemplateColumn>
@@ -57,7 +76,13 @@
                     </DataGridTemplateColumn.CellTemplate>
                     <DataGridTemplateColumn.CellEditingTemplate>
                         <DataTemplate>
-                            <TextBox Text="{Binding User, Mode=TwoWay}"></TextBox>
+                            <TextBox Text="{Binding User, Mode=TwoWay}">
+                            <intr:Interaction.Triggers>
+                                <intr:EventTrigger EventName="TextChanged">
+                                    <intr:InvokeCommandAction Command="{Binding ViewChangeRequest}"></intr:InvokeCommandAction>
+                                </intr:EventTrigger>
+                            </intr:Interaction.Triggers>
+                        </TextBox>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellEditingTemplate>
                 </DataGridTemplateColumn>
@@ -69,7 +94,13 @@
                     </DataGridTemplateColumn.CellTemplate>
                     <DataGridTemplateColumn.CellEditingTemplate>
                         <DataTemplate>
-                            <TextBox Text="{Binding Password, Mode=TwoWay}"></TextBox>
+                            <TextBox Text="{Binding Password, Mode=TwoWay}">
+                            <intr:Interaction.Triggers>
+                                <intr:EventTrigger EventName="TextChanged">
+                                    <intr:InvokeCommandAction Command="{Binding ViewChangeRequest}"></intr:InvokeCommandAction>
+                                </intr:EventTrigger>
+                            </intr:Interaction.Triggers>
+                        </TextBox>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellEditingTemplate>
                 </DataGridTemplateColumn>

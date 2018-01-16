@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using System.Windows.Controls;
 using MySynch.Q.Common.Configurators;
 using MySynch.Q.Common.Mappers;
 using MySynch.Q.Sender.Configurator.Configuration;
@@ -23,7 +24,7 @@ namespace MySynch.Q.Sender.Configurator
                                 TargetFilterConfigurationDescription.FiltersCollectionElementName),
                             new MapCollectionNodeNoAttributes<QueueConfigurationViewModel>(new MapQueue(),
                                 TargetQueueConfigurationDescription.QueuesCollectionElementName)),
-                        TargetSenderConfigurationDescription.SendersCollectionElementName)));
+                        TargetSenderConfigurationDescription.SendersCollectionElementName)),new SvcController());
             senderConfiguratorViewModel.InitiateView();
             DataContext = senderConfiguratorViewModel;
         }

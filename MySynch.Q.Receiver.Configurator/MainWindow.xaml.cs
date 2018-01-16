@@ -14,7 +14,7 @@ namespace MySynch.Q.Receiver.Configurator
     {
         public MainWindow()
         {
-            var receiversConfiguratorViewModel = new ReceiversConfigurationViewModel(new ConfigurationProvider(),
+            var receiversConfiguratorViewModel = new ReceiversConfigurationViewModel(new SvcController(), new ConfigurationProvider(),
                 new ConfigurationToViewModelProvider<ReceiverConfigurationViewModel>(new MapCollectionNodeNoAttributes<ReceiverConfigurationViewModel>(new MapReceiver(),TargetReceiverConfigurationDescription.ReceiversCollectionElementName)),
                 new ConfigurationToViewModelProvider<TranslatorConfigurationViewModel>(
                     new MapCollectionNodeNoAttributes<TranslatorConfigurationViewModel>(new MapTranslator(),TargetTranslatorConfigurationDescription.TranslatorsCollectionElementName)));
