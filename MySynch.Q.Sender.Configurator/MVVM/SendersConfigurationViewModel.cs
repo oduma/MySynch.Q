@@ -105,13 +105,11 @@ namespace MySynch.Q.Sender.Configurator.MVVM
             _svcController.Stop(serviceNames);
             if (_sendersProvider.SetViewModelsCollection(Senders, _configurationProvider.GetConfigInfo()?.FirstOrDefault()))
             {
-                //mark as saved
                 _svcController.Start(serviceNames);
+                SaveEnabled = false;
                 return;
             }
-            //mark as unsaved
             _svcController.Start(serviceNames);
-            return;
         }
     }
 }
