@@ -24,7 +24,10 @@ namespace MySynch.Q.Sender.Configurator.MVVM
             }
         }
 
+        public FilterConfigurationViewModel SelectedFilter { get; private set; }
         public ICommand AddNewFilter { get; private set; }
+
+        public ICommand RemoveFilter { get; private set; }
         public string SenderIdentifier { get; set; }
 
         public void InitiateView()
@@ -35,6 +38,14 @@ namespace MySynch.Q.Sender.Configurator.MVVM
         public FiltersConfigurationViewModel()
         {
             AddNewFilter= new RelayCommand(AddFilter);
+            RemoveFilter = new RelayCommand(Remove);
+        }
+
+        private void Remove()
+        {
+            Filters.Remove(SelectedFilter);
+            RaisePropertyChanged(()=>Filters);
+            RaiseChangeEvent();
         }
 
         private void AddFilter()

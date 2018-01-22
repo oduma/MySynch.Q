@@ -27,11 +27,22 @@ namespace MySynch.Q.Sender.Configurator.MVVM
             }
         }
 
+        public QueueConfigurationViewModel SelectedQueue { get; set; }
         public ICommand AddNewQueue { get; private set; }
+
+        public ICommand RemoveQueue { get; private set; }
 
         public QueuesConfigurationViewModel()
         {
             AddNewQueue=new RelayCommand(AddQueue);
+            RemoveQueue= new RelayCommand(Remove);
+        }
+
+        private void Remove()
+        {
+            Queues.Remove(SelectedQueue);
+            RaisePropertyChanged(()=>Queues);
+            RaiseChangeEvent();
         }
 
         private void AddQueue()

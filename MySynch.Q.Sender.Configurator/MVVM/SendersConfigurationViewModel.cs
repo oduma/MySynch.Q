@@ -26,6 +26,7 @@ namespace MySynch.Q.Sender.Configurator.MVVM
             SaveEnabled = false;
         }
 
+        public ICommand RemoveSender { get; private set; }
         public ICommand Save { get; private set; }
 
         public ICommand AddNewSender { get; private set; }
@@ -47,7 +48,13 @@ namespace MySynch.Q.Sender.Configurator.MVVM
             }
         }
 
+        public SenderConfigurationViewModel SelectedSender { get; set; }
         private void Sender_ViewModelChanged(object sender, System.EventArgs e)
+        {
+            MarkForSave();
+        }
+
+        private void MarkForSave()
         {
             WindowTitle = DefaultWindowTitle + " * ";
             SaveEnabled = true;
@@ -85,6 +92,14 @@ namespace MySynch.Q.Sender.Configurator.MVVM
             Senders =_sendersProvider.GetViewModelsCollection(_configurationProvider.GetConfigInfo()?.FirstOrDefault(c=>c.SectionIdentifier==TargetSenderConfigurationDescription.SectionElementName));
             Save= new RelayCommand(SaveConfig);
             AddNewSender= new RelayCommand(AddSender);
+            RemoveSender= new RelayCommand(Remove);
+        }
+
+        private void Remove()
+        {
+            Senders.Remove(SelectedSender);
+            RaisePropertyChanged(()=>Senders);
+            MarkForSave();
         }
 
         private void AddSender()

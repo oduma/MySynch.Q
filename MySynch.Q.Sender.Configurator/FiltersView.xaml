@@ -17,10 +17,15 @@
             <RowDefinition Height="Auto"></RowDefinition>
         </Grid.RowDefinitions>
         <DataGrid 
-    CanUserDeleteRows="True" 
+    CanUserDeleteRows="False" 
     CanUserResizeColumns="True" 
     CanUserAddRows="False" 
-    AutoGenerateColumns="False" Grid.ColumnSpan="2" Grid.Row="0" ItemsSource="{Binding Filters}">
+    AutoGenerateColumns="False" Grid.ColumnSpan="2" Grid.Row="0" 
+            ItemsSource="{Binding Filters}"
+            SelectedItem="{Binding SelectedFilter, Mode=TwoWay}">
+            <DataGrid.InputBindings>
+                <KeyBinding Key="Delete" Command="{Binding RemoveFilter}"></KeyBinding>
+            </DataGrid.InputBindings>
         <DataGrid.Columns>
             <DataGridTemplateColumn Header="Key" Width="Auto" IsReadOnly="False">
                 <DataGridTemplateColumn.CellTemplate>

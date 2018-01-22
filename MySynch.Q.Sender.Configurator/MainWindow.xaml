@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:MySynch.Q.Sender.Configurator"
         xmlns:intr="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
         xmlns:controls="clr-namespace:MySynch.Q.Controls;assembly=MySynch.Q.Controls"
+        xmlns:mvvm="clr-namespace:MySynch.Q.Sender.Configurator.MVVM"
         mc:Ignorable="d"
         Title="{Binding WindowTitle}" Height="250" Width="725">
     <Grid>
@@ -22,11 +23,15 @@
             Grid.Column="0"
             Grid.ColumnSpan="3"
             Grid.Row="0"
-            CanUserDeleteRows="True" 
             CanUserResizeColumns="True" 
             CanUserAddRows="False" 
             AutoGenerateColumns="False"
-            ItemsSource="{Binding Senders}">
+            ItemsSource="{Binding Senders}"
+            IsSynchronizedWithCurrentItem="False"
+            SelectedItem="{Binding SelectedSender, Mode=TwoWay}">
+            <DataGrid.InputBindings>
+                <KeyBinding Key="Delete" Command="{Binding RemoveSender}"></KeyBinding>
+            </DataGrid.InputBindings>
             <DataGrid.Columns>
                 <DataGridTemplateColumn Header="Local Root Folder" IsReadOnly="False" Width="*">
                     <DataGridTemplateColumn.CellTemplate>
