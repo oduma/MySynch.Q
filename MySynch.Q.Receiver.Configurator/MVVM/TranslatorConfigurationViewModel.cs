@@ -2,7 +2,7 @@
 
 namespace MySynch.Q.Receiver.Configurator.MVVM
 {
-    public class TranslatorConfigurationViewModel:ViewModelBase
+    public class TranslatorConfigurationViewModel:ViewModelWithTrackChangesBase
     {
         public int Priority { get; set; }
         public string From { get; set; }

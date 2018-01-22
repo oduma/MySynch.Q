@@ -107,6 +107,7 @@ namespace MySynch.Q.Sender.Configurator.MVVM
             {
                 _svcController.Start(serviceNames);
                 SaveEnabled = false;
+                WindowTitle = DefaultWindowTitle;
                 return;
             }
             _svcController.Start(serviceNames);

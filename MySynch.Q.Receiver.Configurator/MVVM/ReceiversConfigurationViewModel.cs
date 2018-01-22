@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Windows.Input;
 using MySynch.Q.Common.Configurators;
+using MySynch.Q.Controls.MVVM;
 using MySynch.Q.Receiver.Configurator.Configuration;
 using Sciendo.Common.WPF.MVVM;
 
@@ -22,9 +23,47 @@ namespace MySynch.Q.Receiver.Configurator.MVVM
             _configurationProvider = configurationProvider;
             _receiversConfigurationToViewModelProvider = receiversConfigurationToViewModelProvider;
             _translatorsConfigurationToViewModelProvider = translatorsConfigurationToViewModelProvider;
+            WindowTitle = DefaultWindowTitle;
+            SaveEnabled = false;
+        }
+
+        private bool _saveEnabled;
+        public bool SaveEnabled
+        {
+            get { return _saveEnabled; }
+            set
+            {
+                if (_saveEnabled != value)
+                {
+                    _saveEnabled = value;
+                    RaisePropertyChanged(() => SaveEnabled);
+                }
+            }
+        }
+
+
+        public const string DefaultWindowTitle = "Receivers Configurator";
+
+        private string _windowTitle;
+
+        public string WindowTitle
+        {
+            get { return _windowTitle; }
+            set
+            {
+                if (_windowTitle != value)
+                {
+                    _windowTitle = value;
+                    RaisePropertyChanged(() => WindowTitle);
+                }
+            }
         }
 
         public ICommand Save { get; private set; }
+
+        public ICommand AddNewReceiver { get; private set; }
+
+        public ICommand AddNewTranslator { get; private set; }
 
         private ObservableCollection<ReceiverConfigurationViewModel> _receivers;
 
@@ -36,11 +75,19 @@ namespace MySynch.Q.Receiver.Configurator.MVVM
                 if (_receivers != value)
                 {
                     _receivers = value;
+                    foreach (var receiver in _receivers)
+                        receiver.ViewModelChanged += Child_ViewModelChanged;
+
                     RaisePropertyChanged(() => Receivers);
                 }
             }
         }
 
+        private void Child_ViewModelChanged(object sender, System.EventArgs e)
+        {
+            WindowTitle = DefaultWindowTitle + " * ";
+            SaveEnabled = true;
+        }
 
         private ObservableCollection<TranslatorConfigurationViewModel> _translators;
 
@@ -52,6 +99,8 @@ namespace MySynch.Q.Receiver.Configurator.MVVM
                 if (_translators != value)
                 {
                     _translators = value;
+                    foreach (var translator in _translators)
+                        translator.ViewModelChanged += Child_ViewModelChanged;
                     RaisePropertyChanged(() => Translators);
                 }
             }
@@ -61,6 +110,27 @@ namespace MySynch.Q.Receiver.Configurator.MVVM
             Receivers = _receiversConfigurationToViewModelProvider.GetViewModelsCollection(_configurationProvider.GetConfigInfo()?.FirstOrDefault(c=>c.SectionIdentifier==TargetReceiverConfigurationDescription.SectionName));
             Translators = _translatorsConfigurationToViewModelProvider.GetViewModelsCollection(_configurationProvider.GetConfigInfo()?.FirstOrDefault(c=>c.SectionIdentifier==TargetTranslatorConfigurationDescription.SectionName));
             Save = new RelayCommand(SaveConfig);
+            AddNewReceiver = new RelayCommand(AddReceiver);
+            AddNewTranslator = new RelayCommand(AddTranslator);
+        }
+
+        private void AddTranslator()
+        {
+            var newTranslatorConfig = new TranslatorConfigurationViewModel();
+            newTranslatorConfig.ViewModelChanged += Child_ViewModelChanged;
+            Translators.Add(newTranslatorConfig);
+            RaisePropertyChanged(() => Translators);
+        }
+
+        private void AddReceiver()
+        {
+            var newReceiverConfig = new ReceiverConfigurationViewModel
+            {
+                LocalRootFolderViewModel = new FolderPickerViewModel()
+            };
+            newReceiverConfig.ViewModelChanged += Child_ViewModelChanged;
+            Receivers.Add(newReceiverConfig);
+            RaisePropertyChanged(() => Receivers);
         }
 
         private void SaveConfig()
@@ -70,14 +140,12 @@ namespace MySynch.Q.Receiver.Configurator.MVVM
             if (_receiversConfigurationToViewModelProvider.SetViewModelsCollection(Receivers, _configurationProvider.GetConfigInfo()?.FirstOrDefault(c => c.SectionIdentifier == TargetReceiverConfigurationDescription.SectionName))
                 && _translatorsConfigurationToViewModelProvider.SetViewModelsCollection(Translators, _configurationProvider.GetConfigInfo()?.FirstOrDefault(c => c.SectionIdentifier == TargetTranslatorConfigurationDescription.SectionName)))
             {
-                //mark as saved
+                SaveEnabled = false;
+                WindowTitle = DefaultWindowTitle;
                 _receiverServiceController.Start(serviceNames);
                 return;
             }
-            //mark as unsaved
             _receiverServiceController.Start(serviceNames);
-            return;
-
         }
     }
 }

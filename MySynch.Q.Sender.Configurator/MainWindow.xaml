@@ -36,7 +36,9 @@
                     </DataGridTemplateColumn.CellTemplate>
                     <DataGridTemplateColumn.CellEditingTemplate>
                         <DataTemplate>
-                            <controls:RootFolderControl DataContext="{Binding LocalRootFolderViewModel}"></controls:RootFolderControl>
+                            <controls:RootFolderControl DataContext="{Binding LocalRootFolderViewModel}">
+                                
+                            </controls:RootFolderControl>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellEditingTemplate>
                 </DataGridTemplateColumn>

@@ -4,28 +4,31 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MySynch.Q.Receiver.Configurator"
+        xmlns:intr="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
         xmlns:controls="clr-namespace:MySynch.Q.Controls;assembly=MySynch.Q.Controls"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
+        Title="{Binding WindowTitle}" Height="350" Width="525">
     <Grid>
         <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"></ColumnDefinition>
             <ColumnDefinition Width="*"></ColumnDefinition>
             <ColumnDefinition Width="Auto"></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
         </Grid.RowDefinitions>
         <DataGrid 
             Grid.Column="0"
-            Grid.ColumnSpan="2"
+            Grid.ColumnSpan="3"
             Grid.Row="0"
             CanUserDeleteRows="True" 
             CanUserResizeColumns="True" 
-            CanUserAddRows="True" 
+            CanUserAddRows="False" 
             AutoGenerateColumns="False"
-            ItemsSource="{Binding Receivers}">
+            ItemsSource="{Binding Receivers}" Margin="-4,-1,4,1">
             <DataGrid.Columns>
                 <DataGridTemplateColumn Header="Local Root Folder" IsReadOnly="False" Width="*">
                     <DataGridTemplateColumn.CellTemplate>
@@ -47,7 +50,13 @@
                     </DataGridTemplateColumn.CellTemplate>
                     <DataGridTemplateColumn.CellEditingTemplate>
                         <DataTemplate>
-                            <TextBox Text="{Binding Name}"></TextBox>
+                            <TextBox Text="{Binding Name}">
+                                <intr:Interaction.Triggers>
+                                    <intr:EventTrigger EventName="TextChanged">
+                                        <intr:InvokeCommandAction Command="{Binding ViewChangeRequest}"></intr:InvokeCommandAction>
+                                    </intr:EventTrigger>
+                                </intr:Interaction.Triggers>
+                            </TextBox>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellEditingTemplate>
                 </DataGridTemplateColumn>
@@ -59,7 +68,13 @@
                     </DataGridTemplateColumn.CellTemplate>
                     <DataGridTemplateColumn.CellEditingTemplate>
                         <DataTemplate>
-                            <TextBox Text="{Binding QueueName}"></TextBox>
+                            <TextBox Text="{Binding QueueName}">
+                                <intr:Interaction.Triggers>
+                                    <intr:EventTrigger EventName="TextChanged">
+                                        <intr:InvokeCommandAction Command="{Binding ViewChangeRequest}"></intr:InvokeCommandAction>
+                                    </intr:EventTrigger>
+                                </intr:Interaction.Triggers>
+                            </TextBox>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellEditingTemplate>
                 </DataGridTemplateColumn>
@@ -71,7 +86,13 @@
                     </DataGridTemplateColumn.CellTemplate>
                     <DataGridTemplateColumn.CellEditingTemplate>
                         <DataTemplate>
-                            <TextBox Text="{Binding Host}"></TextBox>
+                            <TextBox Text="{Binding Host}">
+                                <intr:Interaction.Triggers>
+                                    <intr:EventTrigger EventName="TextChanged">
+                                        <intr:InvokeCommandAction Command="{Binding ViewChangeRequest}"></intr:InvokeCommandAction>
+                                    </intr:EventTrigger>
+                                </intr:Interaction.Triggers>
+                            </TextBox>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellEditingTemplate>
                 </DataGridTemplateColumn>
@@ -83,7 +104,13 @@
                     </DataGridTemplateColumn.CellTemplate>
                     <DataGridTemplateColumn.CellEditingTemplate>
                         <DataTemplate>
-                            <TextBox Text="{Binding User}"></TextBox>
+                            <TextBox Text="{Binding User}">
+                                <intr:Interaction.Triggers>
+                                    <intr:EventTrigger EventName="TextChanged">
+                                        <intr:InvokeCommandAction Command="{Binding ViewChangeRequest}"></intr:InvokeCommandAction>
+                                    </intr:EventTrigger>
+                                </intr:Interaction.Triggers>
+                            </TextBox>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellEditingTemplate>
                 </DataGridTemplateColumn>
@@ -95,19 +122,26 @@
                     </DataGridTemplateColumn.CellTemplate>
                     <DataGridTemplateColumn.CellEditingTemplate>
                         <DataTemplate>
-                            <TextBox Text="{Binding Password}"></TextBox>
+                            <TextBox Text="{Binding Password}">
+                                <intr:Interaction.Triggers>
+                                    <intr:EventTrigger EventName="TextChanged">
+                                        <intr:InvokeCommandAction Command="{Binding ViewChangeRequest}"></intr:InvokeCommandAction>
+                                    </intr:EventTrigger>
+                                </intr:Interaction.Triggers>
+                            </TextBox>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellEditingTemplate>
                 </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
+        <Button Content="New Receiver" Grid.Column="0" Grid.Row="1" Command="{Binding AddNewReceiver}"></Button>
         <DataGrid 
             Grid.Column="0"
-            Grid.ColumnSpan="2"
-            Grid.Row="1"
+            Grid.ColumnSpan="3"
+            Grid.Row="2"
             CanUserDeleteRows="True" 
             CanUserResizeColumns="True" 
-            CanUserAddRows="True" 
+            CanUserAddRows="False" 
             AutoGenerateColumns="False"
             ItemsSource="{Binding Translators}">
             <DataGrid.Columns>
@@ -119,7 +153,13 @@
                     </DataGridTemplateColumn.CellTemplate>
                     <DataGridTemplateColumn.CellEditingTemplate>
                         <DataTemplate>
-                            <TextBox Text="{Binding From}"></TextBox>
+                            <TextBox Text="{Binding From}">
+                                <intr:Interaction.Triggers>
+                                    <intr:EventTrigger EventName="TextChanged">
+                                        <intr:InvokeCommandAction Command="{Binding ViewChangeRequest}"></intr:InvokeCommandAction>
+                                    </intr:EventTrigger>
+                                </intr:Interaction.Triggers>
+                            </TextBox>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellEditingTemplate>
                 </DataGridTemplateColumn>
@@ -131,7 +171,13 @@
                     </DataGridTemplateColumn.CellTemplate>
                     <DataGridTemplateColumn.CellEditingTemplate>
                         <DataTemplate>
-                            <TextBox Text="{Binding To}"></TextBox>
+                            <TextBox Text="{Binding To}">
+                                <intr:Interaction.Triggers>
+                                    <intr:EventTrigger EventName="TextChanged">
+                                        <intr:InvokeCommandAction Command="{Binding ViewChangeRequest}"></intr:InvokeCommandAction>
+                                    </intr:EventTrigger>
+                                </intr:Interaction.Triggers>
+                            </TextBox>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellEditingTemplate>
                 </DataGridTemplateColumn>
@@ -143,14 +189,20 @@
                     </DataGridTemplateColumn.CellTemplate>
                     <DataGridTemplateColumn.CellEditingTemplate>
                         <DataTemplate>
-                            <TextBox Text="{Binding Priority}"></TextBox>
+                            <TextBox Text="{Binding Priority}">
+                                <intr:Interaction.Triggers>
+                                    <intr:EventTrigger EventName="TextChanged">
+                                        <intr:InvokeCommandAction Command="{Binding ViewChangeRequest}"></intr:InvokeCommandAction>
+                                    </intr:EventTrigger>
+                                </intr:Interaction.Triggers>
+                            </TextBox>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellEditingTemplate>
                 </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
-
-        <Button Content="Save" Grid.Column="1" Grid.Row="2" Command="{Binding Save}"></Button>
+        <Button Content="New Translator" Grid.Column="0" Grid.Row="3" Command="{Binding AddNewTranslator}"></Button>
+        <Button Content="Save" Grid.Column="2" Grid.Row="3" Command="{Binding Save}" IsEnabled="{Binding SaveEnabled}"></Button>
     </Grid>
 </Window>
 
