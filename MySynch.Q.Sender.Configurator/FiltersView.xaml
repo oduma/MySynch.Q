@@ -7,10 +7,19 @@
         xmlns:intr="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
         mc:Ignorable="d"
         Title="{Binding FiltersViewTitle}" Height="200" Width="200">
-    <DataGrid 
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+        </Grid.RowDefinitions>
+        <DataGrid 
     CanUserDeleteRows="True" 
     CanUserResizeColumns="True" 
-    CanUserAddRows="True" 
+    CanUserAddRows="False" 
     AutoGenerateColumns="False" Grid.ColumnSpan="2" Grid.Row="0" ItemsSource="{Binding Filters}">
         <DataGrid.Columns>
             <DataGridTemplateColumn Header="Key" Width="Auto" IsReadOnly="False">
@@ -27,7 +36,6 @@
                                     <intr:InvokeCommandAction Command="{Binding ViewChangeRequest}"></intr:InvokeCommandAction>
                                 </intr:EventTrigger>
                             </intr:Interaction.Triggers>
-
                         </TextBox>
                     </DataTemplate>
                 </DataGridTemplateColumn.CellEditingTemplate>
@@ -52,5 +60,7 @@
             </DataGridTemplateColumn>
         </DataGrid.Columns>
     </DataGrid>
+        <Button Grid.Column="0" Grid.Row="1" Content="New Filter" Command="{Binding AddNewFilter}"></Button>
 
+    </Grid>
 </Window>

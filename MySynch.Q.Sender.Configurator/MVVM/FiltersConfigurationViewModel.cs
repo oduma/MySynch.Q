@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using System.Windows.Input;
 using Sciendo.Common.WPF.MVVM;
 
 namespace MySynch.Q.Sender.Configurator.MVVM
@@ -23,11 +24,28 @@ namespace MySynch.Q.Sender.Configurator.MVVM
             }
         }
 
+        public ICommand AddNewFilter { get; private set; }
         public string SenderIdentifier { get; set; }
 
         public void InitiateView()
         {
             
+        }
+
+        public FiltersConfigurationViewModel()
+        {
+            AddNewFilter= new RelayCommand(AddFilter);
+        }
+
+        private void AddFilter()
+        {
+            var newFilter = new FilterConfigurationViewModel();
+            TrackAllChildren(new[] { newFilter });
+            if (Filters == null)
+                Filters = new ObservableCollection<FilterConfigurationViewModel>();
+            Filters.Add(newFilter);
+            RaisePropertyChanged(() => Filters);
+
         }
     }
 }

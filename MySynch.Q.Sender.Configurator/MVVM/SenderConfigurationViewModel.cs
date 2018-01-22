@@ -77,7 +77,9 @@ namespace MySynch.Q.Sender.Configurator.MVVM
 
         private void ShowFilters()
         {
-            FiltersViewModel.SenderIdentifier = LocalRootFolderViewModel.Folder;
+            if(FiltersViewModel==null)
+                FiltersViewModel= new FiltersConfigurationViewModel();
+            FiltersViewModel.SenderIdentifier = (LocalRootFolderViewModel.Folder)??string.Empty;
             var filtersView = new FiltersView(FiltersViewModel);
             filtersView.ShowDialog();
             NoOfFilters = FiltersViewModel.Filters.Count;
