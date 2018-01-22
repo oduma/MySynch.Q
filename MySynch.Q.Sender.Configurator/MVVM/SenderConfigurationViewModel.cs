@@ -86,7 +86,7 @@ namespace MySynch.Q.Sender.Configurator.MVVM
 
         private void ShowQueues()
         {
-            QueuesViewModel.SenderIdentifier = LocalRootFolderViewModel.Folder;
+            QueuesViewModel.SenderIdentifier = (LocalRootFolderViewModel.Folder)??string.Empty;
             var queuesView=new QueuesView(QueuesViewModel);
             queuesView.ShowDialog();
             NoOfQueues = (QueuesViewModel.Queues!=null)?QueuesViewModel.Queues.Count:0;

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Windows.Input;
 using Sciendo.Common.WPF.MVVM;
 
 namespace MySynch.Q.Sender.Configurator.MVVM
@@ -19,10 +20,28 @@ namespace MySynch.Q.Sender.Configurator.MVVM
                 if (_queues != value)
                 {
                     _queues = value;
-                    TrackAllChildren(_queues);
+                    if(_queues!=null)
+                        TrackAllChildren(_queues);
                     RaisePropertyChanged(() => Queues);
                 }
             }
+        }
+
+        public ICommand AddNewQueue { get; private set; }
+
+        public QueuesConfigurationViewModel()
+        {
+            AddNewQueue=new RelayCommand(AddQueue);
+        }
+
+        private void AddQueue()
+        {
+            var newQueue= new QueueConfigurationViewModel();
+            TrackAllChildren(new [] {newQueue});
+            if(Queues==null)
+                Queues= new ObservableCollection<QueueConfigurationViewModel>();
+            Queues.Add(newQueue);
+            RaisePropertyChanged(()=>Queues);
         }
 
         public void InitiateView()
