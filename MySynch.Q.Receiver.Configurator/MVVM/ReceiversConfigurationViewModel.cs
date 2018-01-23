@@ -65,6 +65,10 @@ namespace MySynch.Q.Receiver.Configurator.MVVM
 
         public ICommand AddNewTranslator { get; private set; }
 
+        public ICommand RemoveReceiver { get; private set; }
+
+        public ICommand RemoveTranslator { get; private set; }
+
         private ObservableCollection<ReceiverConfigurationViewModel> _receivers;
 
         public ObservableCollection<ReceiverConfigurationViewModel> Receivers
@@ -84,6 +88,11 @@ namespace MySynch.Q.Receiver.Configurator.MVVM
         }
 
         private void Child_ViewModelChanged(object sender, System.EventArgs e)
+        {
+            MarkForSave();
+        }
+
+        private void MarkForSave()
         {
             WindowTitle = DefaultWindowTitle + " * ";
             SaveEnabled = true;
@@ -112,7 +121,27 @@ namespace MySynch.Q.Receiver.Configurator.MVVM
             Save = new RelayCommand(SaveConfig);
             AddNewReceiver = new RelayCommand(AddReceiver);
             AddNewTranslator = new RelayCommand(AddTranslator);
+            RemoveReceiver= new RelayCommand(DeleteReceiver);
+            RemoveTranslator= new RelayCommand(DeleteTranslator);
         }
+
+        private void DeleteTranslator()
+        {
+            Translators.Remove(SelectedTranslator);
+            RaisePropertyChanged(()=>Translators);
+            MarkForSave();
+        }
+
+        public TranslatorConfigurationViewModel SelectedTranslator { get; set; }
+
+        private void DeleteReceiver()
+        {
+            Receivers.Remove(SelectedReceiver);
+            RaisePropertyChanged(()=>Receivers);
+            MarkForSave();
+        }
+
+        public ReceiverConfigurationViewModel SelectedReceiver { get; set; }
 
         private void AddTranslator()
         {

@@ -24,11 +24,15 @@
             Grid.Column="0"
             Grid.ColumnSpan="3"
             Grid.Row="0"
-            CanUserDeleteRows="True" 
+            CanUserDeleteRows="False" 
             CanUserResizeColumns="True" 
             CanUserAddRows="False" 
             AutoGenerateColumns="False"
-            ItemsSource="{Binding Receivers}" Margin="-4,-1,4,1">
+            ItemsSource="{Binding Receivers}" Margin="-4,-1,4,1"
+            SelectedItem="{Binding SelectedReceiver, Mode=TwoWay}">
+            <DataGrid.InputBindings>
+                <KeyBinding Key="Delete" Command="{Binding RemoveReceiver}"></KeyBinding>
+            </DataGrid.InputBindings>
             <DataGrid.Columns>
                 <DataGridTemplateColumn Header="Local Root Folder" IsReadOnly="False" Width="*">
                     <DataGridTemplateColumn.CellTemplate>
@@ -139,11 +143,14 @@
             Grid.Column="0"
             Grid.ColumnSpan="3"
             Grid.Row="2"
-            CanUserDeleteRows="True" 
+            CanUserDeleteRows="False" 
             CanUserResizeColumns="True" 
             CanUserAddRows="False" 
             AutoGenerateColumns="False"
-            ItemsSource="{Binding Translators}">
+            ItemsSource="{Binding Translators}" SelectedItem="{Binding SelectedTranslator, Mode=TwoWay}">
+            <DataGrid.InputBindings>
+                <KeyBinding Key="Delete" Command="{Binding RemoveTranslator}"></KeyBinding>
+            </DataGrid.InputBindings>
             <DataGrid.Columns>
                 <DataGridTemplateColumn Header="From" IsReadOnly="False" Width="*">
                     <DataGridTemplateColumn.CellTemplate>
