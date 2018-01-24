@@ -1,0 +1,17 @@
+C:\Code\Sciendo\MySynch.Q\MySynch.Q.Receiver.Configurator\bin\Release\MySynch.Q.Receiver.Configurator.exe.config
+C:\Code\Sciendo\MySynch.Q\receiver\configurator\MySynch.Q.Receiver.Configurator.exe.config
+C:\Code\Sciendo\MySynch.Q\receiver\configurator\MySynch.Q.Receiver.exe.config
+C:\Code\Sciendo\MySynch.Q\receiver\configurator\MySynch.Q.Receiver.Configurator.exe
+C:\Code\Sciendo\MySynch.Q\receiver\configurator\MySynch.Q.Receiver.Configurator.pdb
+C:\Code\Sciendo\MySynch.Q\MySynch.Q.Receiver.Configurator\obj\Release\MySynch.Q.Receiver.Configurator.csprojResolveAssemblyReference.cache
+C:\Code\Sciendo\MySynch.Q\MySynch.Q.Receiver.Configurator\obj\Release\MainWindow.g.cs
+C:\Code\Sciendo\MySynch.Q\MySynch.Q.Receiver.Configurator\obj\Release\App.g.cs
+C:\Code\Sciendo\MySynch.Q\MySynch.Q.Receiver.Configurator\obj\Release\MySynch.Q.Receiver.Configurator_MarkupCompile.cache
+C:\Code\Sciendo\MySynch.Q\MySynch.Q.Receiver.Configurator\obj\Release\MySynch.Q.Receiver.Configurator_MarkupCompile.lref
+C:\Code\Sciendo\MySynch.Q\MySynch.Q.Receiver.Configurator\obj\Release\App.baml
+C:\Code\Sciendo\MySynch.Q\MySynch.Q.Receiver.Configurator\obj\Release\MainWindow.baml
+C:\Code\Sciendo\MySynch.Q\MySynch.Q.Receiver.Configurator\obj\Release\MySynch.Q.Receiver.Configurator.g.resources
+C:\Code\Sciendo\MySynch.Q\MySynch.Q.Receiver.Configurator\obj\Release\MySynch.Q.Receiver.Configurator.Properties.Resources.resources
+C:\Code\Sciendo\MySynch.Q\MySynch.Q.Receiver.Configurator\obj\Release\MySynch.Q.Receiver.Configurator.csproj.GenerateResource.Cache
+C:\Code\Sciendo\MySynch.Q\MySynch.Q.Receiver.Configurator\obj\Release\MySynch.Q.Receiver.Configurator.exe
+C:\Code\Sciendo\MySynch.Q\MySynch.Q.Receiver.Configurator\obj\Release\MySynch.Q.Receiver.Configurator.pdb

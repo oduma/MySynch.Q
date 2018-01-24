@@ -1,0 +1,5 @@
+C:\Code\Sciendo\MySynch.Q\Sciendo.Common.WPF.MVVM\bin\Release\Sciendo.Common.WPF.MVVM.dll
+C:\Code\Sciendo\MySynch.Q\Sciendo.Common.WPF.MVVM\bin\Release\Sciendo.Common.WPF.MVVM.pdb
+C:\Code\Sciendo\MySynch.Q\Sciendo.Common.WPF.MVVM\obj\Release\Sciendo.Common.WPF.MVVM.dll
+C:\Code\Sciendo\MySynch.Q\Sciendo.Common.WPF.MVVM\obj\Release\Sciendo.Common.WPF.MVVM.pdb
+C:\Code\Sciendo\MySynch.Q\Sciendo.Common.WPF.MVVM\obj\Release\Sciendo.Common.WPF.MVVM.csprojResolveAssemblyReference.cache
