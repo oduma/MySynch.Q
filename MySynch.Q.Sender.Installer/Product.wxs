@@ -11,7 +11,8 @@
       <![CDATA[Installed OR NETFRAMEWORK45]]>
     </Condition>
 
-    <Feature Id="MySynch.Q.Sender" Title="My Synch Queue Based Sender" Level="1" ConfigurableDirectory="INSTALLLOCATION" AllowAdvertise="no">
+    <Feature Id="MySynch.Q.Sender" Title="My Synch Queue Based Sender" Level="1" ConfigurableDirectory="INSTALLLOCATION" 
+             AllowAdvertise="no">
         <Component Id="cmp3A68FEBA27962FE316CB4DB3AE5F6733" Directory="INSTALLLOCATION" Guid="{E9743A7F-5F4C-423D-8D0D-5644B6859B6D}">
           <File Id="fil1BCB069BBFA07C79A09FF7038092F999" KeyPath="yes" Source="..\sender\log4net.config" />
         </Component>
