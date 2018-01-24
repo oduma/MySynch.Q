@@ -303,3 +303,7 @@ __pycache__/
 
 # OpenCover UI analysis results
 OpenCover/
+.vs/MySynch.Q/v14/.suo
+MySynch.Q.Common/obj/Release/DesignTimeResolveAssemblyReferencesInput.cache
+*.cache
+MySynch.Q.Sender/obj/Release/DesignTimeResolveAssemblyReferencesInput.cache
