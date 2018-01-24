@@ -24,7 +24,7 @@ namespace MySynch.Q.Sender.Configurator.MVVM
             }
         }
 
-        public FilterConfigurationViewModel SelectedFilter { get; private set; }
+        public FilterConfigurationViewModel SelectedFilter { get; set; }
         public ICommand AddNewFilter { get; private set; }
 
         public ICommand RemoveFilter { get; private set; }

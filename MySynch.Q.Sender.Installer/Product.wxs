@@ -1,14 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi" xmlns:util="http://schemas.microsoft.com/wix/UtilExtension" >
-	<Product Id="*" Name="MySynch.Q.Sender" Language="1033" Version="1.0.0.0" Manufacturer="Sciendo" UpgradeCode="ec0d31db-499a-4559-b071-6b1cc4f202dc">
-		<Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
+	  <Product Id="*" Name="MySynch.Q.Sender" 
+           Language="1033" Version="1.0.0.0" Manufacturer="Sciendo" UpgradeCode="ec0d31db-499a-4559-b071-6b1cc4f202dc">
+		<Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine"  AdminImage="yes" InstallPrivileges="elevated"/>
     <PropertyRef Id="NETFRAMEWORK45"></PropertyRef>
-    <Property Id="SRCROOTDIRVAL" Value="C:\"/>
     <Property Id="WIXUI_INSTALLDIR" Value="INSTALLLOCATION" />
-    <Property Id="SRCQUEUEHOSTNAME" Value="localhost"/>
-    <Property Id="MINMEM" Value="0"/>
-    
-    
     <MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
 		<MediaTemplate />
     <Condition Message='This setup requires the .NET Framework 4.5 installed.'>
@@ -16,7 +12,6 @@
     </Condition>
 
     <Feature Id="MySynch.Q.Sender" Title="My Synch Queue Based Sender" Level="1" ConfigurableDirectory="INSTALLLOCATION" AllowAdvertise="no">
-      <ComponentRef Id="ProgramMenuDir"/>
         <Component Id="cmp3A68FEBA27962FE316CB4DB3AE5F6733" Directory="INSTALLLOCATION" Guid="{E9743A7F-5F4C-423D-8D0D-5644B6859B6D}">
           <File Id="fil1BCB069BBFA07C79A09FF7038092F999" KeyPath="yes" Source="..\sender\log4net.config" />
         </Component>
@@ -40,22 +35,36 @@
       </Component>
       <Component Id="MySynch.Q.Sender.exe.config" Directory="INSTALLLOCATION" Guid="{7C74FEB9-2A53-4E73-86A9-C1D001FEAAF5}">
         <File Id="MySynch.Q.Sender.exe.config" KeyPath="yes" Source="..\sender\MySynch.Q.Sender.exe.config" />
-        <util:XmlFile Id="SetSenderRootFolder"
-                      Action="setValue"
-                      ElementPath="//sendersSection/senders/add/@localRootFolder"
-                      Value="[SRCROOTDIRVAL]"
-                      File="[#MySynch.Q.Sender.exe.config]" />
-        <util:XmlFile Id="SetQueueHostName"
-                Action="setValue"
-                ElementPath="//sendersSection/senders/add/queues/add/@hostName"
-                Value="[SRCQUEUEHOSTNAME]"
-                File="[#MySynch.Q.Sender.exe.config]" />
-        <util:XmlFile Id="SetMinMemory"
-                      Action="setValue"
-                      ElementPath="//sendersSection/senders/add/@minMem"
-                      Value="[MINMEM]"
-                      File="[#MySynch.Q.Sender.exe.config]" />
+      </Component>
 
+      <Component Id="cmpa" Directory="En" Guid="{79C8809A-3EAA-47B3-B20D-1CC601CEA7F4}">
+        <File Id="fila" KeyPath="yes" Source="..\sender\configurator\en\System.Windows.Interactivity.resources.dll" />
+      </Component>
+      <Component Id="cmpb" Directory="Configurator" Guid="{0B76DA57-CA80-4DE2-8AE7-BF9FD3108348}">
+        <File Id="filb" KeyPath="yes" Source="..\sender\configurator\Microsoft.WindowsAPICodePack.dll" />
+      </Component>
+      <Component Id="cmpc" Directory="Configurator" Guid="{0E209CB4-00B4-4CAF-B940-C5B059ADA02B}">
+        <File Id="filc" KeyPath="yes" Source="..\sender\configurator\Microsoft.WindowsAPICodePack.Shell.dll" />
+      </Component>
+      <Component Id="cmpd" Directory="Configurator" Guid="{87DDCBC7-D7A4-4F27-B5B4-D40000DF6D68}">
+          <File Id="fild" KeyPath="yes" Source="..\sender\configurator\MySynch.Q.Common.dll" />
+        </Component>
+    <Component Id="cmpe" Directory="Configurator" Guid="{4C64EFA6-B17B-4008-BD3D-E622A397A5E7}">
+        <File Id="file" KeyPath="yes" Source="..\sender\configurator\MySynch.Q.Controls.dll" />
+      </Component>
+      <Component Id="cmpf" Directory="Configurator" Guid="{C3A1289A-504C-4140-A05D-BE8114463069}">
+        <File Id="filf" KeyPath="yes" Source="..\sender\configurator\Sciendo.Common.WPF.MVVM.dll" />
+      </Component>
+      <Component Id="cmpg" Directory="Configurator" Guid="{7C15A61D-E608-4BE8-B51D-8FB26ACA23FF}">
+        <File Id="filg" KeyPath="yes" Source="..\sender\configurator\System.Windows.Interactivity.dll" />
+      </Component>
+      <Component Id="MySynch.Q.Sender.Configurator.exe.config" Directory="Configurator" Guid="{ABEA8A10-433A-406D-9D78-90F5AEDDE7CA}">
+        <File Id="MySynch.Q.Sender.Configurator.exe.config" KeyPath="yes" Source="..\sender\configurator\MySynch.Q.Sender.Configurator.exe.config" />
+        <util:XmlFile Id="SetSenderConfigFilePath"
+                      Action="setValue"
+                      ElementPath="//locatorsSection/locators/add/@location"
+                      Value="..\MySynch.Q.Sender.exe.config"
+                      File="[#MySynch.Q.Sender.Configurator.exe.config]" />
       </Component>
       <Component Id="MySynch.Q.Sender.Service" Directory="INSTALLLOCATION" Guid="{A57774C4-F4E5-4E14-9B4B-09C8BD6EFCAC}">
         <File Id="MySynch.Q.Sender.exe" Name="MySynch.Q.Sender.exe" Source="..\sender\MySynch.Q.Sender.exe" Vital="yes" KeyPath="yes"/>
@@ -65,15 +74,32 @@
           Vital="yes"
           Name="MySynch.Q.Sender"
           DisplayName="MySynch Queue Sender"
-          Description="Monitores folder [SRCROOTDIRVAL] and publishes any changes to all the queues at the *@[SRCQUEUEHOSTNAME]."
-          Start="auto"
+          Description="Monitores folders and publishes any changes to all the queues."
           ErrorControl="ignore"
+          Start="auto"
           Interactive="no">
         </ServiceInstall>
-        <ServiceControl Id="StartSenderService" Start="install" Stop="both" Remove="uninstall" Name="MySynch.Q.Sender" Wait="yes" />
+        <ServiceControl Id="StartSenderService" Stop="both" Remove="uninstall" Name="MySynch.Q.Sender" Wait="yes" />
+      </Component>
+      <Component Id="MySynch.Q.Sender.Configurator.exe" Directory="Configurator" Guid="{2CC3B27A-537F-417F-955C-C470A4F4E893}">
+        <File Id="MySynch.Q.Sender.Configurator.exe" KeyPath="yes" Source="..\sender\configurator\MySynch.Q.Sender.Configurator.exe" />
       </Component>
       <ComponentRef Id="LOGS"/>
+      <ComponentRef Id="ApplicationShortcut"/>
     </Feature>
+      <DirectoryRef Id="ProgramMenuSenderDir">
+        <Component Id="ApplicationShortcut" Guid="{866D7156-8EE3-4E5C-86AB-4B1B648B1A46}">
+        <Shortcut Id="ApplicationStartMenuShortcut" 
+                  Name="Sender Configurator"
+                  Description="Configure the Sender"
+                  Target="[#MySynch.Q.Sender.Configurator.exe]"
+                  WorkingDirectory="APPLICATIONROOTDIRECTORY"/>
+        <RemoveFolder Id="CleanUpShortCut" Directory="ProgramMenuSenderDir" On="uninstall"/>
+        <RemoveFolder Id="CleanUpShortCut1" Directory="SciendoFolder" On="uninstall"/>
+        <RegistryValue Root="HKCU" Key="Software\Microsoft\Sciendo\MySynch.Q.Sender" Name="installed" Type="integer" Value="1" KeyPath="yes"/>
+    </Component>
+</DirectoryRef>
+
   </Product>
 
 	<Fragment>
@@ -82,16 +108,19 @@
         <Directory Id="Sciendo" Name="Sciendo">
           <Directory Id="MySynch.Q" Name="MySynch.Q">
             <Directory Id="INSTALLLOCATION" Name="Sender">
+              <Directory Id ="Configurator" Name="Configurator">
+                <Directory Id ="En" Name ="en">
+                  
+                </Directory>
+              </Directory>
             </Directory>
           </Directory>
         </Directory>
       </Directory>
       <Directory Id="ProgramMenuFolder" Name="Programs">
-        <Directory Id="ProgramMenuDir" Name="MySynch.Q.Sender">
-          <Component Id="ProgramMenuDir" Guid="{26F451D3-B079-4BBD-80BE-0E836BE7C34E}">
-            <RemoveFolder Id="ProgramMenuDir" On="uninstall" />
-            <RegistryValue Root="HKCU" Key="Software\Sciendo\MySynch.Q" Type="string" Value="" KeyPath="yes" />
-          </Component>
+        <Directory Id ="SciendoFolder" Name="Sciendo">
+          <Directory Id="ProgramMenuSenderDir" Name="Sender">
+          </Directory>
         </Directory>
       </Directory>
       <Directory Id="DesktopFolder" Name="Desktop" />
@@ -111,131 +140,8 @@
         </Directory>
       </Directory>
     </Directory>
-    <UI Id="MyWixUI">
-      <TextStyle Id="WixUI_Font_Normal" FaceName="Tahoma" Size="8" />
-      <TextStyle Id="WixUI_Font_Bigger" FaceName="Tahoma" Size="12" />
-      <TextStyle Id="WixUI_Font_Title" FaceName="Tahoma" Size="9" Bold="yes" />
-
-      <Property Id="DefaultUIFont" Value="WixUI_Font_Normal" />
-      <Property Id="WixUI_Mode" Value="Advanced" />
-      <Dialog Id="SrcDirDlg" Width="370" Height="270" Title="Source Root Folder selection">
-        <Control Id="PathEdit" Type="PathEdit" X="25" Y="202" Width="320" Height="18" Property="VALTEMP" />
-        <Control Id="OK" Type="PushButton" X="240" Y="243" Width="56" Height="17" Default="yes" Text="!(loc.WixUIOK)">
-          <Publish Property="SRCROOTDIRVAL" Value="[VALTEMP]" Order="1">1</Publish>
-          <Publish Event="EndDialog" Value="Return" Order="2">1</Publish>
-        </Control>
-        <Control Id="Cancel" Type="PushButton" X="304" Y="243" Width="56" Height="17" Cancel="yes" Text="!(loc.WixUICancel)">
-          <Publish Event="EndDialog" Value="Return">1</Publish>
-        </Control>
-        <Control Id="ComboLabel" Type="Text" X="25" Y="58" Width="44" Height="10" TabSkip="no" Text="!(loc.BrowseDlgComboLabel)" />
-        <Control Id="DirectoryCombo" Type="DirectoryCombo" X="70" Y="55" Width="220" Height="80" Property="VALTEMP" Fixed="yes" Remote="yes">
-          <Subscribe Event="IgnoreChange" Attribute="IgnoreChange" />
-        </Control>
-        <Control Id="WixUI_Bmp_Up" Type="PushButton" X="298" Y="55" Width="19" Height="19" ToolTip="!(loc.BrowseDlgWixUI_Bmp_UpTooltip)" Icon="yes" FixedSize="yes" IconSize="16" Text="!(loc.BrowseDlgWixUI_Bmp_Up)">
-          <Publish Event="DirectoryListUp" Value="0">1</Publish>
-        </Control>
-        <Control Id="NewFolder" Type="PushButton" X="325" Y="55" Width="19" Height="19" ToolTip="!(loc.BrowseDlgNewFolderTooltip)" Icon="yes" FixedSize="yes" IconSize="16" Text="!(loc.BrowseDlgNewFolder)">
-          <Publish Event="DirectoryListNew" Value="0">1</Publish>
-        </Control>
-        <Control Id="DirectoryList" Type="DirectoryList" X="25" Y="83" Width="320" Height="98" Property="VALTEMP" Sunken="yes" TabSkip="no" />
-        <Control Id="PathLabel" Type="Text" X="25" Y="190" Width="320" Height="10" TabSkip="no" Text="!(loc.BrowseDlgPathLabel)" />
-        <Control Id="BannerBitmap" Type="Bitmap" X="0" Y="0" Width="370" Height="44" TabSkip="no" Text="!(loc.BrowseDlgBannerBitmap)" />
-        <Control Id="BannerLine" Type="Line" X="0" Y="44" Width="370" Height="0" />
-        <Control Id="BottomLine" Type="Line" X="0" Y="234" Width="370" Height="0" />
-        <Control Id="Description" Type="Text" X="25" Y="23" Width="280" Height="15" Transparent="yes" NoPrefix="yes" Text="This is going to be used by queue sender" />
-        <Control Id="Title" Type="Text" X="15" Y="6" Width="200" Height="15" Transparent="yes" NoPrefix="yes" Text="Select a folder" />
-      </Dialog>
-
-      <Dialog Id="MySynchDlg" Width="370" Height="270"
-               Title="Settings - [ProductName]" NoMinimize="yes">
-
-        <!-- Virtual Dir prompt -->
-        <Control Id="RootDirLabel" Type="Text" X="45" Y="73" Width="100" Height="15" TabSkip="no" Text="&amp;Sender Root Directory:"/>
-        <Control Id="RootDirPathValue" Type="PathEdit" X="45" Y="85" Width="215" Height="18" Property="SRCROOTDIRVAL"/>
-        <Control Id="RootDirPathButton" Type="PushButton" X="270" Y="85" Width="50" Height="17" Text="Browse">
-          <Publish Property="VALTEMP" Value="[SRCROOTDIRVAL]" Order="1">1</Publish>
-          <Publish Event="SpawnDialog" Value="SrcDirDlg" Order="2">1</Publish>
-        </Control>
-        <!-- Queue Host Name prompt-->
-        <Control Id="QueueHostNameLabel" Type ="Text" X="45" Y="103" Width="100" Height="15" TabSkip="no" Text="&amp;Queue Host Name:"/>
-        <Control Id="QueueHostNameValue" Type ="Edit" X="45" Y="118" Width="215" Height="18" Property="SRCQUEUEHOSTNAME"/>
-
-        <!-- Min Mem prompt-->
-        <Control Id="MinMemLabel" Type ="Text" X="45" Y="136" Width="100" Height="15" TabSkip="no" Text="&amp;Minimum memory on the Queue Host:"/>
-        <Control Id="MinMemValue" Type ="Edit" X="45" Y="151" Width="215" Height="18" Integer="yes" Property="MINMEM"/>
-        
-        <!-- Back button -->
-        <Control Id="Back" Type="PushButton" X="180" Y="243"
-                Width="56" Height="17" Text="&amp;Back">
-          <Publish Event="NewDialog" Value="InstallDirDlg">1</Publish>
-        </Control>
-        <Control Id="Next" Type="PushButton" X="236" Y="243"
-               Width="56" Height="17" Default="yes" Text="&amp;Next">
-          <Publish Event="NewDialog" Value="VerifyReadyDlg">
-            <!--if settings are correct, allow next dialog-->
-            <![CDATA[SRCROOTDIRVAL <> ""]]>
-          </Publish>
-          <Publish Property="SRCROOTDIRVAL" Value="[SRCROOTDIRVAL]"></Publish>
-        </Control>
-        <Control Id="Cancel" Type="PushButton" X="304" Y="243"
-                   Width="56" Height="17" Cancel="yes" Text="Cancel">
-          <Publish Event="SpawnDialog" Value="CancelDlg">1</Publish>
-        </Control>
-        <Control Id="BannerBitmap" Type="Bitmap" X="0" Y="0"
-             Width="370" Height="44" TabSkip="no" Text="WixUI_Bmp_Banner" />
-        <Control Id="Description" Type="Text" X="25" Y="23"
-               Width="280" Height="15" Transparent="yes" NoPrefix="yes">
-          <Text>Please enter Source Root Configuration</Text>
-        </Control>
-        <Control Id="BottomLine" Type="Line" X="0" Y="234"
-              Width="370" Height="0" />
-        <Control Id="Title" Type="Text" X="15" Y="6"
-                Width="200" Height="15" Transparent="yes" NoPrefix="yes">
-          <Text>{\WixUI_Font_Title}MySynch Queue Sender Configuration</Text>
-        </Control>
-        <Control Id="BannerLine" Type="Line" X="0" Y="44" Width="370" Height="0" />
-      </Dialog>
-
-
-      <DialogRef Id="BrowseDlg" />
-      <DialogRef Id="DiskCostDlg" />
-      <DialogRef Id="ErrorDlg" />
-      <DialogRef Id="FatalError" />
-      <DialogRef Id="FilesInUse" />
-      <DialogRef Id="MsiRMFilesInUse" />
-      <DialogRef Id="PrepareDlg" />
-      <DialogRef Id="ProgressDlg" />
-      <DialogRef Id="ResumeDlg" />
-      <DialogRef Id="UserExit" />
-
-      <Publish Dialog="BrowseDlg" Control="OK" Event="DoAction" Value="WixUIValidatePath" Order="3">1</Publish>
-      <Publish Dialog="BrowseDlg" Control="OK" Event="SpawnDialog" Value="InvalidDirDlg" Order="4"><![CDATA[WIXUI_INSTALLDIR_VALID<>"1"]]></Publish>
-
-      <Publish Dialog="ExitDialog" Control="Finish" Event="EndDialog" Value="Return" Order="999">1</Publish>
-
-      <Publish Dialog="WelcomeDlg" Control="Next" Event="NewDialog" Value="InstallDirDlg" Order="1">NOT Installed</Publish>
-      <Publish Dialog="WelcomeDlg" Control="Next" Event="NewDialog" Value="VerifyReadyDlg" Order="1">Installed AND PATCH</Publish>
-
-      <Publish Dialog="InstallDirDlg" Control="Back" Event="NewDialog" Value="WelcomeDlg">1</Publish>
-      <Publish Dialog="InstallDirDlg" Control="Next" Event="SetTargetPath" Value="[WIXUI_INSTALLDIR]" Order="1">1</Publish>
-      <Publish Dialog="InstallDirDlg" Control="Next" Event="DoAction" Value="WixUIValidatePath" Order="2">NOT WIXUI_DONTVALIDATEPATH</Publish>
-      <Publish Dialog="InstallDirDlg" Control="Next" Event="SpawnDialog" Value="InvalidDirDlg" Order="3"><![CDATA[NOT WIXUI_DONTVALIDATEPATH AND WIXUI_INSTALLDIR_VALID<>"1"]]></Publish>
-      <Publish Dialog="InstallDirDlg" Control="Next" Event="NewDialog" Value="MySynchDlg" Order="4">WIXUI_DONTVALIDATEPATH OR WIXUI_INSTALLDIR_VALID="1"</Publish>
-      <Publish Dialog="InstallDirDlg" Control="ChangeFolder" Property="_BrowseProperty" Value="[WIXUI_INSTALLDIR]" Order="1">1</Publish>
-      <Publish Dialog="InstallDirDlg" Control="ChangeFolder" Event="SpawnDialog" Value="BrowseDlg" Order="2">1</Publish>
-
-      <Publish Dialog="VerifyReadyDlg" Control="Back" Event="NewDialog" Value="MySynchDlg" Order="1">NOT Installed</Publish>
-      <Publish Dialog="VerifyReadyDlg" Control="Back" Event="NewDialog" Value="MaintenanceTypeDlg" Order="2">Installed AND NOT PATCH</Publish>
-      <Publish Dialog="VerifyReadyDlg" Control="Back" Event="NewDialog" Value="WelcomeDlg" Order="2">Installed AND PATCH</Publish>
-
-      <Publish Dialog="MaintenanceWelcomeDlg" Control="Next" Event="NewDialog" Value="MaintenanceTypeDlg">1</Publish>
-
-      <Publish Dialog="MaintenanceTypeDlg" Control="RepairButton" Event="NewDialog" Value="VerifyReadyDlg">1</Publish>
-      <Publish Dialog="MaintenanceTypeDlg" Control="RemoveButton" Event="NewDialog" Value="VerifyReadyDlg">1</Publish>
-      <Publish Dialog="MaintenanceTypeDlg" Control="Back" Event="NewDialog" Value="MaintenanceWelcomeDlg">1</Publish>
-
+    <UI>
+      <UIRef Id="WixUI_Minimal" />
     </UI>
-    <UIRef Id="WixUI_Common" />
-
   </Fragment>
 </Wix>
