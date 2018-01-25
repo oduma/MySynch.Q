@@ -305,3 +305,7 @@ __pycache__/
 OpenCover/
 .vs/MySynch.Q/v14/.suo
 *.cache
+
+#MySynch.Q
+sender/
+receiver/
