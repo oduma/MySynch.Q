@@ -4,6 +4,7 @@ using Sciendo.Common.Serialization;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 using Sciendo.Common.IO;
 using Sciendo.Playlist.Translator;
