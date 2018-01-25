@@ -39,7 +39,7 @@ namespace MySynch.Q.Tests.Sender
         {
             try
             {
-                var publisher = new Publisher(new List<ISenderQueue>(), null, null, 0);
+                var publisher = new Publisher(new List<ISenderQueue>().ToArray(), null, null, 0);
             }
             catch (ArgumentNullException argumentNullException)
             {
@@ -58,7 +58,7 @@ namespace MySynch.Q.Tests.Sender
         {
             try
             {
-                var publisher = new Publisher(new List<ISenderQueue>() {new SenderQueue(new QueueElement())}, null,
+                var publisher = new Publisher(new List<ISenderQueue>() {new SenderQueue(new QueueElement())}.ToArray(), null,
                     null, 0);
             }
             catch (ArgumentNullException argumentNullException)
