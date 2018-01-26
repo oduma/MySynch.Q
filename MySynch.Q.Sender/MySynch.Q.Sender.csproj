@@ -50,25 +50,21 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Newtonsoft.Json.7.0.1-beta2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="RabbitMQ.Client, Version=4.0.0.0, Culture=neutral, PublicKeyToken=89e7d7c5feba84ce, processorArchitecture=MSIL">
-      <HintPath>..\packages\RabbitMQ.Client.4.1.1\lib\net451\RabbitMQ.Client.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="RabbitMQ.Client">
+      <HintPath>..\packages\RabbitMQ.Client.3.5.0\lib\net40\RabbitMQ.Client.dll</HintPath>
     </Reference>
     <Reference Include="Sciendo.Common, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Sciendo.Common.1.0.0-Build00016\lib\net40\Sciendo.Common.dll</HintPath>
+      <HintPath>..\packages\Sciendo.Common.1.0.0-Build00023\lib\net40\Sciendo.Common.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Configuration.Install" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Management" />
     <Reference Include="System.Net.Http" />
-    <Reference Include="System.Net.Http.Formatting, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.ServiceProcess" />
     <Reference Include="System.Xml" />
@@ -78,22 +74,24 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IIOOperations.cs" />
-    <Compile Include="IMessageFeeder.cs" />
-    <Compile Include="IOOperations.cs" />
-    <Compile Include="IPublisher.cs" />
-    <Compile Include="ISenderQueue.cs" />
-    <Compile Include="ISenderService.cs" />
+    <Compile Include="Configuration\ExtensionElement.cs" />
+    <Compile Include="Configuration\ExtensionElementCollection.cs" />
     <Compile Include="MessageFeeder.cs" />
     <Compile Include="Publisher.cs" />
+    <Compile Include="Configuration\QueueElement.cs" />
+    <Compile Include="Configuration\QueueElementCollection.cs" />
+    <Compile Include="Configuration\SenderElement.cs" />
+    <Compile Include="Configuration\SenderElementCollection.cs" />
     <Compile Include="SenderQueue.cs" />
-    <Compile Include="SenderSection.cs" />
+    <Compile Include="Configuration\SendersSection.cs" />
     <Compile Include="SenderService.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="log4net.Debug.config">
       <DependentUpon>log4net.config</DependentUpon>
       <IsTransformFile>True</IsTransformFile>

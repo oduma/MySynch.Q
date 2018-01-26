@@ -1,36 +1,34 @@
 ﻿using MySynch.Q.Common.Contracts;
-using RabbitMQ.Client;
 using Sciendo.Common.Logging;
 using Sciendo.Common.Serialization;
 using System;
-using System.Collections.Generic;
-using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading;
 
 namespace MySynch.Q.Sender
 {
-    public  class Publisher : IPublisher
+    internal class Publisher
     {
-        public Publisher(ISenderQueue[] senderQueues, List<ConnectionFactory> connectionFactories, IMessageFeeder messageFeeder, long minFreeMemory)
+
+        private readonly string _minFreeMemory;
+
+        public CancellationTokenSource CancellationTokenSource { get; set; }
+
+        public CancellationToken CancellationToken { get; set; }
+
+        internal Publisher(SenderQueue[] senderQueues, string minFreeMemory, MessageFeeder messageFeeder)
         {
-            LoggingManager.Debug("Constructing Publisher...");
-            if(senderQueues==null || !senderQueues.Any())
-                throw new ArgumentNullException(nameof(senderQueues));
-            if(messageFeeder==null)
-                throw new ArgumentNullException(nameof(messageFeeder));
+            LoggingManager.Debug($"Constructing {messageFeeder.RootPath} Publisher...");
             _senderQueues = senderQueues;
-            _connectionFactories = (connectionFactories)?? new List<ConnectionFactory>();
-            _messageFeeder = messageFeeder;
             _minFreeMemory = minFreeMemory;
-            LoggingManager.Debug("Publisher Constructed.");
+            _messageFeeder = messageFeeder;
+            LoggingManager.Debug($"Publisher {messageFeeder.RootPath} Constructed.");
         }
 
-        ISenderQueue[] _senderQueues;
-        List<ConnectionFactory> _connectionFactories;
+        private readonly SenderQueue[] _senderQueues;
 
-        public virtual void Initialize()
+        internal void Initialize()
         {
             try
             {
@@ -38,18 +36,7 @@ namespace MySynch.Q.Sender
                 
                 foreach (var senderQueue in _senderQueues)
                 {
-                    var connectionFactory = _connectionFactories.FirstOrDefault(f => f.HostName == senderQueue.QueueElement.HostName);
-                    if (connectionFactory == null)
-                    {
-                        connectionFactory = new ConnectionFactory
-                        {
-                            HostName = senderQueue.QueueElement.HostName,
-                            UserName = senderQueue.QueueElement.UserName,
-                            Password = senderQueue.QueueElement.Password
-                        };
-                        _connectionFactories.Add(connectionFactory);
-                    }
-                    senderQueue.StartChannel(connectionFactory);
+                    senderQueue.StartChannel();
                 }
                 LoggingManager.Debug("Publisher Initialized.");
             }
@@ -60,47 +47,38 @@ namespace MySynch.Q.Sender
             }
         }
 
-        public void TryStart()
+        internal void TryStart()
         {
-            if (!_messageFeeder.More)
-                _messageFeeder.Initialize();
-            this._messageFeeder.More = true;
-            this._messageFeeder.PublishMessage = PublishMessage;
-            this._messageFeeder.ShouldPublishMessage = ShouldPublishMessage;
+            _messageFeeder.Initialize(true, PublishMessage, ShouldPublishMessage);
         }
 
-        internal virtual bool ShouldPublishMessage()
+        private bool ShouldPublishMessage()
         {
-            LoggingManager.Debug("Should Publish Message...");
-            foreach (var senderQueue in _senderQueues.Where(q => q.Channel != null && !q.Channel.IsClosed))
-            {
-                if (!senderQueue.ShouldSendMessage(_minFreeMemory))
-                {
-                    LoggingManager.Debug("Queue " + senderQueue.QueueElement.QueueName +" on " + senderQueue.QueueElement.HostName +" sais NO!");
-                    return false;
-                }
-            }
-            LoggingManager.Debug("All Queues can accespt messages");
+            //LoggingManager.Debug("Should Publish Message...");
+            //foreach (var senderQueue in _senderQueues.Where(q => q.Channel != null && !q.Channel.IsClosed))
+            //{
+            //    if (!senderQueue.ShouldSendMessage(_minFreeMemory))
+            //    {
+            //        LoggingManager.Debug("Queue " + senderQueue.Name + " on " + senderQueue.HostName + " sais NO!");
+            //        return false;
+            //    }
+            //}
+            //LoggingManager.Debug("All Queues can accespt messages");
             return true;
         }
 
-        internal virtual void PublishMessage(BodyTransferMessage message)
+        internal void PublishMessage(TransferMessage message)
         {
             LoggingManager.Debug("Publishing Message...");
-            var tempMessage = Serializer.Serialize<BodyTransferMessage>(message);
+            var tempMessage = Serializer.Serialize<TransferMessage>(message);
             byte[] rawMessage = Encoding.UTF8.GetBytes(tempMessage);
-            foreach (var senderQueue in _senderQueues.Where(q => q.Channel != null))
+            foreach (var senderQueue in _senderQueues)
             {
-                if (senderQueue.Channel.IsClosed)
-                {
-                    LoggingManager.Debug("Channel closed reopening it...");
-                    senderQueue.StartChannel(_connectionFactories.FirstOrDefault(f => f.HostName == senderQueue.QueueElement.HostName));
-                }
                 senderQueue.SendMessage(rawMessage);
             }
             LoggingManager.Debug("Message Published.");
         }
-        public void Stop()
+        internal void Stop()
         {
             LoggingManager.Debug("Stoping Publisher...");
             _messageFeeder.More = false;
@@ -113,7 +91,6 @@ namespace MySynch.Q.Sender
             LoggingManager.Debug("Publisher Stopped.");
         }
 
-        private IMessageFeeder _messageFeeder;
-        private long _minFreeMemory;
+        private readonly MessageFeeder _messageFeeder;
     }
 }

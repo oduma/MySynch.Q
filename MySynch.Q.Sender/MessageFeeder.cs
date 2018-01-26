@@ -2,15 +2,18 @@
 using MySynch.Q.Common.Contracts;
 using Sciendo.Common.Logging;
 using System;
+using System.IO;
 using System.Threading;
+using System.Web;
+using Sciendo.Common.IO;
 
 namespace MySynch.Q.Sender
 {
-    public class MessageFeeder : IMessageFeeder
+    public class MessageFeeder
     {
-        private readonly int _maxFileSize;
+        private readonly BodyType _messageBodyType;
 
-        internal virtual void FileRenamed(string oldPath, string newPath)
+        private void fsWatcher_Renamed(string oldPath, string newPath)
         {
             if (!More)
             {
@@ -19,10 +22,11 @@ namespace MySynch.Q.Sender
             }
             LoggingManager.Debug("A File renamed from " + oldPath + " to " + newPath);
             //if it is a directory ignore it
-            if (!_ioOperations.FileExists(newPath))
+            if (!File.Exists(newPath))
                 return;
             // Wait if file is still open
-            while (_ioOperations.IsFileLocked(newPath))
+            FileInfo fileInfo = new FileInfo(newPath);
+            while (IsFileLocked(fileInfo))
             {
                 Thread.Sleep(500);
             }
@@ -36,15 +40,37 @@ namespace MySynch.Q.Sender
                 LoggingManager.Debug("Waiting 5 seconds queue is busy...");
                 Thread.Sleep(5000);
             }
-            PublishMessage(new BodyTransferMessage { Name = oldPath, Body = null,SourceRootPath=_rootPath });
-            foreach (var message in _ioOperations.GetMessagesFromTheFile(newPath,_maxFileSize))
-            {
-                message.SourceRootPath = _rootPath;
-                PublishMessage(message);
-            }
+            PublishMessage(new TransferMessage { BodyType = _messageBodyType, Name = oldPath, Body = null,SourceRootPath=RootPath });
+            PublishMessage(new TransferMessage { BodyType = _messageBodyType, Name = newPath, Body = GetFileContent(newPath),SourceRootPath=RootPath });
+
         }
 
-        internal virtual void FileDeleted(string path)
+        private object GetFileContent(string filePath)
+        {
+            if (_messageBodyType == BodyType.Binary)
+            {
+                return GetBinaryFileContent(filePath);
+            }
+            if (_messageBodyType == BodyType.Text)
+                return  new TextFileReader().Read(filePath);
+            return null;
+        }
+
+        private byte[] GetBinaryFileContent(string filePath )
+        {
+
+            FileInfo fInfo = new FileInfo(filePath);
+
+            byte[] buffer = new byte[fInfo.Length];
+            using (var fs = File.OpenRead(filePath))
+            {
+                fs.Read(buffer, 0, (int)fInfo.Length);
+                return buffer;
+            }
+
+        }
+
+        private void fsWatcher_Deleted(string path)
         {
             if (!More)
             {
@@ -52,7 +78,7 @@ namespace MySynch.Q.Sender
                 return;
             }
             LoggingManager.Debug("A file deleted: " + path);
-            if (!_ioOperations.FileExists(path))
+            if (Directory.Exists(path))
                 return;
             if (ShouldPublishMessage == null)
             {
@@ -64,22 +90,22 @@ namespace MySynch.Q.Sender
                 LoggingManager.Debug("Waiting 5 seconds queue is busy...");
                 Thread.Sleep(5000);
             }
-            PublishMessage(new BodyTransferMessage { Name = path, Body = null, SourceRootPath = _rootPath });
+            PublishMessage(new TransferMessage { BodyType = _messageBodyType, Name = path, Body = null, SourceRootPath = RootPath });
         }
 
         private void StopFeeder()
         {
-            if(_directoryMonitor!=null)
+            if(_fsWatcher!=null)
             {
-                _directoryMonitor.Change -= FileChanged;
-                _directoryMonitor.Delete -= FileDeleted;
-                _directoryMonitor.Rename -= FileRenamed;
-                _directoryMonitor.Stop();
+                _fsWatcher.Change -= fsWatcher_Changed;
+                _fsWatcher.Delete -= fsWatcher_Deleted;
+                _fsWatcher.Rename -= fsWatcher_Renamed;
+                _fsWatcher.Stop();
 
             }
         }
 
-        internal virtual void FileChanged(string path)
+        private void fsWatcher_Changed(string path)
         {
             if (!More)
             {
@@ -88,11 +114,12 @@ namespace MySynch.Q.Sender
             }
             LoggingManager.Debug("A file changed: " + path);
             //if it is a directory ignore it
-            if (!_ioOperations.FileExists(path))
+            if (!File.Exists(path))
                 return;
             //queue an insert;
             // Wait if file is still open
-            while (_ioOperations.IsFileLocked(path))
+            FileInfo fileInfo = new FileInfo(path);
+            while (IsFileLocked(fileInfo))
             {
                 Thread.Sleep(500);
             }
@@ -107,51 +134,77 @@ namespace MySynch.Q.Sender
                 LoggingManager.Debug("Waiting 5 seconds queue is busy...");
                 Thread.Sleep(5000);
             }
-            foreach (var message in _ioOperations.GetMessagesFromTheFile(path,_maxFileSize))
+            PublishMessage(new TransferMessage { BodyType = _messageBodyType, Name = path, Body = GetFileContent(path), SourceRootPath = RootPath });
+        }
+
+        static bool IsFileLocked(FileInfo file)
+        {
+            FileStream stream = null;
+
+            try
             {
-                message.SourceRootPath = _rootPath;
-                PublishMessage(message);
+                if((file.Attributes & FileAttributes.ReadOnly)==FileAttributes.ReadOnly)
+                    stream = file.Open(FileMode.Open,
+                         FileAccess.Read, FileShare.None);
+                else
+                    stream = file.Open(FileMode.Open,
+                         FileAccess.ReadWrite, FileShare.None);
+
+            }
+            catch (IOException)
+            {
+                //the file is unavailable because it is:
+                //still being written to
+                //or being processed by another thread
+                //or does not exist (has already been processed)
+                return true;
+            }
+            finally
+            {
+                if (stream != null)
+                    stream.Close();
             }
 
+            //file is not locked
+            return false;
         }
 
+        private readonly DirectoryMonitor _fsWatcher;
+        public string RootPath { get; private set; }
 
-        private IDirectoryMonitor _directoryMonitor;
-        private string _rootPath;
-        private readonly IIOOperations _ioOperations;
 
-        public void Initialize()
+        public MessageFeeder(string localRootFolder, BodyType messageBodyType, params string[] filterExtensions)
         {
-            LoggingManager.Debug(_rootPath + " Initializing _messageFeeder...");
+            _messageBodyType = messageBodyType;
+            LoggingManager.Debug("Constructing _messageFeeder...");
+            if (string.IsNullOrEmpty(localRootFolder))
+                throw new ArgumentNullException(nameof(localRootFolder));
+            if (!Directory.Exists(localRootFolder))
+                throw new ArgumentException("localRootFolder does not exist");
+
+            _fsWatcher = new DirectoryMonitor(localRootFolder);
+            RootPath = localRootFolder;
 
             StopFeeder();
-            _directoryMonitor.Change += FileChanged;
-            _directoryMonitor.Delete += FileDeleted;
-            _directoryMonitor.Rename += FileRenamed;
-            _directoryMonitor.Start();
-            LoggingManager.Debug(_rootPath + " Initialized _messageFeeder...");
-        }
-
-        public MessageFeeder(int maxFileSize, IDirectoryMonitor directoryMonitor, string localRootFolder,IIOOperations ioOperations)
-        {
-            if(directoryMonitor==null)
-                throw new ArgumentNullException(nameof(directoryMonitor));
-            if(string.IsNullOrEmpty(localRootFolder))
-                throw new ArgumentNullException(nameof(localRootFolder));
-            LoggingManager.Debug(string.Format("Constructing _messageFeeder {0} {1} ...",
-                (maxFileSize == 0) ? "without" : "with", (maxFileSize == 0) ? "any limit" : maxFileSize + " limit"));
-            _directoryMonitor = directoryMonitor;
-            _rootPath = localRootFolder;
-            _ioOperations = (ioOperations)??new IOOperations();
-            _maxFileSize = maxFileSize;
+            _fsWatcher.Change += fsWatcher_Changed;
+            _fsWatcher.Delete += fsWatcher_Deleted;
+            _fsWatcher.Rename += fsWatcher_Renamed;
+            _fsWatcher.Start();
             LoggingManager.Debug("_messageFeeder Constructed.");
 
         }
 
-        public virtual Action<BodyTransferMessage> PublishMessage { get; set; }
+        public Action<TransferMessage> PublishMessage { get; set; }
 
-        public virtual Func<bool> ShouldPublishMessage { get; set; } 
+        public Func<bool> ShouldPublishMessage { get; set; } 
 
-        public virtual bool More { get; set; }
+        public bool More { get; set; }
+
+        public void Initialize(bool acceptMessages, Action<TransferMessage> publishMessage, Func<bool> shouldPublishMessage)
+        {
+            More = acceptMessages;
+            PublishMessage = publishMessage;
+            ShouldPublishMessage = shouldPublishMessage;
+        }
     }
 }

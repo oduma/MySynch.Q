@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi" xmlns:util="http://schemas.microsoft.com/wix/UtilExtension" >
+  <Product Id="*" Name="MySynch.Q.Receiver" Language="1033" Version="1.0.0.0" Manufacturer="Sciendo" UpgradeCode="{615BEC0F-01E9-47BE-9F50-E2DD72F15E61}">
+    <Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine"/>
+    <PropertyRef Id="NETFRAMEWORK45"></PropertyRef>
+    <Property Id="WIXUI_INSTALLDIR" Value="INSTALLLOCATION" />
+
+    <MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
+    <MediaTemplate />
+    <Condition Message='This setup requires the .NET Framework 4.5 installed.'>
+      <![CDATA[Installed OR NETFRAMEWORK45]]>
+    </Condition>
+
+    <Feature Id="MySynch.Q.Reciever" Title="My Synch Queue Based Reciever" Level="1" ConfigurableDirectory="INSTALLLOCATION" 
+             AllowAdvertise="no">
+      <Component Id="cmp1r" Directory="INSTALLLOCATION" Guid="{D0505D3E-6F1B-4D59-8F14-5FD32F2AB7DE}">
+        <File Id="fil1r" KeyPath="yes" Source="..\receiver\log4net.config" />
+      </Component>
+      <Component Id="cmp2r" Directory="INSTALLLOCATION" Guid="{40CF5242-1AB6-4C76-B8CA-877A0DCE44D1}">
+        <File Id="fil2r" KeyPath="yes" Source="..\receiver\log4net.dll" />
+      </Component>
+      <Component Id="cmp3r" Directory="INSTALLLOCATION" Guid="{B1191267-8DAD-47CB-9447-0E1C9C903D87}">
+        <File Id="fil3r" KeyPath="yes" Source="..\receiver\MySynch.Q.Common.dll" />
+      </Component>
+      <Component Id="cmp4r" Directory="INSTALLLOCATION" Guid="{417800C8-8673-45BA-B067-0E327F6E1859}">
+        <File Id="fil4r" KeyPath="yes" Source="..\receiver\Sciendo.Common.dll" />
+      </Component>
+      <Component Id="cmp5r" Directory="INSTALLLOCATION" Guid="{BAA1A8B4-369A-43C7-A079-E10B4DD3030B}">
+        <File Id="fil5r" KeyPath="yes" Source="..\receiver\RabbitMQ.Client.dll" />
+      </Component>
+<<<<<<< HEAD
+      <Component Id="cmp6r" Directory="INSTALLLOCATION" Guid="{941530AD-4F0C-4E53-81C0-885FB93807DC}">
+        <File Id="fil6r" KeyPath="yes" Source="..\receiver\Topshelf.dll" />
+=======
+      <Component Id="cmp6r" Directory="INSTALLLOCATION" Guid="{389392C8-2F0E-4071-B7C2-177C953114A4}">
+        <File Id="fil6r" KeyPath="yes" Source="..\receiver\Sciendo.IOC.Configuration.dll" />
+      </Component>
+      <Component Id="cmp7r" Directory="INSTALLLOCATION" Guid="{BCAF06D2-62AD-40B2-9AA0-33324686E974}">
+        <File Id="fil7r" KeyPath="yes" Source="..\receiver\Sciendo.IOC.dll" />
+      </Component>
+      <Component Id="cmp8r" Directory="INSTALLLOCATION" Guid="{1A8B3FB2-6C6B-41F7-89A9-C677DA278162}">
+        <File Id="fil8r" KeyPath="yes" Source="..\receiver\Sciendo.Playlist.Translator.dll" />
+      </Component>
+      <Component Id="cmp9r" Directory="INSTALLLOCATION" Guid="{D35099FA-E97E-4094-9ACD-470DAC961525}">
+        <File Id="fil9r" KeyPath="yes" Source="..\receiver\Topshelf.dll" />
+>>>>>>> multisend
+      </Component>
+      <Component Id="MySynch.Q.Receiver.exe.config" Directory="INSTALLLOCATION" Guid="{842915BC-03E8-4020-BC0A-FE0FC55208A6}">
+        <File Id="MySynch.Q.Receiver.exe.config" KeyPath="yes" Source="..\receiver\MySynch.Q.Receiver.exe.config" />
+      </Component>
+      <Component Id="cmpa" Directory="En" Guid="{DD685376-F7E6-4F5E-A899-F96AAEBA1816}">
+        <File Id="fila" KeyPath="yes" Source="..\receiver\configurator\en\System.Windows.Interactivity.resources.dll" />
+      </Component>
+      <Component Id="cmpb" Directory="Configurator" Guid="{CF2B57A5-BDF3-45DA-AF5A-FD8746BCC9D8}">
+        <File Id="filb" KeyPath="yes" Source="..\receiver\configurator\Microsoft.WindowsAPICodePack.dll" />
+      </Component>
+      <Component Id="cmpc" Directory="Configurator" Guid="{3CA7047F-CB8C-4258-B119-E158B71D4699}">
+        <File Id="filc" KeyPath="yes" Source="..\receiver\configurator\Microsoft.WindowsAPICodePack.Shell.dll" />
+      </Component>
+      <Component Id="cmpd" Directory="Configurator" Guid="{2FC1D11E-8DAC-4B75-BCBC-D11EE4EFAE29}">
+        <File Id="fild" KeyPath="yes" Source="..\receiver\configurator\MySynch.Q.Common.dll" />
+      </Component>
+      <Component Id="cmpe" Directory="Configurator" Guid="{F60D31F4-7C94-43E5-83B2-47B8B0FA6C81}">
+        <File Id="file" KeyPath="yes" Source="..\receiver\configurator\MySynch.Q.Controls.dll" />
+      </Component>
+      <Component Id="cmpf" Directory="Configurator" Guid="{D58E794C-A51D-4379-B552-5D62A0E9715C}">
+        <File Id="filf" KeyPath="yes" Source="..\receiver\configurator\Sciendo.Common.WPF.MVVM.dll" />
+      </Component>
+      <Component Id="cmpg" Directory="Configurator" Guid="{6CA61CF1-E448-44F7-9B5F-BE9354352337}">
+        <File Id="filg" KeyPath="yes" Source="..\receiver\configurator\System.Windows.Interactivity.dll" />
+      </Component>
+      <Component Id="MySynch.Q.Receiver.Configurator.exe.config" Directory="Configurator" Guid="{959533A6-8FD4-4378-8B44-65A8D55350DC}">
+        <File Id="MySynch.Q.Receiver.Configurator.exe.config" KeyPath="yes" Source="..\receiver\configurator\MySynch.Q.Receiver.Configurator.exe.config" />
+        <util:XmlFile Id="SetReceiverConfigFilePath"
+                      Action="setValue"
+                      ElementPath="//locatorsSection/locators/add/@location"
+                      Value="..\MySynch.Q.Receiver.exe.config"
+                      File="[#MySynch.Q.Receiver.Configurator.exe.config]" />
+      </Component>
+
+      <Component Id="MySynch.Q.Receiver.Service" Directory="INSTALLLOCATION" Guid="{28739BAE-104D-4A5C-B765-46FCDA963C6C}">
+        <File Id="MySynch.Q.Receiver.exe" Name="MySynch.Q.Receiver.exe" Source="..\receiver\MySynch.Q.Receiver.exe" Vital="yes" KeyPath="yes"/>
+        <ServiceInstall
+          Id="ReceiverServiceInstaller"
+          Type="ownProcess"
+          Vital="yes"
+          Name="MySynch.Q.Receiver"
+          DisplayName="MySynch Queue Receiver"
+          Description="Populates a numebr of folders based on any changes from the queues."
+          Start="auto"
+<<<<<<< HEAD
+          Account="[SERVICEACCOUNT]"
+          Password="[SERVICEPASSWORD]"
+=======
+>>>>>>> multisend
+          ErrorControl="ignore"
+          Interactive="no">
+        </ServiceInstall>
+        <ServiceControl Id="StartReceiverService" Stop="both" Remove="uninstall" Name="MySynch.Q.Receiver" Wait="yes" />
+      </Component>
+      <Component Id="MySynch.Q.Receiver.Configurator.exe" Directory="Configurator" Guid="{3890E447-6CE2-4D0A-9A76-74C6BF8B7813}">
+        <File Id="MySynch.Q.Receiver.Configurator.exe" KeyPath="yes" Source="..\receiver\configurator\MySynch.Q.Receiver.Configurator.exe" />
+      </Component>
+      <ComponentRef Id="LOGS"/>
+      <ComponentRef Id="ApplicationShortcut"/>
+    </Feature>
+    <DirectoryRef Id="ProgramMenuReceiverDir">
+      <Component Id="ApplicationShortcut" Guid="{22009F70-78CC-4CB7-81CF-79776416171E}">
+        <Shortcut Id="ApplicationStartMenuShortcut"
+                  Name="Receiver Configurator"
+                  Description="Configure the Receiver"
+                  Target="[#MySynch.Q.Receiver.Configurator.exe]"
+                  WorkingDirectory="APPLICATIONROOTDIRECTORY"/>
+        <RemoveFolder Id="CleanUpShortCut" Directory="ProgramMenuReceiverDir" On="uninstall"/>
+        <RemoveFolder Id="CleanUpShortCut1" Directory="SciendoFolder" On="uninstall"/>
+        <RegistryValue Root="HKCU" Key="Software\Microsoft\Sciendo\MySynch.Q.Reciever" Name="installed" Type="integer" Value="1" KeyPath="yes"/>
+      </Component>
+    </DirectoryRef>
+  </Product>
+
+  <Fragment>
+    <Directory Id="TARGETDIR" Name="SourceDir">
+      <Directory Id="ProgramFilesFolder">
+        <Directory Id="Sciendo" Name="Sciendo">
+          <Directory Id="MySynch.Q" Name="MySynch.Q">
+            <Directory Id="INSTALLLOCATION" Name="Receiver">
+              <Directory Id ="Configurator" Name="Configurator">
+                <Directory Id ="En" Name ="en">
+
+                </Directory>
+              </Directory>
+            </Directory>
+          </Directory>
+        </Directory>
+      </Directory>
+      <Directory Id="ProgramMenuFolder" Name="Programs">
+        <Directory Id ="SciendoFolder" Name="Sciendo">
+          <Directory Id="ProgramMenuReceiverDir" Name="Receiver">
+          </Directory>
+        </Directory>
+      </Directory>
+      <Directory Id="DesktopFolder" Name="Desktop" />
+      <Directory Id="LOGS" Name="Logs">
+        <Directory Id="SciendoLogs" Name ="Sciendo">
+          <Directory Id="MySynch.Q.Logs" Name="MySynch.Q">
+            <Directory Id ="Receiver.Logs" Name="Receiver">
+              <Directory Id="Release.Logs" Name="Release">
+          <Component Id="LOGS" Guid="{FE205B80-4330-43F8-A4CD-EBBD324D62F9}"
+          SharedDllRefCount="no" KeyPath="no" NeverOverwrite="no" Permanent="no" Transitive="no"
+          Win64="no" Location="either">
+            <CreateFolder/>
+          </Component>
+              </Directory>
+            </Directory>
+          </Directory>
+        </Directory>
+      </Directory>
+    </Directory>
+    <UI>
+      <UIRef Id="WixUI_Minimal" />
+    </UI>
+  </Fragment>
+</Wix>

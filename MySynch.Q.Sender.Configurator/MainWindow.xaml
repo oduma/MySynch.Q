@@ -1,0 +1,108 @@
+﻿<Window x:Class="MySynch.Q.Sender.Configurator.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MySynch.Q.Sender.Configurator"
+        xmlns:intr="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+        xmlns:controls="clr-namespace:MySynch.Q.Controls;assembly=MySynch.Q.Controls"
+        xmlns:mvvm="clr-namespace:MySynch.Q.Sender.Configurator.MVVM"
+        mc:Ignorable="d"
+        Title="{Binding WindowTitle}" Height="250" Width="725">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="Auto"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+        </Grid.RowDefinitions>
+        <DataGrid 
+            Grid.Column="0"
+            Grid.ColumnSpan="3"
+            Grid.Row="0"
+            CanUserResizeColumns="True" 
+            CanUserAddRows="False" 
+            AutoGenerateColumns="False"
+            ItemsSource="{Binding Senders}"
+            IsSynchronizedWithCurrentItem="False"
+            SelectedItem="{Binding SelectedSender, Mode=TwoWay}">
+            <DataGrid.InputBindings>
+                <KeyBinding Key="Delete" Command="{Binding RemoveSender}"></KeyBinding>
+            </DataGrid.InputBindings>
+            <DataGrid.Columns>
+                <DataGridTemplateColumn Header="Local Root Folder" IsReadOnly="False" Width="*">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Label Content="{Binding LocalRootFolderViewModel.Folder}"></Label>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                    <DataGridTemplateColumn.CellEditingTemplate>
+                        <DataTemplate>
+                            <controls:RootFolderControl DataContext="{Binding LocalRootFolderViewModel}">
+                                
+                            </controls:RootFolderControl>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellEditingTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Message Body Type" IsReadOnly="False" Width="Auto">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Label Content="{Binding MessageBodyType}"></Label>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                    <DataGridTemplateColumn.CellEditingTemplate>
+                        <DataTemplate>
+                            <ComboBox ItemsSource="{Binding Path=DataContext.AllAvailableBodyTypes, 
+                                RelativeSource={RelativeSource AncestorType={x:Type Window}}}" 
+                                      SelectedValue="{Binding MessageBodyType, Mode=TwoWay}">
+                                <intr:Interaction.Triggers>
+                                    <intr:EventTrigger EventName="SelectionChanged">
+                                        <intr:InvokeCommandAction Command="{Binding ViewChangeRequest}"></intr:InvokeCommandAction>
+                                    </intr:EventTrigger>
+                                </intr:Interaction.Triggers>
+                            </ComboBox>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellEditingTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Minimum Memory" IsReadOnly="False" Width="Auto">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Label Content="{Binding MinMemory}"></Label>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                    <DataGridTemplateColumn.CellEditingTemplate>
+                        <DataTemplate>
+                            <TextBox Text="{Binding MinMemory, Mode=TwoWay}">
+                                <intr:Interaction.Triggers>
+                                    <intr:EventTrigger EventName="TextChanged">
+                                        <intr:InvokeCommandAction Command="{Binding ViewChangeRequest}"></intr:InvokeCommandAction>
+                                    </intr:EventTrigger>
+                                </intr:Interaction.Triggers>
+                            </TextBox>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellEditingTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Queues" IsReadOnly="False" Width="Auto">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Content="{Binding QueuesLauncherTitle}" Command="{Binding ViewQueues}"></Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Filters" IsReadOnly="False" Width="Auto">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Content="{Binding FiltersLauncherTitle}" Command="{Binding ViewFilters}"></Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+        <Button Content="New Sender" Grid.Column="0" Grid.Row="1" Command="{Binding AddNewSender}"></Button>
+        <Button Content="Save" Grid.Column="2" Grid.Row="1" Command="{Binding Save}" IsEnabled="{Binding SaveEnabled}"></Button>
+    </Grid>
+</Window>
+

@@ -1,23 +1,62 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Configuration;
+using System.Linq;
 using System.Threading.Tasks;
 using Sciendo.Common.Logging;
 using System.Threading;
+using MySynch.Q.Sender.Configuration;
 
 namespace MySynch.Q.Sender
 {
-    public class SenderService : ISenderService
+    public partial class SenderService
     {
-        private IPublisher _publisher;
-        private CancellationTokenSource _cancellationTokenSource;
-        private CancellationToken _cancellationToken;
-        public SenderService(IPublisher publisher)
+        private readonly List<Publisher> _publishers;
+        public SenderService()
         {
-            if(publisher==null)
-                throw new ArgumentNullException(nameof(publisher));
             LoggingManager.Debug("Constructing Sender...");
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
-            _publisher = publisher;
+            LoggingManager.Debug("Before loading publishers...");
+            _publishers = LoadAllPublishers();
             LoggingManager.Debug("Sender constructed.");
+        }
+
+        private static List<Publisher> LoadAllPublishers()
+        {
+            LoggingManager.Debug("Loading publishers...");
+            var publishers = new List<Publisher>();
+            IEnumerable<SenderElement> sendersInConfig = null;
+            try
+            {
+                LoggingManager.Debug("Trying to load sendersSection from config file...");
+                sendersInConfig = ((SendersSection)ConfigurationManager.GetSection("sendersSection")).Senders.Cast<SenderElement>();
+                LoggingManager.Debug($"Loaded {sendersInConfig.Count()} from configuration.");
+            }
+            catch (Exception e)
+            {
+                LoggingManager.LogSciendoSystemError("Exception while loading the senders config section.", e);
+            }
+
+            foreach (var senderConfig in sendersInConfig)
+            {
+
+                publishers.Add(
+                    new Publisher(
+                        senderConfig.Queues.Cast<QueueElement>()
+                            .Select(
+                                q =>
+                                    new SenderQueue
+                                    {
+                                        QueueName = q.QueueName,
+                                        Name = q.Name,
+                                        HostName = q.HostName,
+                                        UserName = q.UserName,
+                                        Password = q.Password
+                                    })
+                            .ToArray(), senderConfig.MinFreeMemory, new MessageFeeder(senderConfig.LocalRootFolder, senderConfig.MessageBodyType)));
+            }
+            LoggingManager.Debug("Publishers loaded.");
+            return publishers;
         }
 
         void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
@@ -28,45 +67,49 @@ namespace MySynch.Q.Sender
 
         public void Start()
         {
-            LoggingManager.Debug("Starting Sender...");
-            _publisher.Initialize();
-            _cancellationTokenSource = new CancellationTokenSource();
-            _cancellationToken = _cancellationTokenSource.Token;
-            _cancellationToken.Register(_publisher.Stop);
-            Task sendTask = new Task(_publisher.TryStart,_cancellationToken);
-            sendTask.Start();
-            LoggingManager.Debug("Sender started.");
+            LoggingManager.Debug("Starting Senders...");
+            foreach (var publisher in _publishers)
+            {
+                publisher.Initialize();
+                publisher.CancellationTokenSource = new CancellationTokenSource();
+                publisher.CancellationToken = publisher.CancellationTokenSource.Token;
+                publisher.CancellationToken.Register(publisher.Stop);
+                Task currentSendTask = new Task(publisher.TryStart, publisher.CancellationToken);
+                currentSendTask.Start();
+            }
+            LoggingManager.Debug("Senders started.");
         }
 
         public void Stop()
         {
-            LoggingManager.Debug("Stoping Sender...");
+            LoggingManager.Debug("Stoping Senders...");
 
-            _cancellationTokenSource.Cancel();
-            LoggingManager.Debug("Sender stopped.");
-
+            foreach (var publisher in _publishers)
+            {
+                publisher.CancellationTokenSource.Cancel();
+            }
+            LoggingManager.Debug("Senders stopped.");
         }
 
         public void Continue()
         {
-            LoggingManager.Debug("Starting Sender...");
-            Task sendTask = new Task(_publisher.TryStart, _cancellationToken);
-            sendTask.Start();
-            LoggingManager.Debug("Sender started.");
+            LoggingManager.Debug("Starting Senders...");
+            Start();
+            LoggingManager.Debug("Senders started.");
         }
 
         public void Pause()
         {
-            LoggingManager.Debug("Stoping Sender...");
-            _cancellationTokenSource.Cancel();
-            LoggingManager.Debug("Sender stoped.");
+            LoggingManager.Debug("Stoping Senders...");
+            Stop();
+            LoggingManager.Debug("Senders stoped.");
         }
 
         public void Shutdown()
         {
-            LoggingManager.Debug("Stoping Sender...");
-            _cancellationTokenSource.Cancel();
-            LoggingManager.Debug("Sender stopped.");
+            LoggingManager.Debug("Stoping Senders...");
+            Stop();
+            LoggingManager.Debug("Senders stopped.");
         }
 
     }

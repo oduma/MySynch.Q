@@ -1,0 +1,118 @@
+﻿using Sciendo.Common.Logging;
+using System;
+<<<<<<< HEAD
+using System.CodeDom;
+using System.Configuration;
+using System.IO;
+using System.Text;
+using System.Threading;
+using MySynch.Q.Common.Contracts;
+using Sciendo.Common.Serialization;
+=======
+using System.Threading;
+>>>>>>> multisend
+
+namespace MySynch.Q.Receiver
+{
+    public class Consummer : IConsummer
+    {
+<<<<<<< HEAD
+        private ReceiverQueue _receiverQueue;
+        private string _rootPath;
+        private MessageApplyer _messageApplyer;
+
+        public Consummer(ReceiverQueue receiverQueue, MessageApplyer messageApplyer, string rootPath)
+        {
+            LoggingManager.Debug("Constructing Consummer...");
+            if(string.IsNullOrEmpty(rootPath))
+                throw new ArgumentNullException(nameof(rootPath));
+            if(receiverQueue==null)
+                throw new ArgumentNullException(nameof(receiverQueue));
+            if(messageApplyer==null)
+                throw new ArgumentNullException(nameof(messageApplyer));
+            if (!Directory.Exists(rootPath))
+                throw new ArgumentException("Root Path not found.", nameof(rootPath));
+            _rootPath = rootPath;
+            _receiverQueue = receiverQueue;
+            _messageApplyer = messageApplyer;
+=======
+        private readonly ReceiverQueue _receiverQueue;
+        private readonly MessageApplyer _messageApplyer;
+        public CancellationTokenSource CancellationTokenSource { get; set; }
+        public CancellationToken CancellationToken { get; set; }
+
+        internal Consummer(MessageApplyer messageApplyer, ReceiverQueue receiverQueue)
+        {
+            LoggingManager.Debug("Constructing Consummer...");
+            _messageApplyer = messageApplyer;
+            _receiverQueue = receiverQueue;
+>>>>>>> multisend
+            LoggingManager.Debug("Consummer Constructed.");
+
+        }
+
+<<<<<<< HEAD
+        public void Initialize()
+=======
+        internal void Initialize(CancellationTokenSource cancellationTokenSource)
+>>>>>>> multisend
+        {
+            try
+            {
+                LoggingManager.Debug("Initializing Consummer ...");
+                CancellationTokenSource = cancellationTokenSource;
+                CancellationToken = CancellationTokenSource.Token;
+                CancellationToken.Register(Stop);
+                _receiverQueue.StartChannels();
+                LoggingManager.Debug("Consummer Initialized.");
+            }
+            catch (Exception ex)
+            {
+                LoggingManager.LogSciendoSystemError(ex);
+                throw;
+            }
+        }
+
+        public void Stop()
+        {
+            LoggingManager.Debug("Stoping Consumer...");
+            More = false;
+            Thread.Sleep(2000);
+            _receiverQueue.StopChannels();
+            LoggingManager.Debug("Consumer Stopped.");
+        }
+
+        public void TryStart(object obj)
+        {
+            More = true;
+            LoggingManager.Debug("More: " + More);
+            while(More)
+            {
+<<<<<<< HEAD
+                var messageBytes = _receiverQueue.GetMessage();
+                if(messageBytes==null || messageBytes.Length<=0)
+                    LoggingManager.Debug("Empty message taken from the queue.");
+                else
+                {
+                    var message = Serializer.Deserialize<BodyTransferMessage>(Encoding.UTF8.GetString(messageBytes));
+                    if (message == null)
+                        LoggingManager.Debug("Empty message after the deserialization.");
+                    try
+                    {
+                        _messageApplyer.ApplyMessage(message);
+                    }
+                    catch (Exception e)
+                    {
+                        LoggingManager.LogSciendoSystemError("Message not applied.",e);
+                    }
+                }
+=======
+                var message = _receiverQueue.GetMessage();
+                _messageApplyer.ApplyMessage(message);
+>>>>>>> multisend
+            }
+        }
+
+        public bool More { get; set; }
+    }
+}

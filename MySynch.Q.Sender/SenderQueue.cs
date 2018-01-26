@@ -8,84 +8,75 @@ using Newtonsoft.Json;
 using RabbitMQ.Client;
 using Sciendo.Common.Logging;
 using System;
-using System.Threading;
+using MySynch.Q.Sender.Configuration;
 
 namespace MySynch.Q.Sender
 {
-    public class SenderQueue : ISenderQueue
+    public class SenderQueue:QueueElement
     {
 
-        public SenderQueue(QueueElement queueElement)
-        {
-            LoggingManager.Debug($"Constructing queue {queueElement.QueueName}...");
-            QueueElement = queueElement;
-        }
         public IConnection Connection { get; set; }
 
         public IModel Channel { get; set; }
 
         private static object _lock = new object();
-        public QueueElement QueueElement { get; set; }
 
-        public void StartChannel(ConnectionFactory connectionFactory)
+        private ConnectionFactory _connectionFactory;
+
+        public void StartChannel()
         {
-            LoggingManager.Debug(QueueElement.QueueName + " on " + connectionFactory.HostName + " with user: " + connectionFactory.UserName + " Channel starting up...");
             try
             {
-                lock (_lock)
+                LoggingManager.Debug(Name + " on " + HostName + " with user: " + UserName + " Channel starting up...");
+                if (_connectionFactory == null)
                 {
-                    LoggingManager.Debug("Entering lock for Thread: " + Thread.CurrentThread.ManagedThreadId);
-                    if (Connection == null || !Connection.IsOpen)
-                        Connection = connectionFactory.CreateConnection();
-                    if (Channel == null || Channel.IsClosed)
-                        Channel = Connection.CreateModel();
-                    Channel.QueueDeclare(QueueElement.QueueName, true, false, true, null);
-                    LoggingManager.Debug("Exiting lock for Thread: " + Thread.CurrentThread.ManagedThreadId);
+                    _connectionFactory = new ConnectionFactory { HostName = HostName, UserName = UserName, Password = Password };
                 }
-
-                LoggingManager.Debug(QueueElement.QueueName + " Channel started up.");
+                if (Connection == null || !Connection.IsOpen)
+                    Connection = _connectionFactory.CreateConnection();
+                if (Channel == null || Channel.IsClosed)
+                    Channel = Connection.CreateModel();
+                Channel.QueueDeclare(QueueName, true, false, true, null);
+                LoggingManager.Debug(Name + " Channel started up.");
             }
-            catch (Exception ex)
+            catch (Exception exception)
             {
-                LoggingManager.LogSciendoSystemError(ex);
-                LoggingManager.Debug(QueueElement.QueueName + " Channel NOT started up.");
+                LoggingManager.LogSciendoSystemError(exception);
+                LoggingManager.Debug(Name + " Channel NOT started up.");
             }
         }
 
         public void StopChannel()
         {
-            LoggingManager.Debug(QueueElement.QueueName + " Channel shutting down...");
-            lock (_lock)
-            {
-                LoggingManager.Debug("Entering lock for Thread: " + Thread.CurrentThread.ManagedThreadId);
-                if (Channel != null && !Channel.IsClosed)
-                    Channel.Close();
-                if (Connection != null && Connection.IsOpen)
-                    Connection.Close();
-                LoggingManager.Debug("Exeting lock for Thread: " + Thread.CurrentThread.ManagedThreadId);
-            }
-            LoggingManager.Debug(QueueElement.QueueName + " Channel shutted down.");
+            LoggingManager.Debug(Name + " Channel shutting down...");
+
+            if (Channel != null && !Channel.IsClosed)
+                Channel.Close();
+            if (Connection != null && Connection.IsOpen)
+                Connection.Close();
+            LoggingManager.Debug(Name + " Channel shutted down.");
 
         }
 
-        public bool ShouldSendMessage(long minMem)
+        public bool ShouldSendMessage(string minMem)
         {
-            var url = @"http://" + QueueElement.HostName + ":15672/api/nodes/rabbit@" + QueueElement.HostName;
-            LoggingManager.Debug("Using the api at: " + url);
-            var nodeManagamentMessage = TryQuery(url);
-            if (nodeManagamentMessage == null)
-                return false;
-            if (nodeManagamentMessage.disk_free_alarm || nodeManagamentMessage.mem_alarm)
-                return false;
-            if (nodeManagamentMessage.mem_limit - nodeManagamentMessage.mem_used <= minMem)
-                return false;
+            //var url = @"http://" + HostName + ":15672/api/nodes/rabbit@" + HostName;
+            //LoggingManager.Debug("Using the api at: " + url);
+            //var nodeManagamentMessage = TryQuery(url);
+            //if (nodeManagamentMessage == null)
+            //    return false;
+            //if (nodeManagamentMessage.disk_free_alarm || nodeManagamentMessage.mem_alarm)
+            //    return false;
+            //if (nodeManagamentMessage.mem_limit - nodeManagamentMessage.mem_used <= Convert.ToInt64(minMem))
+            //    return false;
             return true;
         }
 
         private NodeManagementMessage TryQuery(string url)
         {
+            LoggingManager.Debug($"Trying to query url: {url} ...");
             var httpClient = new HttpClient();
-            var byteArray = Encoding.ASCII.GetBytes(string.Format("{0}:{1}",QueueElement.UserName,QueueElement.Password));
+            var byteArray = Encoding.ASCII.GetBytes(string.Format("{0}:{1}",UserName,Password));
             var header = new AuthenticationHeaderValue(
                        "Basic", Convert.ToBase64String(byteArray));
             httpClient.DefaultRequestHeaders.Authorization = header;
@@ -104,15 +95,10 @@ namespace MySynch.Q.Sender
 
         public void SendMessage(byte[] message)
         {
-            LoggingManager.Debug("Sending message to " + QueueElement.QueueName +"...");
-            lock (_lock)
-            {
-                LoggingManager.Debug("Entering lock for Thread: " + Thread.CurrentThread.ManagedThreadId);
-                Channel.QueueDeclare(QueueElement.QueueName, true, false, true, null);
-                Channel.BasicPublish("", QueueElement.QueueName, true, null, message);
-                LoggingManager.Debug("Exiting lock for Thread: " + Thread.CurrentThread.ManagedThreadId);
-            }
-            LoggingManager.Debug("Message sent to " + QueueElement.QueueName + ".");
+            LoggingManager.Debug("Sending message to " + Name +"...");
+            StartChannel();
+            Channel.BasicPublish("", QueueName, true, null, message);
+            LoggingManager.Debug("Message sent to " + Name + ".");
         }
 
     }

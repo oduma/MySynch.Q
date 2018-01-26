@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Linq;
-using System.ServiceProcess;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Sciendo.Common.Logging;
+using Sciendo.IOC;
+using Sciendo.IOC.Configuration;
+using Sciendo.Playlist.Translator;
 using Topshelf;
 
 namespace MySynch.Q.Receiver
@@ -16,20 +13,15 @@ namespace MySynch.Q.Receiver
         /// </summary>
         static void Main()
         {
-            var receiverConfig = ConfigurationManager.GetSection("receiver") as ReceiverSection;
+            LoggingManager.Debug("Loading playlists configuration ...");
+            Container.GetInstance().UsingConfiguration().AddFirstFromFilteredAssemblies<ITranslator>(LifeStyle.Transient, "textTranslators");
+
             HostFactory.Run(x =>
             {
                 x.Service<ReceiverService>(
                     s =>
                     {
-                        s.ConstructUsing(name => new ReceiverService(new Consummer(new ReceiverQueue
-                        {
-                            Name = receiverConfig.Name,
-                            QueueName = receiverConfig.QueueName,
-                            HostName = receiverConfig.HostName,
-                            UserName = receiverConfig.UserName,
-                            Password = receiverConfig.Password
-                        }, new MessageApplyer(receiverConfig.LocalRootFolder), receiverConfig.LocalRootFolder)));
+                        s.ConstructUsing(name => new ReceiverService(Container.GetInstance().ResolveAll<ITranslator>()));
                         s.WhenStarted(tc => tc.Start());
                         s.WhenStopped(tc => tc.Stop());
                         s.WhenShutdown(tc => tc.Shutdown());
@@ -37,18 +29,9 @@ namespace MySynch.Q.Receiver
                         s.WhenPaused(tc => tc.Pause());
                     });
                 x.RunAsLocalSystem();
-
-#if DEBUG
-                x.SetServiceName("Sciendo Synch Receiver (Debug)");
-                x.SetDisplayName("Sciendo Synch Receiver (Debug)");
-                x.SetDescription("Receives messages from  a queue and persists files to folder. (Debug)");
-#else
-                x.SetServiceName("MySynch.Q.Receiver");
-                x.SetDisplayName("MySynch Queue Receiver");
-                x.SetDescription("Receives messages from  a queue and persists files to folder.");
-#endif
             });
         }
+
     }
 }
 

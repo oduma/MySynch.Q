@@ -1,11 +1,12 @@
 ﻿using RabbitMQ.Client;
 using Sciendo.Common.Logging;
 using System;
+using MySynch.Q.Receiver.Configuration;
 using RabbitMQ.Client.Events;
 
 namespace MySynch.Q.Receiver
 {
-    public class ReceiverQueue:ReceiverSection
+    public class ReceiverQueue:ReceiverElement
     {
 
         public virtual void StartChannels()
@@ -14,12 +15,12 @@ namespace MySynch.Q.Receiver
 
             try
             {
-               if(Connection==null || ! Connection.IsOpen)
-                Connection = new ConnectionFactory { HostName = HostName,UserName=UserName,Password=Password}.CreateConnection();
-               if(Channel==null || !Channel.IsOpen)
-                Channel = Connection.CreateModel();
+                if (Connection == null || !Connection.IsOpen)
+                    Connection = new ConnectionFactory { HostName = HostName, UserName = UserName, Password = Password }.CreateConnection();
+                if (Channel == null || !Channel.IsOpen)
+                    Channel = Connection.CreateModel();
 
-               Channel.QueueDeclare(QueueName, true, false, true, null);
+                Channel.QueueDeclare(QueueName, true, false, true, null);
 
                 _consumer = new QueueingBasicConsumer(Channel);
                 Channel.BasicConsume(QueueName, true, _consumer);

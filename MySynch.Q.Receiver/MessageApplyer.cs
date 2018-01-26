@@ -2,107 +2,100 @@
 using Sciendo.Common.Logging;
 using Sciendo.Common.Serialization;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using Sciendo.Common.IO;
+using Sciendo.Playlist.Translator;
 
 namespace MySynch.Q.Receiver
 {
     public class MessageApplyer
     {
         private readonly string _rootPath;
-        public MessageApplyer(string rootPath)
+        private readonly IEnumerable<ITranslator> _translators;
+
+        public MessageApplyer(string rootPath,IEnumerable<ITranslator> translators)
         {
-            if(string.IsNullOrEmpty(rootPath))
-                throw new ArgumentNullException(nameof(rootPath));
-            if (!Directory.Exists(rootPath))
-                throw new ArgumentException("Root Path not found.", nameof(rootPath));
             _rootPath = rootPath;
+            _translators = translators;
         }
 
-        internal virtual void ApplyMessage(BodyTransferMessage msgWithBody)
+        internal void ApplyMessage(byte[] message)
         {
-            if(string.IsNullOrEmpty(msgWithBody.Name))
-                throw new ArgumentNullException(nameof(msgWithBody.Name));
-            if(string.IsNullOrEmpty(msgWithBody.SourceRootPath))
-                throw new ArgumentNullException(nameof(msgWithBody.SourceRootPath));
-
             LoggingManager.Debug("Applying a message...");
-            if (msgWithBody.Body == null)
-                ApplyDelete(msgWithBody.SourceRootPath ,msgWithBody.Name);
-            else if (msgWithBody.Part == null || msgWithBody.Part.FromParts<=0 || msgWithBody.Part.PartId<=0)
+            if (message != null && message.Length > 0)
             {
-                LoggingManager.Debug("Message not applied");
-                return;
-            }
-            else if (msgWithBody.Part.FromParts == 1)
-            {
-                ApplyUpSert(msgWithBody.SourceRootPath, msgWithBody.Name, msgWithBody.Body);
-            }
-            else if(msgWithBody.Part.FromParts>msgWithBody.Part.PartId)
-            {
-                ApplyUpSert(msgWithBody.SourceRootPath,
-                    string.Format("{0}.part{1}", msgWithBody.Name, msgWithBody.Part.PartId), msgWithBody.Body);
-            }
-            else if (msgWithBody.Part.PartId > 1 && msgWithBody.Part.PartId == msgWithBody.Part.FromParts)
-            {
-                ApplyUpSert(msgWithBody.SourceRootPath,
-                    string.Format("{0}.part{1}", msgWithBody.Name, msgWithBody.Part.PartId), msgWithBody.Body);
-                GatherParts(msgWithBody.Name, msgWithBody.SourceRootPath);
-            }
-            LoggingManager.Debug("Message applied.");
-        }
-
-        public virtual void GatherParts(string name,string sourceRootPath)
-        {
-            LoggingManager.Debug("Gathering all the info in the file " + name);
-            var localFileName = _rootPath + name.Replace(sourceRootPath, "");
-            if(File.Exists(localFileName))
-                File.Delete(localFileName);
-            var localFolder = Path.GetDirectoryName(localFileName);
-            using (var fs = File.Create(localFileName))
-            {
-                var orderedParts = GetPartsInOrder(localFolder, localFileName);
-                foreach (var key in orderedParts.Keys)
+                LoggingManager.Debug("Message not null trying to deserialize it...");
+                try
                 {
-
-                    var fLen = new FileInfo(orderedParts[key]).Length;
-                    byte[] buffer = new byte[fLen];
-                    using (var fr = File.OpenRead(orderedParts[key]))
-                    {
-                        fr.Read(buffer, 0, (int) fLen);
-                    }
-                    File.Delete(orderedParts[key]);
-                    fs.Write(buffer, 0, (int) fLen);
+                    var transferMessage = Serializer.Deserialize<TransferMessage>(Encoding.UTF8.GetString(message));
+                    LoggingManager.Debug($"Message deserialized:{transferMessage.Name}");
+                    if (transferMessage.Body == null)
+                        ApplyDelete(transferMessage.SourceRootPath, transferMessage.Name);
+                    else if (transferMessage.BodyType == BodyType.Binary)
+                        ApplyBinaryUpSert(transferMessage.SourceRootPath, transferMessage.Name, (byte[])transferMessage.Body);
+                    else
+                        ApplyTextUpSert(transferMessage.SourceRootPath, transferMessage.Name, TranslateMessageBody((string)transferMessage.Body));
+                    LoggingManager.Debug("Message applied.");
+                }
+                catch (Exception e)
+                {
+                    LoggingManager.Debug("Exception occured during applying the message. NOt Applied. See error logs.");
+                    LoggingManager.LogSciendoSystemError(e);
                 }
             }
-        }
-
-        private SortedList<int,string> GetPartsInOrder(string localFolder, string localFileName)
-        {
-            SortedList<int, string> result = new SortedList<int, string>();
-            foreach (var file in Directory.GetFiles(localFolder, "*.part*").Where(f => f.Contains(localFileName)))
+            else
             {
-                result.Add(Convert.ToInt32(file.Replace(string.Format("{0}.part",localFileName),"")),file);
+                LoggingManager.Debug("Empty message NOT applied.");
             }
-            return result;
         }
 
-        public virtual void ApplyUpSert(string sourceRootPath, string name, byte[] body)
+        private string TranslateMessageBody(string transferMessage)
+        {
+            foreach (var messageTranslator in _translators)
+            {
+                transferMessage = messageTranslator.Translate(transferMessage);
+            }
+            return transferMessage;
+        }
+
+        private void ApplyTextUpSert(string sourceRootPath, string name, string body)
         {
             LoggingManager.Debug("Applying upsert from " + sourceRootPath + " to " + _rootPath + " of " + name);
 
             try
             {
-                var localFileName = _rootPath+name.Replace(sourceRootPath, "");
-                var localFolder = Path.GetDirectoryName(localFileName);
-                if(!Directory.Exists(localFolder))
-                    Directory.CreateDirectory(localFolder);
-                using (var fs = File.Create(localFileName, body.Length))
+                var localFileName = GetLocalFileName(sourceRootPath, name);
+                if (body.Length == 0)
+                    File.WriteAllText(localFileName, string.Empty);
+                else
+                    new TextFileWriter().Write(body,localFileName);
+
+                LoggingManager.Debug("Upsert applied.");
+            }
+            catch (Exception ex)
+            {
+                LoggingManager.LogSciendoSystemError(ex);
+            }
+        }
+
+        private void ApplyBinaryUpSert(string sourceRootPath, string name, byte[] body)
+        {
+            LoggingManager.Debug("Applying upsert from " + sourceRootPath + " to " + _rootPath + " of " + name);
+
+            try
+            {
+                var localFileName = GetLocalFileName(sourceRootPath, name);
+                if(body.Length==0)
+                    File.WriteAllText(localFileName,string.Empty);
+                else
                 {
-                    fs.Write(body, 0, body.Length);
+                    using (var fs = File.Create(localFileName, body.Length))
+                    {
+                        fs.Write(body, 0, body.Length);
+                    }
                 }
                 LoggingManager.Debug("Upsert applied.");
             }
@@ -113,7 +106,16 @@ namespace MySynch.Q.Receiver
 
         }
 
-        public virtual void ApplyDelete(string sourceRootPath, string name)
+        private string GetLocalFileName(string sourceRootPath, string name)
+        {
+            var localFileName = _rootPath + name.Replace(sourceRootPath, "");
+            var localFolder = Path.GetDirectoryName(localFileName);
+            if (!Directory.Exists(localFolder))
+                Directory.CreateDirectory(localFolder);
+            return localFileName;
+        }
+
+        private void ApplyDelete(string sourceRootPath, string name)
         {
             LoggingManager.Debug("Applying delete to " + _rootPath + " of " + name);
             try

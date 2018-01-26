@@ -1,0 +1,107 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{696F72F6-22A7-41EF-A57D-0876B593721E}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>MySynch.Q.Common</RootNamespace>
+    <AssemblyName>MySynch.Q.Common</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="log4net">
+      <HintPath>..\packages\log4net.2.0.3\lib\net40-full\log4net.dll</HintPath>
+    </Reference>
+<<<<<<< HEAD
+    <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.7.0.1-beta2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="RabbitMQ.Client, Version=4.0.0.0, Culture=neutral, PublicKeyToken=89e7d7c5feba84ce, processorArchitecture=MSIL">
+      <HintPath>..\packages\RabbitMQ.Client.4.1.1\lib\net451\RabbitMQ.Client.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Sciendo.Common">
+      <HintPath>..\packages\Sciendo.Common.1.0.0-Build00016\lib\net40\Sciendo.Common.dll</HintPath>
+=======
+    <Reference Include="Sciendo.Common, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sciendo.Common.1.0.0-Build00023\lib\net40\Sciendo.Common.dll</HintPath>
+      <Private>True</Private>
+>>>>>>> multisend
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.ServiceProcess" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Configurators\ConfigurationProvider.cs" />
+    <Compile Include="Configurators\ConfigurationToViewModelProvider.cs" />
+    <Compile Include="Configurators\Configuration\ConfigurationLocatorSection.cs" />
+    <Compile Include="Configurators\Configuration\LocatorElement.cs" />
+    <Compile Include="Configurators\Configuration\LocatorElementCollection.cs" />
+    <Compile Include="Configurators\Description\TargetConfigurationDescription.cs" />
+    <Compile Include="Configurators\IConfigurationProvider.cs" />
+    <Compile Include="Configurators\ConfigurationSectionLocator.cs" />
+    <Compile Include="Configurators\IConfigurationViewModelProvider.cs" />
+    <Compile Include="Configurators\ISvcController.cs" />
+    <Compile Include="Configurators\SvcController.cs" />
+    <Compile Include="Contracts\BodyType.cs" />
+    <Compile Include="Contracts\TransferMessage.cs" />
+    <Compile Include="Contracts\Management\ContextMessage.cs" />
+    <Compile Include="Contracts\Management\DetailMessage.cs" />
+    <Compile Include="Contracts\Management\DetailMessageBase.cs" />
+    <Compile Include="Contracts\Management\NodeManagementMessage.cs" />
+    <Compile Include="Contracts\Management\Rate.cs" />
+    <Compile Include="Contracts\Management\VersionMessage.cs" />
+<<<<<<< HEAD
+    <Compile Include="DirectoryMonitor.cs" />
+    <Compile Include="IDirectoryMonitor.cs" />
+=======
+    <Compile Include="Mappers\ExtensionMethods.cs" />
+    <Compile Include="Mappers\IMap.cs" />
+    <Compile Include="Mappers\MapCollectionNodeNoAttributes.cs" />
+>>>>>>> multisend
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Sciendo.Common.WPF.MVVM\Sciendo.Common.WPF.MVVM.csproj">
+      <Project>{7db31fac-3744-43c3-844b-bbd6d8186985}</Project>
+      <Name>Sciendo.Common.WPF.MVVM</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
