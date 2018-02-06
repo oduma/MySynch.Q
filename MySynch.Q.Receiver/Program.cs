@@ -1,4 +1,6 @@
-﻿using Sciendo.Common.Logging;
+﻿using System;
+using Sciendo.Common.Logging;
+using Sciendo.Common.Music.Contracts;
 using Sciendo.IOC;
 using Sciendo.IOC.Configuration;
 using Sciendo.Playlist.Translator;

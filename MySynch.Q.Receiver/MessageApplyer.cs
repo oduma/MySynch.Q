@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using Sciendo.Common.IO;
+using Sciendo.Common.Music.Contracts;
 using Sciendo.Playlist.Translator;
 
 namespace MySynch.Q.Receiver
@@ -15,11 +16,13 @@ namespace MySynch.Q.Receiver
     {
         private readonly string _rootPath;
         private readonly IEnumerable<ITranslator> _translators;
+        private readonly IEnumerable<IPostProcessor> _postProcessors;
 
-        public MessageApplyer(string rootPath,IEnumerable<ITranslator> translators)
+        public MessageApplyer(string rootPath,IEnumerable<ITranslator> translators,IEnumerable<IPostProcessor> postProcessors)
         {
             _rootPath = rootPath;
             _translators = translators;
+            _postProcessors = postProcessors;
         }
 
         internal void ApplyMessage(byte[] message)
@@ -39,6 +42,8 @@ namespace MySynch.Q.Receiver
                     else
                         ApplyTextUpSert(transferMessage.SourceRootPath, transferMessage.Name, TranslateMessageBody((string)transferMessage.Body));
                     LoggingManager.Debug("Message applied.");
+                    PostProcessMessage(transferMessage);
+                    LoggingManager.Debug("Finished with message.");
                 }
                 catch (Exception e)
                 {
@@ -50,6 +55,16 @@ namespace MySynch.Q.Receiver
             {
                 LoggingManager.Debug("Empty message NOT applied.");
             }
+        }
+
+        private void PostProcessMessage(TransferMessage transferMessage)
+        {
+            LoggingManager.Debug("Starting Postprocessing of message...");
+            foreach (var postProcessor in _postProcessors)
+            {
+                postProcessor.Process(transferMessage.Body,transferMessage.Name);
+            }
+            LoggingManager.Debug("PostProcessing of message finished.");
         }
 
         private string TranslateMessageBody(string transferMessage)

@@ -6,6 +6,9 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using MySynch.Q.Receiver.Configuration;
+using Sciendo.Common.Music.Contracts;
+using Sciendo.IOC;
+using Sciendo.IOC.Configuration;
 using Sciendo.Playlist.Translator;
 
 namespace MySynch.Q.Receiver
@@ -32,7 +35,8 @@ namespace MySynch.Q.Receiver
 
             foreach (var receiver in ((ReceiversSection)ConfigurationManager.GetSection("receiversSection")).Receivers.Cast<ReceiverElement>())
             {
-                consummers.Add(new Consummer(new MessageApplyer(receiver.LocalRootFolder,_translators), new ReceiverQueue
+
+                consummers.Add(new Consummer(new MessageApplyer(receiver.LocalRootFolder,_translators,GetPostProcessors(receiver).ToArray()), new ReceiverQueue
                 {
                     Name = receiver.Name,
                     QueueName = receiver.QueueName,
@@ -43,6 +47,37 @@ namespace MySynch.Q.Receiver
             }
 
             return consummers;
+        }
+
+        private IEnumerable<IPostProcessor> GetPostProcessors(ReceiverElement receiver)
+        {
+            if (receiver.PostProcessors == null || receiver.PostProcessors.Count == 0)
+                yield return null;
+            else
+            {
+                foreach ( var postProcessorElement in receiver.PostProcessors.Cast<PostProcessorElement>())
+                {
+                    IPostProcessor postProcessor;
+                    try
+                    {
+                        postProcessor = Container.GetInstance().Resolve<IPostProcessor>(postProcessorElement.Value);
+                    }
+                    catch (Exception e)
+                    {
+                        try
+                        {
+                            Container.GetInstance().UsingConfiguration().AddAllFromFilteredAssemblies<IPostProcessor>(LifeStyle.Transient);
+                            postProcessor = Container.GetInstance().Resolve<IPostProcessor>(postProcessorElement.Value);
+                        }
+                        catch (Exception exception)
+                        {
+                            Console.WriteLine(exception);
+                            throw;
+                        }
+                    }
+                    yield return postProcessor;
+                }
+            }
         }
 
         void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)

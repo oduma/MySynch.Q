@@ -51,6 +51,11 @@ namespace MySynch.Q.Receiver.Configuration
             }
         }
 
+        [ConfigurationProperty("postProcessors")]
+        public PostProcessorElementCollection PostProcessors
+        {
+            get { return (PostProcessorElementCollection)this["postProcessors"]; }
+        }
 
     }
 }

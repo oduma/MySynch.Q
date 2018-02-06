@@ -7,7 +7,7 @@
         xmlns:intr="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
         xmlns:controls="clr-namespace:MySynch.Q.Controls;assembly=MySynch.Q.Controls"
         mc:Ignorable="d"
-        Title="{Binding WindowTitle}" Height="350" Width="525">
+        Title="{Binding WindowTitle}" Height="350" Width="625">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"></ColumnDefinition>
@@ -28,7 +28,7 @@
             CanUserResizeColumns="True" 
             CanUserAddRows="False" 
             AutoGenerateColumns="False"
-            ItemsSource="{Binding Receivers}" Margin="-4,-1,4,1"
+            ItemsSource="{Binding Receivers}"
             SelectedItem="{Binding SelectedReceiver, Mode=TwoWay}">
             <DataGrid.InputBindings>
                 <KeyBinding Key="Delete" Command="{Binding RemoveReceiver}"></KeyBinding>
