@@ -50,6 +50,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ReceiverTests\MapPostProcessorTests.cs" />
     <Compile Include="ReceiverTests\MapTranslatorTests.cs" />
     <Compile Include="ReceiverTests\MapReceiverTests.cs" />
     <Compile Include="SenderTests\MapFilterTests.cs" />

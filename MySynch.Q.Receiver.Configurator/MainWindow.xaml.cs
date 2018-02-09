@@ -14,10 +14,18 @@ namespace MySynch.Q.Receiver.Configurator
     {
         public MainWindow()
         {
-            var receiversConfiguratorViewModel = new ReceiversConfigurationViewModel(new SvcController(), new ConfigurationProvider(),
-                new ConfigurationToViewModelProvider<ReceiverConfigurationViewModel>(new MapCollectionNodeNoAttributes<ReceiverConfigurationViewModel>(new MapReceiver(),TargetReceiverConfigurationDescription.ReceiversCollectionElementName)),
+            var receiversConfiguratorViewModel = new ReceiversConfigurationViewModel(new SvcController(),
+                new ConfigurationProvider(),
+                new ConfigurationToViewModelProvider<ReceiverConfigurationViewModel>(
+                    new MapCollectionNodeNoAttributes<ReceiverConfigurationViewModel>(
+                        new MapReceiver(
+                            new MapCollectionNodeNoAttributes<PostProcessorConfigurationViewModel>(
+                                new MapPostProcessor(),
+                                TargetPostProcessorConfigurationDescription.PostProcessorsCollectionElementName)),
+                        TargetReceiverConfigurationDescription.ReceiversCollectionElementName)),
                 new ConfigurationToViewModelProvider<TranslatorConfigurationViewModel>(
-                    new MapCollectionNodeNoAttributes<TranslatorConfigurationViewModel>(new MapTranslator(),TargetTranslatorConfigurationDescription.TranslatorsCollectionElementName)));
+                    new MapCollectionNodeNoAttributes<TranslatorConfigurationViewModel>(new MapTranslator(),
+                        TargetTranslatorConfigurationDescription.TranslatorsCollectionElementName)));
             receiversConfiguratorViewModel.InitiateView();
             DataContext = receiversConfiguratorViewModel;
         }

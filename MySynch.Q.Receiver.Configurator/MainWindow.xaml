@@ -136,6 +136,14 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellEditingTemplate>
                 </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Post Processors" IsReadOnly="True" Width="Auto">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Content="{Binding PostProcessorsLauncherTitle}" Command="{Binding ViewPostProcessors}"></Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
             </DataGrid.Columns>
         </DataGrid>
         <Button Content="New Receiver" Grid.Column="0" Grid.Row="1" Command="{Binding AddNewReceiver}"></Button>

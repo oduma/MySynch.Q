@@ -55,7 +55,7 @@ namespace MySynch.Q.Receiver
                 yield return null;
             else
             {
-                foreach ( var postProcessorElement in receiver.PostProcessors.Cast<PostProcessorElement>())
+                foreach ( var postProcessorElement in receiver.PostProcessors.Cast<PostProcessorElement>().OrderBy(pp=>pp.Priority))
                 {
                     IPostProcessor postProcessor;
                     try

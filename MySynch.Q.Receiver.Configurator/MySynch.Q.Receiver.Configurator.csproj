@@ -57,7 +57,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Configuration\TargetPostProcessorConfigurationDescription.cs" />
+    <Compile Include="Mappers\MapPostProcessor.cs" />
     <Compile Include="Mappers\MapTranslator.cs" />
+    <Compile Include="MVVM\PostProcessorConfigurationViewModel.cs" />
+    <Compile Include="MVVM\PostProcessorsConfigurationViewModel.cs" />
     <Compile Include="MVVM\TranslatorConfigurationViewModel.cs" />
     <Compile Include="Configuration\TargetReceiverConfigurationDescription.cs" />
     <Compile Include="Configuration\TargetTranslatorConfigurationDescription.cs" />
@@ -73,11 +77,18 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="PostProcessorsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Mappers\MapReceiver.cs" />
     <Compile Include="MVVM\ReceiverConfigurationViewModel.cs" />
     <Compile Include="MVVM\ReceiversConfigurationViewModel.cs" />
+    <Compile Include="PostProcessorsView.xaml.cs">
+      <DependentUpon>PostProcessorsView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
