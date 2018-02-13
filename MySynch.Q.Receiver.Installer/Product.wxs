@@ -40,6 +40,45 @@
       <Component Id="cmp9r" Directory="INSTALLLOCATION" Guid="{D35099FA-E97E-4094-9ACD-470DAC961525}">
         <File Id="fil9r" KeyPath="yes" Source="..\receiver\Topshelf.dll" />
       </Component>
+      <Component Id ="cmp10r" Directory="X86Sqlite" Guid ="{F2D55B36-ABC6-4F3C-89FA-502FEB44E70C}">
+        <File Id="fil10r" KeyPath="yes" Source="..\receiver\X86\SQLite.Interop.dll"/>
+      </Component>
+      <Component Id ="cmp11r" Directory="X64Sqlite" Guid ="{485FAECA-0EED-4A22-AD78-2A01F07FE5AB}">
+        <File Id="fil11r" KeyPath="yes" Source="..\receiver\X64\SQLite.Interop.dll"/>
+      </Component>
+      <Component Id="cmp12r" Directory="INSTALLLOCATION" Guid="{E5718BDC-2AF4-42F2-8CD2-5C4E083AAF4F}">
+        <File Id="fil12r" KeyPath="yes" Source="..\receiver\Dapper.dll" />
+      </Component>
+      <Component Id="cmp13r" Directory="INSTALLLOCATION" Guid="{0AE97AA1-6866-4354-A473-A1F8FB170F8D}">
+        <File Id="fil13r" KeyPath="yes" Source="..\receiver\EntityFramework.dll" />
+      </Component>
+      <Component Id="cmp14r" Directory="INSTALLLOCATION" Guid="{A7A483ED-48DB-43B3-A572-C1CCCC81C9E6}">
+        <File Id="fil14r" KeyPath="yes" Source="..\receiver\EntityFramework.SqlServer.dll" />
+      </Component>
+      <Component Id="cmp15r" Directory="INSTALLLOCATION" Guid="{ECCA2725-84DE-457C-8D8A-42C0AEC0D8FE}">
+        <File Id="fil15r" KeyPath="yes" Source="..\receiver\Sciendo.Common.Music.Contracts.dll" />
+      </Component>
+      <Component Id="cmp16r" Directory="INSTALLLOCATION" Guid="{E1ECCB87-EEB8-4D71-863D-BF2950C51EA4}">
+        <File Id="fil16r" KeyPath="yes" Source="..\receiver\Sciendo.Mixx.DataAccess.dll" />
+      </Component>
+      <Component Id="cmp17r" Directory="INSTALLLOCATION" Guid="{2F878711-F741-448E-B639-BBC55A36FAAD}">
+        <File Id="fil17r" KeyPath="yes" Source="..\receiver\Sciendo.Playlist.Mixx.Processor.dll" />
+      </Component>
+      <Component Id="cmp18r" Directory="INSTALLLOCATION" Guid="{1E0BA1FE-6A50-43CA-8456-57F586572654}">
+        <File Id="fil18r" KeyPath="yes" Source="..\receiver\Sciendo.Playlists.dll" />
+      </Component>
+      <Component Id="cmp19r" Directory="INSTALLLOCATION" Guid="{8A68330B-45EB-4B72-BDE2-265F3AC11E8E}">
+        <File Id="fil19r" KeyPath="yes" Source="..\receiver\System.Data.SQLite.dll" />
+      </Component>
+      <Component Id="cmp20r" Directory="INSTALLLOCATION" Guid="{11E90166-3D7D-43BF-9448-8135BBAED922}">
+        <File Id="fil20r" KeyPath="yes" Source="..\receiver\System.Data.SQLite.EF6.dll" />
+      </Component>
+      <Component Id="cmp21r" Directory="INSTALLLOCATION" Guid="{41766AF6-CB5B-4356-856D-68E0DA728C26}">
+        <File Id="fil21r" KeyPath="yes" Source="..\receiver\System.Data.SQLite.Linq.dll" />
+      </Component>
+      <Component Id="cmp22r" Directory="INSTALLLOCATION" Guid="{B5504912-7536-45E9-A719-2F32E57873C0}">
+        <File Id="fil22r" KeyPath="yes" Source="..\receiver\TagLib.Portable.dll" />
+      </Component>
       <Component Id="MySynch.Q.Receiver.exe.config" Directory="INSTALLLOCATION" Guid="{842915BC-03E8-4020-BC0A-FE0FC55208A6}">
         <File Id="MySynch.Q.Receiver.exe.config" KeyPath="yes" Source="..\receiver\MySynch.Q.Receiver.exe.config" />
       </Component>
@@ -115,6 +154,12 @@
         <Directory Id="Sciendo" Name="Sciendo">
           <Directory Id="MySynch.Q" Name="MySynch.Q">
             <Directory Id="INSTALLLOCATION" Name="Receiver">
+              <Directory Id ="X86Sqlite" Name ="X86">
+                
+              </Directory>
+              <Directory Id ="X64Sqlite" Name ="X64">
+
+              </Directory>
               <Directory Id ="Configurator" Name="Configurator">
                 <Directory Id ="En" Name ="en">
 

@@ -26,11 +26,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{A2D2B0
 		.nuget\packages.config = .nuget\packages.config
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8A7D3EAF-90A1-4B11-A74D-2E25EC4C27FD}"
-	ProjectSection(SolutionItems) = preProject
-		.travis.yml = .travis.yml
-	EndProjectSection
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MySynch.Q.Sender.Configurator", "MySynch.Q.Sender.Configurator\MySynch.Q.Sender.Configurator.csproj", "{283C942E-2FA7-4CBD-8BBE-D36B1FB3C373}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MySynch.Q.Configurators.Tests.Unit", "MySynch.Q.Sender.Configurator.Tests.Unit\MySynch.Q.Configurators.Tests.Unit.csproj", "{E007A8A9-DF39-4688-B01D-AE94B1DD4185}"
