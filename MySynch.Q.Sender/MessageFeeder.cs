@@ -1,12 +1,9 @@
-﻿using MySynch.Q.Common;
-using MySynch.Q.Common.Contracts;
+﻿using MySynch.Q.Common.Contracts;
 using Sciendo.Common.Logging;
 using System;
 using System.IO;
 using System.Threading;
-using System.Web;
 using Sciendo.Common.IO;
-using DirectoryMonitor = MySynch.Q.Common.DirectoryMonitor;
 
 namespace MySynch.Q.Sender
 {
