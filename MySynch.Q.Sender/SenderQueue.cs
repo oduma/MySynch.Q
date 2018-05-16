@@ -95,10 +95,13 @@ namespace MySynch.Q.Sender
 
         public void SendMessage(byte[] message)
         {
-            LoggingManager.Debug("Sending message to " + Name +"...");
-            StartChannel();
-            Channel.BasicPublish("", QueueName, true, null, message);
-            LoggingManager.Debug("Message sent to " + Name + ".");
+            lock (_lock)
+            {
+                LoggingManager.Debug("Sending message to " + Name + "...");
+                StartChannel();
+                Channel.BasicPublish("", QueueName, true, null, message);
+                LoggingManager.Debug("Message sent to " + Name + ".");
+            }
         }
 
     }

@@ -18,10 +18,10 @@ namespace MySynch.Q.Receiver.Configuration
             set { this["value"] = value; }
         }
 
-        [ConfigurationProperty("priority", DefaultValue = 0, IsKey = false, IsRequired = true)]
+        [ConfigurationProperty("priority", DefaultValue = 0, IsKey = false, IsRequired = false)]
         public int Priority
         {
-            get { return (int)this["pirority"]; }
+            get { return (int)this["priority"]; }
             set { this["priority"] = value; }
         }
     }

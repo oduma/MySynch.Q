@@ -6,6 +6,7 @@ using System.IO;
 using System.Threading;
 using System.Web;
 using Sciendo.Common.IO;
+using DirectoryMonitor = MySynch.Q.Common.DirectoryMonitor;
 
 namespace MySynch.Q.Sender
 {

@@ -11,6 +11,6 @@ namespace MySynch.Q.Receiver.Configurator.Configuration
         public static string PostProcessorsCollectionElementName => "postProcessors";
         public static string Name => "name";
         public static string Value => "value";
-        public static string PostProcessorElementName => "postProcessor";
+        public static string PostProcessorElementName => "add";
     }
 }
