@@ -4,7 +4,6 @@ using Sciendo.Common.Serialization;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
 using Sciendo.Common.IO;
 using Sciendo.Common.Music.Contracts;
@@ -17,12 +16,18 @@ namespace MySynch.Q.Receiver
         private readonly string _rootPath;
         private readonly IEnumerable<ITranslator> _translators;
         private readonly IEnumerable<IPostProcessor> _postProcessors;
+        private readonly IStorage _storage;
 
-        public MessageApplyer(string rootPath,IEnumerable<ITranslator> translators,IEnumerable<IPostProcessor> postProcessors)
+        public MessageApplyer(string rootPath,
+            IEnumerable<ITranslator> translators,
+            IEnumerable<IPostProcessor> postProcessors,
+            IStorage storage)
+
         {
             _rootPath = rootPath;
             _translators = translators;
             _postProcessors = postProcessors;
+            _storage = storage;
         }
 
         internal void ApplyMessage(byte[] message)
@@ -83,10 +88,7 @@ namespace MySynch.Q.Receiver
             try
             {
                 var localFileName = GetLocalFileName(sourceRootPath, name);
-                if (body.Length == 0)
-                    File.WriteAllText(localFileName, string.Empty);
-                else
-                    new TextFileWriter().Write(body,localFileName);
+                _storage.File.WriteAllText(localFileName,(body.Length==0)?string.Empty:body);
 
                 LoggingManager.Debug("Upsert applied.");
             }
@@ -104,13 +106,10 @@ namespace MySynch.Q.Receiver
             {
                 var localFileName = GetLocalFileName(sourceRootPath, name);
                 if(body.Length==0)
-                    File.WriteAllText(localFileName,string.Empty);
+                    _storage.File.WriteAllText(localFileName,string.Empty);
                 else
                 {
-                    using (var fs = File.Create(localFileName, body.Length))
-                    {
-                        fs.Write(body, 0, body.Length);
-                    }
+                    _storage.File.Create(localFileName, body);
                 }
                 LoggingManager.Debug("Upsert applied.");
             }
@@ -125,8 +124,8 @@ namespace MySynch.Q.Receiver
         {
             var localFileName = _rootPath + name.Replace(sourceRootPath, "");
             var localFolder = Path.GetDirectoryName(localFileName);
-            if (!Directory.Exists(localFolder))
-                Directory.CreateDirectory(localFolder);
+            if (!_storage.Directory.Exists(localFolder))
+                _storage.Directory.CreateDirectory(localFolder);
             return localFileName;
         }
 
@@ -138,10 +137,13 @@ namespace MySynch.Q.Receiver
                 var localDeleteFileName = name.Replace(
                     sourceRootPath, _rootPath);
                 LoggingManager.Debug("Transformed name: " + localDeleteFileName);
-                if (File.Exists(localDeleteFileName))
-                    File.Delete(localDeleteFileName);
-                if(Directory.Exists(localDeleteFileName))
-                    Directory.Delete(localDeleteFileName,true);
+                if (_storage.File.Exists(localDeleteFileName))
+                {
+                    _storage.File.Delete(localDeleteFileName);
+                    return;
+                }
+                if(_storage.Directory.Exists(localDeleteFileName))
+                    _storage.Directory.Delete(localDeleteFileName,true);
             }
             catch (Exception ex)
             {

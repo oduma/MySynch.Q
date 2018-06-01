@@ -1,4 +1,5 @@
 ﻿using System.Configuration;
+using MySynch.Q.Common;
 
 namespace MySynch.Q.Receiver.Configuration
 {

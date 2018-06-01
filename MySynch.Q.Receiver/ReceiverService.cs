@@ -6,6 +6,8 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using MySynch.Q.Receiver.Configuration;
+using Sciendo.Common.IO;
+using Sciendo.Common.IO.MTP;
 using Sciendo.Common.Music.Contracts;
 using Sciendo.IOC;
 using Sciendo.IOC.Configuration;
@@ -35,18 +37,27 @@ namespace MySynch.Q.Receiver
 
             foreach (var receiver in ((ReceiversSection)ConfigurationManager.GetSection("receiversSection")).Receivers.Cast<ReceiverElement>())
             {
-
-                consummers.Add(new Consummer(new MessageApplyer(receiver.LocalRootFolder,_translators,GetPostProcessors(receiver).ToArray()), new ReceiverQueue
-                {
-                    Name = receiver.Name,
-                    QueueName = receiver.QueueName,
-                    HostName = receiver.HostName,
-                    UserName = receiver.UserName,
-                    Password = receiver.Password
-                }));
+                IStorage storage = CreateFor(receiver.LocalRootFolder);
+                consummers.Add(
+                    new Consummer(
+                        new MessageApplyer(receiver.LocalRootFolder, _translators, GetPostProcessors(receiver).ToArray(),storage), new ReceiverQueue
+                        {
+                            Name = receiver.Name,
+                            QueueName = receiver.QueueName,
+                            HostName = receiver.HostName,
+                            UserName = receiver.UserName,
+                            Password = receiver.Password
+                        }));
             }
 
             return consummers;
+        }
+
+        private IStorage CreateFor(string receiverLocalRootFolder)
+        {
+            if(MtpPathInterpreter.IsMtpDevice(receiverLocalRootFolder))
+                return new MtpStorage();
+            return new FsStorage();
         }
 
         private IEnumerable<IPostProcessor> GetPostProcessors(ReceiverElement receiver)
