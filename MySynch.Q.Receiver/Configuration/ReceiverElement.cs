@@ -12,6 +12,7 @@ namespace MySynch.Q.Receiver.Configuration
             set { this["name"] = value; }
         }
 
+
         [ConfigurationProperty("queueName", DefaultValue = "", IsRequired = true)]
         public string QueueName
         {

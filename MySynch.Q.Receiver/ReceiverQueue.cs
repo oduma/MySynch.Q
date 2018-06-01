@@ -20,7 +20,9 @@ namespace MySynch.Q.Receiver
                 if (Channel == null || !Channel.IsOpen)
                     Channel = Connection.CreateModel();
 
-                Channel.QueueDeclare(QueueName, true, false, true, null);
+                var receiverQueueName = Channel.QueueDeclare().QueueName;
+                Channel.QueueBind(receiverQueueName,QueueName,"");
+
 
                 _consumer = new QueueingBasicConsumer(Channel);
                 Channel.BasicConsume(QueueName, true, _consumer);

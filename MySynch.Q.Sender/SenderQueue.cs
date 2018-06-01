@@ -19,6 +19,7 @@ namespace MySynch.Q.Sender
 
         public IModel Channel { get; set; }
 
+        private const string ExchangeType = "fanout";
         private static object _lock = new object();
 
         private ConnectionFactory _connectionFactory;
@@ -36,7 +37,7 @@ namespace MySynch.Q.Sender
                     Connection = _connectionFactory.CreateConnection();
                 if (Channel == null || Channel.IsClosed)
                     Channel = Connection.CreateModel();
-                Channel.QueueDeclare(QueueName, true, false, true, null);
+                Channel.ExchangeDeclare(QueueName, ExchangeType);
                 LoggingManager.Debug(Name + " Channel started up.");
             }
             catch (Exception exception)
@@ -99,7 +100,7 @@ namespace MySynch.Q.Sender
             {
                 LoggingManager.Debug("Sending message to " + Name + "...");
                 StartChannel();
-                Channel.BasicPublish("", QueueName, true, null, message);
+                Channel.BasicPublish(QueueName,"", true, null, message);
                 LoggingManager.Debug("Message sent to " + Name + ".");
             }
         }
