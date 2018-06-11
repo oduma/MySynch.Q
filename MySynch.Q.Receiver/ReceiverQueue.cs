@@ -25,7 +25,7 @@ namespace MySynch.Q.Receiver
 
 
                 _consumer = new QueueingBasicConsumer(Channel);
-                Channel.BasicConsume(QueueName, true, _consumer);
+                Channel.BasicConsume(receiverQueueName, true, _consumer);
                 LoggingManager.Debug(Name + " Channel started up.");
             }
             catch (Exception ex)

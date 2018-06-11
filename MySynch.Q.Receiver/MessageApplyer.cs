@@ -67,7 +67,8 @@ namespace MySynch.Q.Receiver
             LoggingManager.Debug("Starting Postprocessing of message...");
             foreach (var postProcessor in _postProcessors)
             {
-                postProcessor.Process(transferMessage.Body,transferMessage.Name);
+                if(postProcessor!=null && transferMessage!=null && transferMessage.Body!=null)
+                    postProcessor.Process(transferMessage.Body,transferMessage.Name);
             }
             LoggingManager.Debug("PostProcessing of message finished.");
         }
